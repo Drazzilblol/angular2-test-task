@@ -1,0 +1,15 @@
+{
+  "BUTTON_ADD": "Добавить",
+  "BUTTON_DELETE": "Удалить",
+  "BUTTON_LANGUAGE": "Язык",
+  "MESSAGE": "Строка не содержит цифры",
+  "LANGUAGES": {
+    "en": "Английский",
+    "ru": "Русский"
+  },
+  "LANGUAGE_MODAL": {
+    "OK": "Ок",
+    "CANCEL": "Отмена",
+    "MESSAGE": "Выберите язык"
+  }
+}

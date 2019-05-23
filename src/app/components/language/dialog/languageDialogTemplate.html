@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{"LANGUAGE_MODAL.MESSAGE" | translate}}</h3>
+</div>
+<div class="modal-body">
+    <select class="form-control" [(ngModel)]="selected">
+        <option *ngFor="let language of languagesList" [ngValue]="language">{{"LANGUAGES." + language | translate}}
+        </option>
+    </select>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" (click)="activeModal.close('Close click')">{{"LANGUAGE_MODAL.OK" |
+        translate}}
+    </button>
+    <button class="btn btn-secondary" type="button" (click)="activeModal.close('Close click')">{{"LANGUAGE_MODAL.CANCEL"
+        | translate }}
+    </button>
+</div>

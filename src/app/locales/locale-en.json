@@ -1,0 +1,15 @@
+{
+  "BUTTON_ADD": "Add",
+  "BUTTON_DELETE": "Delete",
+  "BUTTON_LANGUAGE": "Language",
+  "MESSAGE": "String does not contains numbers",
+  "LANGUAGES": {
+    "en": "English",
+    "ru": "Russian"
+  },
+  "LANGUAGE_MODAL": {
+    "OK": "Ok",
+    "CANCEL": "Cancel",
+    "MESSAGE": "Select language"
+  }
+}
