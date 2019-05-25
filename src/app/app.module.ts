@@ -14,6 +14,8 @@ import {StringAdd} from './components/string-add/stringAddController';
 import {StringList} from './components/string-list/stringListController';
 import {NumbersFilter} from './pipes/numbersFilter';
 
+import languages from "./components/language/languages.json"
+
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "/locales/locale-", ".json");
 }
@@ -33,10 +35,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
     constructor(translate: TranslateService) {
-        // this language will be used as a fallback when a translation isn't found in the current language
-        translate.setDefaultLang('en');
-
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use('en');
+        translate.use(languages.defaultLanguage);
     }
 }
