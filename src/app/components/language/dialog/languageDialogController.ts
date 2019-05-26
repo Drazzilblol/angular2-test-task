@@ -9,7 +9,7 @@ import languages from "../languages.json"
     selector: 'ngbd-modal-content',
     templateUrl: './languageDialogTemplate.html'
 })
-export class NgbdModalContent {
+export class LanguageDialog {
 
     languagesList = languages.languagesList;
     selected;

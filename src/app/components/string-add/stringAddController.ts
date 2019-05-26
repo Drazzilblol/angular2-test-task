@@ -11,5 +11,4 @@ export class StringAdd {
     onAdd(text: string) {
         this.add.emit(text);
     }
-
 };

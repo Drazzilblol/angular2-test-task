@@ -4,7 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {Component} from '@angular/core';
 
-import {NgbdModalContent} from './dialog/languageDialogController';
+import {LanguageDialog} from './dialog/languageDialogController';
 
 @Component({
     selector: 'language',
@@ -15,7 +15,7 @@ export class Language {
     }
 
     open() {
-        this.modalService.open(NgbdModalContent);
+        this.modalService.open(LanguageDialog);
     }
 
 }

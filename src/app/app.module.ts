@@ -8,7 +8,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AppComponent} from './app.component';
 import {Language} from './components/language/languageController';
-import {NgbdModalContent} from './components/language/dialog/languageDialogController';
+import {LanguageDialog} from './components/language/dialog/languageDialogController';
 import {StringListContainer} from './components/string-list-container/stringListContainerController';
 import {StringAdd} from './components/string-add/stringAddController';
 import {StringList} from './components/string-list/stringListController';
@@ -29,9 +29,9 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient]
             }
         })],
-    declarations: [AppComponent, Language, NgbdModalContent, StringListContainer, StringAdd, StringList, NumbersFilter],
+    declarations: [AppComponent, Language, LanguageDialog, StringListContainer, StringAdd, StringList, NumbersFilter],
     bootstrap: [AppComponent],
-    entryComponents: [NgbdModalContent],
+    entryComponents: [LanguageDialog],
 })
 export class AppModule {
     constructor(translate: TranslateService) {
