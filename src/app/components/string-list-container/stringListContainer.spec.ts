@@ -3,10 +3,10 @@
 import {StringListContainer} from './stringListContainerController';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
-import {TranslateModule} from '@ngx-translate/core';
 import {StringList} from '../string-list/stringListController';
 import {StringAdd} from '../string-add/stringAddController';
 import {NumbersFilter} from '../../pipes/numbersFilter';
+import {imports} from '../../../tests/TestTranslationConfig';
 
 describe('string list container', function () {
     let component: StringListContainer;
@@ -14,7 +14,7 @@ describe('string list container', function () {
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, TranslateModule.forRoot()],
+            imports: [FormsModule, imports],
             declarations: [StringListContainer, StringList, StringAdd, NumbersFilter],
         });
     });

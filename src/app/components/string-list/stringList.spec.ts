@@ -2,19 +2,27 @@
 
 import {FormsModule} from '@angular/forms';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {TranslateModule} from '@ngx-translate/core';
 import {StringList} from './stringListController';
 import {NumbersFilter} from '../../pipes/numbersFilter';
+import {imports} from '../../../tests/TestTranslationConfig';
+import {TranslateService} from '@ngx-translate/core';
+
+import english from '../../locales/locale-en.json';
+import russian from '../../locales/locale-ru.json';
 
 describe('string list', function () {
     let component: StringList;
     let fixture: ComponentFixture<StringList>;
+    let translate: TranslateService;
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, TranslateModule.forRoot()],
+            imports: [FormsModule, imports],
             declarations: [StringList, NumbersFilter],
         });
+
+        translate = TestBed.get(TranslateService);
+        translate.use("en")
     });
 
     beforeEach(function () {
@@ -24,8 +32,9 @@ describe('string list', function () {
     });
 
     afterAll(function () {
-        component = null;
         fixture = null;
+        component = null;
+        translate = null;
     });
 
     describe('component', function () {
@@ -61,7 +70,11 @@ describe('string list', function () {
             fixture.detectChanges();
 
             let firstElement = fixture.nativeElement.querySelector('li:first-of-type span');
-            expect(firstElement.innerText).toBe('MESSAGE');
+            expect(firstElement.innerText).toBe(english.MESSAGE);
+
+            translate.use("ru");
+            fixture.detectChanges();
+            expect(firstElement.innerText).toBe(russian.MESSAGE);
         });
 
         it('check delete button localization', function () {
@@ -69,7 +82,11 @@ describe('string list', function () {
             fixture.detectChanges();
 
             let delButton = fixture.nativeElement.querySelector('li:first-of-type button')
-            expect(delButton.innerText).toBe('BUTTON_DELETE');
+            expect(delButton.innerText).toBe(english.BUTTON_DELETE);
+
+            translate.use("ru");
+            fixture.detectChanges();
+            expect(delButton.innerText).toBe(russian.BUTTON_DELETE);
         });
     });
 });
