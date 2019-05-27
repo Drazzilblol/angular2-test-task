@@ -36,6 +36,16 @@ describe('string add', function () {
         translate = null;
     });
 
+    it("check is add button disabled with empty input", function () {
+        let button = fixture.nativeElement.querySelector('button');
+        expect(button.disabled).toBe(true);
+
+        let input = fixture.nativeElement.querySelector('input');
+        input.value = "                ";
+        input.dispatchEvent(new Event('input'));
+        expect(button.disabled).toBe(true);
+    });
+
     it('check add string', function () {
         let testString = 'test';
 

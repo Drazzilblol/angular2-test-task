@@ -1,7 +1,7 @@
 <div class="input-group">
     <input type="text" class="form-control" [(ngModel)]="text" aria-describedby="basic-addon2">
     <div class="input-group-append">
-        <button ng-disabled="!text" class="btn btn-outline-secondary" (click)="onAdd(text)">{{"BUTTON_ADD" | translate}}
+        <button [disabled]="!text" class="btn btn-outline-secondary" (click)="onAdd(text)">{{"BUTTON_ADD" | translate}}
         </button>
     </div>
 </div>
