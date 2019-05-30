@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {StringList} from './stringListController';
 import {NumbersFilter} from '../../pipes/numbersFilter';
-import {imports} from '../../../tests/TestTranslationConfig';
+import {translateTestImport} from '../../../tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 
 import english from '../../locales/locale-en.json';
@@ -17,7 +17,7 @@ describe('string list', function () {
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, imports],
+            imports: [FormsModule, translateTestImport],
             declarations: [StringList, NumbersFilter],
         });
 

@@ -3,7 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 
 import {StringAdd} from './stringAddController';
-import {imports} from '../../../tests/TestTranslationConfig';
+import {translateTestImport} from '../../../tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 
 import english from '../../locales/locale-en.json';
@@ -16,7 +16,7 @@ describe('string add', function () {
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, imports],
+            imports: [FormsModule, translateTestImport],
             declarations: [StringAdd]
         });
 

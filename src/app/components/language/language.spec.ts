@@ -6,7 +6,7 @@ import {Language} from './languageController';
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {LanguageDialog} from './dialog/languageDialogController';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {imports} from '../../../tests/TestTranslationConfig';
+import {translateTestImport} from '../../../tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 
 import english from '../../locales/locale-en.json';
@@ -20,7 +20,7 @@ describe('language', function () {
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, imports, NgbModalModule],
+            imports: [FormsModule, translateTestImport, NgbModalModule],
             declarations: [Language, LanguageDialog],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {

@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NumbersFilter implements PipeTransform{
 
     transform(input: string){
-            if (typeof input !== "string" || input === "") return "MESSAGE";
+            if (input === "") return "MESSAGE";
 
             let filteredArray = input.split("")
                 .filter(element => !isNaN(+element));

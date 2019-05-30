@@ -8,7 +8,7 @@ describe('number filter', function () {
 
     let numbersFilter: NumbersFilter;
 
-    beforeEach(() => {
+    beforeEach(function () {
         numbersFilter = new NumbersFilter();
     });
 

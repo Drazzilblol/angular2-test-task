@@ -1,5 +1,3 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-let CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     resolve: {
@@ -18,14 +16,4 @@ module.exports = {
 
         ]
     },
-    plugins: [
-        new HtmlWebpackPlugin({template: './src/index.html'}),
-
-        new CopyPlugin([
-            {from: 'src/app/locales/*', to: 'locales', flatten: true},
-        ]),
-
-
-    ],
-
 }

@@ -6,7 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {StringList} from '../string-list/stringListController';
 import {StringAdd} from '../string-add/stringAddController';
 import {NumbersFilter} from '../../pipes/numbersFilter';
-import {imports} from '../../../tests/TestTranslationConfig';
+import {translateTestImport} from '../../../tests/TestTranslationConfig';
 
 describe('string list container', function () {
     let component: StringListContainer;
@@ -14,7 +14,7 @@ describe('string list container', function () {
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, imports],
+            imports: [FormsModule, translateTestImport],
             declarations: [StringListContainer, StringList, StringAdd, NumbersFilter],
         });
     });

@@ -5,12 +5,13 @@ import {Language} from './language/languageController';
 import {LanguageDialog} from './language/dialog/languageDialogController';
 import {StringAdd} from './string-add/stringAddController';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {FiltersModule} from '../pipes/filters.module';
+import languages from "./language/languages.json"
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "/locales/locale-", ".json");
@@ -25,9 +26,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         }
     })],
     declarations: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList],
-    exports: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList]
+    exports: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList],
+    entryComponents: [LanguageDialog]
 })
 export class ComponentsModule {
-    constructor() {
+    constructor(translate: TranslateService) {
+        translate.use(languages.defaultLanguage);
     }
 }
