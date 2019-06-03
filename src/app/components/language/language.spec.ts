@@ -37,12 +37,16 @@ describe('language', function () {
     });
 
     describe('component', function () {
-        it('check dialog open', function () {
+        it('check dialog open/close', function () {
             let langButton = fixture.nativeElement.querySelector('button');
             langButton.dispatchEvent(new Event('click'));
             fixture.detectChanges();
 
             expect(document.querySelector('.modal-content')).not.toBe(null);
+
+            document.querySelector('.btn-secondary').dispatchEvent(new Event('click'));
+
+            expect(document.querySelector('.modal-content')).toBe(null);
         });
     });
 });

@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {StringAdd} from './stringAdd.component';
-
 import {translateTestImport} from 'tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';

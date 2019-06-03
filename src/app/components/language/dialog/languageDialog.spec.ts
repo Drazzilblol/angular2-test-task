@@ -76,8 +76,6 @@ describe('language', function () {
             expect(languageSelect.options[0].innerText.trim()).toBe(russian.LANGUAGES.en);
             expect(languageSelect.options[1].innerText.trim()).toBe(russian.LANGUAGES.ru);
         });
-
-
     });
 });
 

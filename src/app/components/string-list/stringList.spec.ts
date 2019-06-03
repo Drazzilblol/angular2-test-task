@@ -4,7 +4,6 @@ import {StringList} from './stringList.component';
 import {NumbersPipe} from 'app/pipes/numbers.pipe';
 import {translateTestImport} from 'tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
-
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 
