@@ -10,6 +10,10 @@ export class StringList {
 
     @Output() onDelete: EventEmitter<number> = new EventEmitter<number>();
 
+    /**
+     * Создает событие удаления строки из списка.
+     * @param {number} index Индекс удаляемой строки в списке.
+     */
     deleteItem(index: number) {
         this.onDelete.emit(index);
     }

@@ -11,6 +11,9 @@ export class Language {
     constructor(private modalService: NgbModal) {
     }
 
+    /**
+     * Открывает диалог выбора языка.
+     */
     open() {
         this.modalService.open(LanguageDialog);
     }
