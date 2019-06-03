@@ -4,7 +4,7 @@ import {Language} from './language.component';
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {LanguageDialog} from './dialog/languageDialog.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
-import {translateTestImport} from '../../../tests/TestTranslationConfig';
+import {translateTestImport} from 'tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 
 describe('language', function () {

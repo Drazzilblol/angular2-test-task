@@ -4,6 +4,7 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "target": "ES5"
+    "target": "ES5",
+    "baseUrl": "./src"
   }
 }

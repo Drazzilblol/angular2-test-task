@@ -3,8 +3,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {StringList} from '../string-list/stringList.component';
 import {StringAdd} from '../string-add/stringAdd.component';
-import {NumbersPipe} from '../../pipes/numbers.pipe';
-import {translateTestImport} from '../../../tests/TestTranslationConfig';
+import {NumbersPipe} from 'app/pipes/numbers.pipe';
+import {translateTestImport} from 'tests/TestTranslationConfig';
 
 describe('string list container', function () {
     let component: StringListContainer;

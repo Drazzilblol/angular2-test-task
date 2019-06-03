@@ -1,12 +1,12 @@
 import {FormsModule} from '@angular/forms';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {StringList} from './stringList.component';
-import {NumbersPipe} from '../../pipes/numbers.pipe';
-import {translateTestImport} from '../../../tests/TestTranslationConfig';
+import {NumbersPipe} from 'app/pipes/numbers.pipe';
+import {translateTestImport} from 'tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 
-import english from '../../locales/locale-en.json';
-import russian from '../../locales/locale-ru.json';
+import english from 'app/locales/locale-en.json';
+import russian from 'app/locales/locale-ru.json';
 
 describe('string list', function () {
     let component: StringList;
