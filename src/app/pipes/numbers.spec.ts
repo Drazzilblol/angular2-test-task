@@ -1,15 +1,12 @@
-'use strict';
-
 import '@angular/core/testing';
+import {NumbersPipe} from './numbers.pipe';
 
-import {NumbersFilter} from './numbersFilter';
+describe('number pipe', function () {
 
-describe('number filter', function () {
-
-    let numbersFilter: NumbersFilter;
+    let numbersFilter: NumbersPipe;
 
     beforeEach(function () {
-        numbersFilter = new NumbersFilter();
+        numbersFilter = new NumbersPipe();
     });
 
     afterAll(function () {

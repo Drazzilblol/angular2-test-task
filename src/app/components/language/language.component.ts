@@ -1,14 +1,11 @@
-'use strict';
-
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
-import {Component} from '@angular/core';
-
-import {LanguageDialog} from './dialog/languageDialogController';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {LanguageDialog} from './dialog/languageDialog.component';
 
 @Component({
     selector: 'language',
-    templateUrl: './languageTemplate.html'
+    templateUrl: './language.template.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Language {
     constructor(private modalService: NgbModal) {
