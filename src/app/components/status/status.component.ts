@@ -5,7 +5,6 @@ import {Component} from '@angular/core';
     templateUrl: './status.template.html',
 })
 export class StatusComponent {
-
     status: string = 'FRESH';
 
     constructor() {
@@ -15,7 +14,7 @@ export class StatusComponent {
     /**
      * Изменяет статус компонента каждые 30 секунд.
      */
-    statusCountdown() {
+    statusCountdown(): void {
         setTimeout(() => {
                 if (this.status == 'FRESH') {
                     this.status = 'YESTERDAY';
@@ -30,7 +29,7 @@ export class StatusComponent {
     /**
      * В зависимости от текущего статуса возвращает цвет.
      */
-    getColor() {
+    getColor(): string {
         if (this.status == 'FRESH') {
             return 'green'
         } else if (this.status == 'YESTERDAY') {

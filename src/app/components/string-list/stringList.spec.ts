@@ -7,7 +7,8 @@ import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {StatusComponent} from '../status/status.component';
-import {NgbModule, NgbTooltip, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {StringsService} from '../../services/strings.service';
 
 describe('string list', function () {
     let component: StringList;
@@ -18,11 +19,11 @@ describe('string list', function () {
         TestBed.configureTestingModule({
             imports: [FormsModule, translateTestImport, NgbTooltipModule],
             declarations: [StringList, NumbersPipe, StatusComponent],
+            providers: [StringsService]
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
         translate.use('en')
-
         fixture = TestBed.createComponent(StringList);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -37,8 +38,8 @@ describe('string list', function () {
     describe('component', function () {
 
         it('check string with numbers', function () {
-            let testStrings = ['t1e2s3t4'];
-            let resultString = '1234';
+            let testStrings: string[] = ['t1e2s3t4'];
+            let resultString: string = '1234';
             component.strings = testStrings;
             fixture.detectChanges();
 
@@ -46,16 +47,13 @@ describe('string list', function () {
         });
 
         it('check items deleting', function () {
-            let resultString = '12345';
+            let resultString: string = '12345';
             component.strings = [resultString];
             fixture.detectChanges();
             let firstElement = fixture.nativeElement.querySelector('li:first-of-type');
 
             expect(firstElement.querySelector('span').innerText).toBe(resultString);
 
-            component.onDelete.subscribe(value => {
-                expect(value).toEqual(0);
-            });
             firstElement.querySelector('button')
                 .dispatchEvent(new Event('click'));
 

@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {StringList} from './string-list/stringList.component';
-import {StringListContainer} from './string-list-container/stringListContainer.component';
 import {Language} from './language/language.component';
 import {LanguageDialog} from './language/dialog/languageDialog.component';
 import {StringAdd} from './string-add/stringAdd.component';
@@ -12,6 +11,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PipesModule} from '../pipes/pipes.module';
 import {StatusComponent} from './status/status.component';
+import {StringsService} from '../services/strings.service';
 
 @NgModule({
     imports: [BrowserModule, NgbModule, FormsModule, HttpClientModule, PipesModule, TranslateModule.forRoot({
@@ -21,9 +21,10 @@ import {StatusComponent} from './status/status.component';
             deps: [HttpClient]
         }
     })],
-    declarations: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList, StatusComponent],
-    exports: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList, StatusComponent],
-    entryComponents: [LanguageDialog]
+    declarations: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent],
+    exports: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent],
+    entryComponents: [LanguageDialog],
+    providers: [StringsService]
 })
 export class ComponentsModule {
 

@@ -5,22 +5,26 @@ import {translateTestImport} from 'tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
+import {StringsService} from '../../services/strings.service';
+import {Subscription} from 'rxjs';
 
 describe('string add', function () {
     let component: StringAdd;
     let fixture: ComponentFixture<StringAdd>;
     let translate: TranslateService;
+    let stringsService: StringsService;
 
     beforeEach(function () {
         TestBed.configureTestingModule({
             imports: [FormsModule, translateTestImport],
-            declarations: [StringAdd]
+            declarations: [StringAdd],
+            providers:[StringsService]
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
         translate.use("en");
-
         fixture = TestBed.createComponent(StringAdd);
+        stringsService = TestBed.get(StringsService);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -29,6 +33,7 @@ describe('string add', function () {
         fixture = null;
         component = null;
         translate = null;
+        stringsService = null;
     });
 
     it("check is add button disabled with empty input", function () {
@@ -44,15 +49,17 @@ describe('string add', function () {
     });
 
     it('check add string', function () {
-        let testString = 'test';
+        let testString: string = 'test';
 
-        component.onAdd.subscribe(value => {
-            expect(value).toEqual(testString);
+        let subscription: Subscription = stringsService.getObservable().subscribe((result:string) => {
+            expect(result).toEqual(testString)
         });
+
         let input = fixture.nativeElement.querySelector('input');
         input.value = testString;
         input.dispatchEvent(new Event('input'));
         fixture.nativeElement.querySelector('button').dispatchEvent(new Event('click'));
+        subscription.unsubscribe()
     });
 
     it("check localization", function () {

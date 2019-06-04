@@ -1,18 +1,20 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {StringsService} from '../../services/strings.service';
 
 @Component({
-    selector: "string-add",
-    templateUrl: "./stringAdd.template.html",
-    changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'string-add',
+    templateUrl: './stringAdd.template.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StringAdd {
-    @Output() onAdd: EventEmitter<string> = new EventEmitter<string>();
+    constructor(private stringService: StringsService) {
+    }
 
     /**
-     * Создает событие добавления строки в список.
+     * Передает строку сервису StringsService для добавления в список.
      * @param {string} text Строка которая должна быть добавлена в список.
      */
-    addItem(text: string) {
-        this.onAdd.emit(text);
+    addItem(text: string): void {
+        this.stringService.addString(text)
     }
 };

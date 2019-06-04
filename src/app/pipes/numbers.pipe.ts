@@ -9,7 +9,7 @@ export class NumbersPipe implements PipeTransform {
      * @return {string} Если строка не содержит цифры возвращает сообщение,
      * если содержит то возвращает строку состоящую из цифр
      */
-    transform(input: string) {
+    transform(input: string): string {
         if (isEmpty(input)) return 'MESSAGE';
 
         let filteredArray = input.split('')

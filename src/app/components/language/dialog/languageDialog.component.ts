@@ -28,14 +28,14 @@ export class LanguageDialog {
     /**
      * Закрывает диалог выбора языка.
      */
-    cancel() {
+    cancel(): void {
         this.activeModal.close()
     }
 
     /**
      * Изменяет язык на выбраный и закрывает дилог выбора языка.
      */
-    confirm() {
+    confirm(): void {
         this.translate.use(this.selected);
         this.activeModal.close()
     }
