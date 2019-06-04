@@ -11,5 +11,10 @@
     "OK": "Ok",
     "CANCEL": "Cancel",
     "MESSAGE": "Select language"
+  },
+  "STATUS": {
+    "FRESH": "Fresh",
+    "YESTERDAY": "Yesterday",
+    "ROTTEN": "Rotten"
   }
 }

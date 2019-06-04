@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PipesModule} from '../pipes/pipes.module';
+import {StatusComponent} from './status/status.component';
 
 @NgModule({
     imports: [BrowserModule, NgbModule, FormsModule, HttpClientModule, PipesModule, TranslateModule.forRoot({
@@ -20,8 +21,8 @@ import {PipesModule} from '../pipes/pipes.module';
             deps: [HttpClient]
         }
     })],
-    declarations: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList],
-    exports: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList],
+    declarations: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList, StatusComponent],
+    exports: [ Language, LanguageDialog, StringListContainer, StringAdd, StringList, StatusComponent],
     entryComponents: [LanguageDialog]
 })
 export class ComponentsModule {

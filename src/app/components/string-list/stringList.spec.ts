@@ -6,6 +6,8 @@ import {translateTestImport} from 'tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
+import {StatusComponent} from '../status/status.component';
+import {NgbModule, NgbTooltip, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 
 describe('string list', function () {
     let component: StringList;
@@ -14,8 +16,8 @@ describe('string list', function () {
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, translateTestImport],
-            declarations: [StringList, NumbersPipe],
+            imports: [FormsModule, translateTestImport, NgbTooltipModule],
+            declarations: [StringList, NumbersPipe, StatusComponent],
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);

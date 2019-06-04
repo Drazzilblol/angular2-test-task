@@ -5,6 +5,8 @@ import {StringList} from '../string-list/stringList.component';
 import {StringAdd} from '../string-add/stringAdd.component';
 import {NumbersPipe} from 'app/pipes/numbers.pipe';
 import {translateTestImport} from 'tests/TestTranslationConfig';
+import {StatusComponent} from '../status/status.component';
+import {NgbTooltip, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 
 describe('string list container', function () {
     let component: StringListContainer;
@@ -12,8 +14,8 @@ describe('string list container', function () {
 
     beforeEach(function () {
         TestBed.configureTestingModule({
-            imports: [FormsModule, translateTestImport],
-            declarations: [StringListContainer, StringList, StringAdd, NumbersPipe],
+            imports: [FormsModule, translateTestImport, NgbTooltipModule],
+            declarations: [StringListContainer, StringList, StringAdd, NumbersPipe, StatusComponent],
         }).compileComponents();
 
         fixture = TestBed.createComponent(StringListContainer);

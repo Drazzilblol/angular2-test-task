@@ -1,7 +1,8 @@
 <ul class="list-group">
     <li class="list-group-item content-left" *ngFor="let string of strings; index as i">
+        <status></status>
         <span>{{string | numbersPipe | translate}}</span>
-        <button class="btn btn-sm btn-danger float-right" (click)="deleteItem(i)">{{ "BUTTON_DELETE" | translate}}</button>
+        <button class="btn btn-sm btn-danger float-right delete-button" (click)="deleteItem(i)">{{ "BUTTON_DELETE" | translate}}</button>
     </li>
 </ul>
 
