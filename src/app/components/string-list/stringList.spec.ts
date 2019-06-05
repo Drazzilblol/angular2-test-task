@@ -10,6 +10,7 @@ import {StatusComponent} from '../status/status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {StringsService} from '../../services/strings.service';
 import {StringListItem} from './models/StringListItem';
+import {ChangeDetectionStrategy} from '@angular/core';
 
 describe('item list', function () {
     let component: StringList;
@@ -21,10 +22,12 @@ describe('item list', function () {
             imports: [FormsModule, translateTestImport, NgbTooltipModule],
             declarations: [StringList, NumbersPipe, StatusComponent],
             providers: [StringsService]
+        }).overrideComponent(StringList, {
+            set: { changeDetection: ChangeDetectionStrategy.Default }
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
-        translate.use('en')
+        translate.use('en');
         fixture = TestBed.createComponent(StringList);
         component = fixture.componentInstance;
         fixture.detectChanges();
