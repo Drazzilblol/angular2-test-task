@@ -12,13 +12,14 @@ import {StringListItem} from './models/StringListItem';
 export class StringList implements OnDestroy {
     subscription: Subscription;
     stringListItems: StringListItem[] = [];
+    interval: number;
 
     constructor(private stringService: StringsService, private cd: ChangeDetectorRef) {
         this.subscription = stringService.getObservable().subscribe(stringListItem => {
             this.stringListItems.push(stringListItem);
             cd.detectChanges();
         });
-        this.countdown();
+        this.interval = this.countdown();
     }
 
     /**
@@ -31,14 +32,15 @@ export class StringList implements OnDestroy {
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+        clearInterval(this.interval);
     }
 
     /**
      * Раз в секунду сравнивает текущее время и время добавления всех элементов списка,
      * если прошло достаточно времени изменяет статус элемента.
      */
-    countdown(): void {
-        setInterval(() => {
+    countdown(): number {
+        return window.setInterval(() => {
             let currentTime: number = now();
             forEach(this.stringListItems, item => {
                 if (currentTime - item.date > 60000 && item.status !== 'ROTTEN') {

@@ -24,8 +24,6 @@ describe('status', function () {
 
         translate = TestBed.get(TranslateService);
         translate.use('en');
-        jasmine.clock().uninstall();
-        jasmine.clock().install();
         fixture = TestBed.createComponent(StatusComponent);
 
         component = fixture.componentInstance;

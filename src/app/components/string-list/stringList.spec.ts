@@ -1,5 +1,5 @@
 import {FormsModule} from '@angular/forms';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {StringList} from './stringList.component';
 import {NumbersPipe} from 'app/pipes/numbers.pipe';
 import {translateTestImport} from 'tests/TestTranslationConfig';
@@ -23,7 +23,7 @@ describe('item list', function () {
             declarations: [StringList, NumbersPipe, StatusComponent],
             providers: [StringsService]
         }).overrideComponent(StringList, {
-            set: { changeDetection: ChangeDetectionStrategy.Default }
+            set: {changeDetection: ChangeDetectionStrategy.Default}
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
@@ -68,7 +68,7 @@ describe('item list', function () {
 
         it('check item without numbers', function () {
             component.stringListItems = [new StringListItem('test')];
-                fixture.detectChanges();
+            fixture.detectChanges();
             let firstElement = fixture.nativeElement.querySelector('li:first-of-type span');
 
             expect(firstElement.innerText).toBe(english.MESSAGE);
@@ -91,6 +91,30 @@ describe('item list', function () {
 
             expect(delButton.innerText).toBe(russian.BUTTON_DELETE);
         });
+
+        it('check is status change over time', fakeAsync(function () {
+            fixture = TestBed.createComponent(StringList);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+            let listItem: StringListItem = new StringListItem('test')
+            component.stringListItems = [listItem];
+            fixture.detectChanges();
+            let status = fixture.nativeElement.querySelector('status>div');
+
+            expect(status.style.backgroundColor).toBe('green');
+
+            tick(31000);
+            fixture.detectChanges();
+
+            expect(status.style.backgroundColor).toBe('yellow');
+
+            tick(31000);
+            fixture.detectChanges();
+
+            expect(status.style.backgroundColor).toBe('red');
+
+            clearInterval(component.interval);
+        }));
     });
 });
 
