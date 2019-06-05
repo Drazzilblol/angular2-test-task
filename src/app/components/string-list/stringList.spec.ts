@@ -9,8 +9,9 @@ import russian from 'app/locales/locale-ru.json';
 import {StatusComponent} from '../status/status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {StringsService} from '../../services/strings.service';
+import {StringListItem} from './models/StringListItem';
 
-describe('string list', function () {
+describe('item list', function () {
     let component: StringList;
     let fixture: ComponentFixture<StringList>;
     let translate: TranslateService;
@@ -37,10 +38,9 @@ describe('string list', function () {
 
     describe('component', function () {
 
-        it('check string with numbers', function () {
-            let testStrings: string[] = ['t1e2s3t4'];
+        it('check item with numbers', function () {
             let resultString: string = '1234';
-            component.strings = testStrings;
+            component.stringListItems = [new StringListItem('t1e2s3t4')];
             fixture.detectChanges();
 
             expect(fixture.nativeElement.querySelector('li span').innerText).toBe(resultString);
@@ -48,7 +48,7 @@ describe('string list', function () {
 
         it('check items deleting', function () {
             let resultString: string = '12345';
-            component.strings = [resultString];
+            component.stringListItems = [new StringListItem(resultString)];
             fixture.detectChanges();
             let firstElement = fixture.nativeElement.querySelector('li:first-of-type');
 
@@ -57,15 +57,15 @@ describe('string list', function () {
             firstElement.querySelector('button')
                 .dispatchEvent(new Event('click'));
 
-            component.strings.splice(0, 1);
+            component.stringListItems.splice(0, 1);
             fixture.detectChanges();
 
             expect(fixture.nativeElement.querySelector('li:first-of-type span')).toBe(null);
         });
 
-        it('check string without numbers', function () {
-            component.strings = ['test'];
-            fixture.detectChanges();
+        it('check item without numbers', function () {
+            component.stringListItems = [new StringListItem('test')];
+                fixture.detectChanges();
             let firstElement = fixture.nativeElement.querySelector('li:first-of-type span');
 
             expect(firstElement.innerText).toBe(english.MESSAGE);
@@ -77,7 +77,7 @@ describe('string list', function () {
         });
 
         it('check deleteItem button localization', function () {
-            component.strings = ['test'];
+            component.stringListItems = [new StringListItem('test')];
             fixture.detectChanges();
             let delButton = fixture.nativeElement.querySelector('li:first-of-type button');
 

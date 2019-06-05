@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {StringsService} from '../../services/strings.service';
+import {StringListItem} from '../string-list/models/StringListItem';
 
 @Component({
     selector: 'string-add',
@@ -15,6 +16,6 @@ export class StringAdd {
      * @param {string} text Строка которая должна быть добавлена в список.
      */
     addItem(text: string): void {
-        this.stringService.addString(text)
+        this.stringService.addString(new StringListItem(text))
     }
-};
+}

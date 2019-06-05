@@ -14,12 +14,10 @@ ul {
     width: 500px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 87vh;
-    margin-top: 1%;
+    height: 93vh;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    padding: 10px;
 }
 
 li:hover {

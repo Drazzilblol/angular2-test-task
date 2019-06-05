@@ -1,23 +1,24 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
+import {StringListItem} from '../components/string-list/models/StringListItem';
 
 @Injectable()
 export class StringsService {
-    private stringsSource = new Subject<string>();
+    private stringsSource = new Subject<StringListItem>();
     private stringsObservable = this.stringsSource.asObservable();
 
     /**
-     * Возвращает Observable, который будет возвращать строки.
+     * Возвращает Observable, который будет возвращать элемены списка.
      */
-    getObservable(): Observable<string> {
+    getObservable(): Observable<StringListItem> {
         return this.stringsObservable;
     }
 
     /**
-     * Излучает строку.
-     * @param {number} string Излучаемая строка.
+     * Излучает элемент списка StringListItem.
+     * @param {StringListItem} stringListItem Излучаемый элемент списка.
      */
-    addString(string: string): void {
-        this.stringsSource.next(string);
+    addString(stringListItem: StringListItem): void {
+        this.stringsSource.next(stringListItem);
     }
 }

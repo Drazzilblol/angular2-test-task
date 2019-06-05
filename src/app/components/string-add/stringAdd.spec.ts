@@ -7,8 +7,9 @@ import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {StringsService} from '../../services/strings.service';
 import {Subscription} from 'rxjs';
+import {StringListItem} from '../string-list/models/StringListItem';
 
-describe('string add', function () {
+describe('item add', function () {
     let component: StringAdd;
     let fixture: ComponentFixture<StringAdd>;
     let translate: TranslateService;
@@ -18,11 +19,11 @@ describe('string add', function () {
         TestBed.configureTestingModule({
             imports: [FormsModule, translateTestImport],
             declarations: [StringAdd],
-            providers:[StringsService]
+            providers: [StringsService]
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
-        translate.use("en");
+        translate.use('en');
         fixture = TestBed.createComponent(StringAdd);
         stringsService = TestBed.get(StringsService);
         component = fixture.componentInstance;
@@ -36,23 +37,23 @@ describe('string add', function () {
         stringsService = null;
     });
 
-    it("check is add button disabled with empty input", function () {
+    it('check is add button disabled with empty input', function () {
         let button = fixture.nativeElement.querySelector('button');
 
         expect(button.disabled).toBe(true);
 
         let input = fixture.nativeElement.querySelector('input');
-        input.value = "                ";
+        input.value = '                ';
         input.dispatchEvent(new Event('input'));
 
         expect(button.disabled).toBe(true);
     });
 
-    it('check add string', function () {
+    it('check add item', function () {
         let testString: string = 'test';
 
-        let subscription: Subscription = stringsService.getObservable().subscribe((result:string) => {
-            expect(result).toEqual(testString)
+        let subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
+            expect(result.text).toBe(testString)
         });
 
         let input = fixture.nativeElement.querySelector('input');
@@ -62,12 +63,12 @@ describe('string add', function () {
         subscription.unsubscribe()
     });
 
-    it("check localization", function () {
-        let button =  fixture.nativeElement.querySelector('button');
+    it('check localization', function () {
+        let button = fixture.nativeElement.querySelector('button');
 
         expect(button.innerText.trim()).toBe(english.BUTTON_ADD);
 
-        translate.use("ru");
+        translate.use('ru');
         fixture.detectChanges();
 
         expect(button.innerText.trim()).toBe(russian.BUTTON_ADD);
