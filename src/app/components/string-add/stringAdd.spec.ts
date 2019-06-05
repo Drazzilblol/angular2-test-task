@@ -1,4 +1,4 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {StringAdd} from './stringAdd.component';
 import {translateTestImport} from 'tests/TestTranslationConfig';
@@ -49,7 +49,7 @@ describe('item add', function () {
         expect(button.disabled).toBe(true);
     });
 
-    it('check add item', function () {
+    it('check add item', fakeAsync(function () {
         let testString: string = 'test';
 
         let subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
@@ -60,8 +60,9 @@ describe('item add', function () {
         input.value = testString;
         input.dispatchEvent(new Event('input'));
         fixture.nativeElement.querySelector('button').dispatchEvent(new Event('click'));
+        tick(50);
         subscription.unsubscribe()
-    });
+    }));
 
     it('check localization', function () {
         let button = fixture.nativeElement.querySelector('button');
