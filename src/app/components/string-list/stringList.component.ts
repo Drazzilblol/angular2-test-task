@@ -20,7 +20,6 @@ export class StringList implements OnDestroy {
             changeDetector.detectChanges();
             if (this.interval === 0) {
                 this.interval = this.countdown();
-                console.log(this.interval);
             }
         });
     }
