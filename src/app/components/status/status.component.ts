@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Statuses} from './statuses';
 
 @Component({
@@ -6,8 +6,10 @@ import {Statuses} from './statuses';
     templateUrl: './status.template.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StatusComponent {
+export class StatusComponent implements OnChanges{
     @Input() status: Statuses;
+
+    color: string;
 
     constructor() {
     }
@@ -15,14 +17,18 @@ export class StatusComponent {
     /**
      * В зависимости от текущего статуса возвращает цвет.
      */
-    getColor(): string {
+    setColor(): void {
         if (this.status === Statuses.FRESH) {
-            return 'green'
+            this.color = 'green'
         }  if (this.status === Statuses.YESTERDAY) {
-            return 'yellow'
+            this.color = 'yellow'
         }  if (this.status === Statuses.ROTTEN) {
-            return 'red'
+            this.color = 'red'
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.setColor()
     }
 }
 

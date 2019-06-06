@@ -7,7 +7,7 @@ import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {StatusComponent} from './status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
-import {ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, SimpleChange} from '@angular/core';
 import {Statuses} from './statuses';
 
 describe('status', function () {
@@ -42,17 +42,26 @@ describe('status', function () {
 
         it('check color changing', function () {
             component.status = Statuses.FRESH;
+            component.ngOnChanges({
+                prop1: new SimpleChange(undefined , Statuses.FRESH, true)
+            });
             fixture.detectChanges();
             let status = fixture.nativeElement.querySelector('div');
 
             expect(status.style.backgroundColor).toBe('green');
 
             component.status = Statuses.YESTERDAY;
+            component.ngOnChanges({
+                prop1: new SimpleChange(Statuses.FRESH , Statuses.YESTERDAY, false)
+            });
             fixture.detectChanges();
 
             expect(status.style.backgroundColor).toBe('yellow');
 
             component.status = Statuses.ROTTEN;
+            component.ngOnChanges({
+                prop1: new SimpleChange(Statuses.YESTERDAY , Statuses.ROTTEN, false)
+            });
             fixture.detectChanges();
 
             expect(status.style.backgroundColor).toBe('red');
