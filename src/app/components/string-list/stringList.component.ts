@@ -3,6 +3,7 @@ import {StringsService} from '../../services/strings.service';
 import {Subscription} from 'rxjs';
 import {now, forEach} from 'lodash'
 import {StringListItem} from './models/StringListItem';
+import {Statuses} from '../status/statuses';
 
 @Component({
     selector: 'strings-list',
@@ -48,15 +49,15 @@ export class StringList implements OnDestroy {
             let currentTime: number = now();
             let rottenCounter: number = 0;
             forEach(this.stringListItems, item => {
-                if (currentTime - item.date > 60000 && item.status !== 'ROTTEN') {
-                    item.status = 'ROTTEN';
+                if (currentTime - item.date > 60000 && item.status !== Statuses.ROTTEN) {
+                    item.status = Statuses.ROTTEN;
                     this.changeDetector.detectChanges();
-                } else if (currentTime - item.date > 30000 && currentTime - item.date < 60000 && item.status !== 'YESTERDAY') {
-                    item.status = 'YESTERDAY';
+                } else if (currentTime - item.date > 30000 && currentTime - item.date < 60000 && item.status !== Statuses.YESTERDAY) {
+                    item.status = Statuses.YESTERDAY;
                     this.changeDetector.detectChanges();
                 }
 
-                if (item.status === 'ROTTEN') rottenCounter++;
+                if (item.status === Statuses.ROTTEN) rottenCounter++;
             });
             if (this.stringListItems.length === rottenCounter) {
                 clearInterval(this.interval);

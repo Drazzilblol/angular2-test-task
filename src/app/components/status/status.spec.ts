@@ -8,6 +8,7 @@ import russian from 'app/locales/locale-ru.json';
 import {StatusComponent} from './status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {ChangeDetectionStrategy} from '@angular/core';
+import {Statuses} from './statuses';
 
 describe('status', function () {
     let component: StatusComponent;
@@ -40,25 +41,25 @@ describe('status', function () {
     describe('component', function () {
 
         it('check color changing', function () {
-            component.status = 'FRESH';
+            component.status = Statuses.FRESH;
             fixture.detectChanges();
             let status = fixture.nativeElement.querySelector('div');
 
             expect(status.style.backgroundColor).toBe('green');
 
-            component.status = 'YESTERDAY';
+            component.status = Statuses.YESTERDAY;
             fixture.detectChanges();
 
             expect(status.style.backgroundColor).toBe('yellow');
 
-            component.status = 'ROTTEN';
+            component.status = Statuses.ROTTEN;
             fixture.detectChanges();
 
             expect(status.style.backgroundColor).toBe('red');
         });
 
         it('check tooltip', function () {
-            component.status = 'FRESH';
+            component.status = Statuses.FRESH;
             fixture.detectChanges();
             let status = fixture.nativeElement.querySelector('div');
             status.dispatchEvent(new Event('mouseenter'));
@@ -66,14 +67,14 @@ describe('status', function () {
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(english.STATUS.FRESH);
 
             status.dispatchEvent(new Event('mouseleave'));
-            component.status = 'YESTERDAY';
+            component.status = Statuses.YESTERDAY;
             fixture.detectChanges();
             status.dispatchEvent(new Event('mouseenter'));
 
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(english.STATUS.YESTERDAY);
 
             status.dispatchEvent(new Event('mouseleave'));
-            component.status = 'ROTTEN';
+            component.status = Statuses.ROTTEN;
             fixture.detectChanges();
             status.dispatchEvent(new Event('mouseenter'));
 
@@ -81,7 +82,7 @@ describe('status', function () {
         });
 
         it('check tooltip translation', function () {
-            component.status = 'FRESH';
+            component.status = Statuses.FRESH;
             translate.use('ru');
             fixture.detectChanges();
             let status = fixture.nativeElement.querySelector('div');
@@ -90,14 +91,14 @@ describe('status', function () {
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(russian.STATUS.FRESH);
 
             status.dispatchEvent(new Event('mouseleave'));
-            component.status = 'YESTERDAY';
+            component.status = Statuses.YESTERDAY;
             fixture.detectChanges();
             status.dispatchEvent(new Event('mouseenter'));
 
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(russian.STATUS.YESTERDAY);
 
             status.dispatchEvent(new Event('mouseleave'));
-            component.status = 'ROTTEN';
+            component.status = Statuses.ROTTEN;
             fixture.detectChanges();
             status.dispatchEvent(new Event('mouseenter'));
 

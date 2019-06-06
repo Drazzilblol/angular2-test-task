@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {Statuses} from './statuses';
 
 @Component({
     selector: 'status',
@@ -6,7 +7,7 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusComponent {
-    @Input() status: string;
+    @Input() status: Statuses;
 
     constructor() {
     }
@@ -15,11 +16,11 @@ export class StatusComponent {
      * В зависимости от текущего статуса возвращает цвет.
      */
     getColor(): string {
-        if (this.status === 'FRESH') {
+        if (this.status === Statuses.FRESH) {
             return 'green'
-        }  if (this.status === 'YESTERDAY') {
+        }  if (this.status === Statuses.YESTERDAY) {
             return 'yellow'
-        }  if (this.status === 'ROTTEN') {
+        }  if (this.status === Statuses.ROTTEN) {
             return 'red'
         }
     }
