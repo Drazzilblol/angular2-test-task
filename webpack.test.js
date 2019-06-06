@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'development',
     resolve: {
         extensions: ['.ts', '.js'],
         modules: [

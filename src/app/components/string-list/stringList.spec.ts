@@ -93,11 +93,9 @@ describe('item list', function () {
         });
 
         it('check is status change over time', fakeAsync(function () {
-            fixture = TestBed.createComponent(StringList);
-            component = fixture.componentInstance;
-            fixture.detectChanges();
-            let listItem: StringListItem = new StringListItem('test')
+            let listItem: StringListItem = new StringListItem('test');
             component.stringListItems = [listItem];
+            let interval = component.countdown();
             fixture.detectChanges();
             let status = fixture.nativeElement.querySelector('status>div');
 
@@ -113,7 +111,7 @@ describe('item list', function () {
 
             expect(status.style.backgroundColor).toBe('red');
 
-            clearInterval(component.interval);
+            clearInterval(interval);
         }));
     });
 });

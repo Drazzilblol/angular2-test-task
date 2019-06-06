@@ -7,7 +7,7 @@ module.exports = config => {
         frameworks: ['jasmine'],
 
         files: [
-            {pattern: './karma.test.js', watched: false},
+            {pattern: './karma.test.js'},
         ],
 
         preprocessors: {

@@ -12,14 +12,17 @@ import {StringListItem} from './models/StringListItem';
 export class StringList implements OnDestroy {
     subscription: Subscription;
     stringListItems: StringListItem[] = [];
-    interval: number;
+    interval: number = 0;
 
-    constructor(private stringService: StringsService, private cd: ChangeDetectorRef) {
+    constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef) {
         this.subscription = stringService.getObservable().subscribe(stringListItem => {
             this.stringListItems.push(stringListItem);
-            cd.detectChanges();
+            changeDetector.detectChanges();
+            if (this.interval === 0) {
+                this.interval = this.countdown();
+                console.log(this.interval);
+            }
         });
-        this.interval = this.countdown();
     }
 
     /**
@@ -37,20 +40,29 @@ export class StringList implements OnDestroy {
 
     /**
      * Раз в секунду сравнивает текущее время и время добавления всех элементов списка,
-     * если прошло достаточно времени изменяет статус элемента.
+     * если прошло достаточно времени изменяет статус элемента, после того как все элементы
+     * получили статус ROTTEN, интервал останавливается.
+     * @return {number} Возвращает номер интервала.
      */
     countdown(): number {
         return window.setInterval(() => {
             let currentTime: number = now();
+            let rottenCounter: number = 0;
             forEach(this.stringListItems, item => {
                 if (currentTime - item.date > 60000 && item.status !== 'ROTTEN') {
                     item.status = 'ROTTEN';
-                    this.cd.detectChanges();
+                    this.changeDetector.detectChanges();
                 } else if (currentTime - item.date > 30000 && currentTime - item.date < 60000 && item.status !== 'YESTERDAY') {
                     item.status = 'YESTERDAY';
-                    this.cd.detectChanges();
+                    this.changeDetector.detectChanges();
                 }
-            })
+
+                if (item.status === 'ROTTEN') rottenCounter++;
+            });
+            if (this.stringListItems.length === rottenCounter) {
+                clearInterval(this.interval);
+                this.interval = 0;
+            }
         }, 1000)
     }
 }
