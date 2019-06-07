@@ -1,7 +1,7 @@
 import {FormsModule} from '@angular/forms';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {StringList} from './stringList.component';
-import {NumbersPipe} from 'app/pipes/numbers.pipe';
+import {NumbersPipe} from 'app/pipes/numbers/numbers.pipe';
 import {translateTestImport} from 'tests/TestTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
@@ -11,6 +11,7 @@ import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {StringsService} from '../../services/strings.service';
 import {StringListItem} from './models/StringListItem';
 import {ChangeDetectionStrategy} from '@angular/core';
+import {ColorsPipe} from '../../pipes/colors/colors.pipe';
 
 describe('item list', function () {
     let component: StringList;
@@ -20,7 +21,7 @@ describe('item list', function () {
     beforeEach(function () {
         TestBed.configureTestingModule({
             imports: [FormsModule, translateTestImport, NgbTooltipModule],
-            declarations: [StringList, NumbersPipe, StatusComponent],
+            declarations: [StringList, NumbersPipe, StatusComponent, ColorsPipe],
             providers: [StringsService]
         }).overrideComponent(StringList, {
             set: {changeDetection: ChangeDetectionStrategy.Default}

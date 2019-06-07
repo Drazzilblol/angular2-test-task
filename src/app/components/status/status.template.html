@@ -1,3 +1,3 @@
-<div class="status" [ngStyle]="{'background-color': color}" placement="left"
+<div class="status" [ngStyle]="'background-color'| colorsPipe:status" placement="left"
      [ngbTooltip]="'STATUS.'+ status | translate" container="body">
 </div>

@@ -3,24 +3,24 @@ import {NumbersPipe} from './numbers.pipe';
 
 describe('number pipe', function () {
 
-    let numbersFilter: NumbersPipe;
+    let numbersPipe: NumbersPipe;
 
     beforeEach(function () {
-        numbersFilter = new NumbersPipe();
+        numbersPipe = new NumbersPipe();
     });
 
     afterAll(function () {
-        numbersFilter = null;
+        numbersPipe = null;
     });
 
     it('should convert item with numbers and letters to item with only numbers', function () {
-        expect(numbersFilter.transform('a1b2c3')).toBe('123');
+        expect(numbersPipe.transform('a1b2c3')).toBe('123');
     });
     it('should return message if item does not contain numbers', function () {
-        expect(numbersFilter.transform('abc')).toBe('MESSAGE');
+        expect(numbersPipe.transform('abc')).toBe('MESSAGE');
     });
     it('should return message if item is empty', function () {
-        expect(numbersFilter.transform('')).toBe('MESSAGE');
+        expect(numbersPipe.transform('')).toBe('MESSAGE');
     });
 });
 

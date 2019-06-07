@@ -18,7 +18,7 @@ export class StringList implements OnDestroy {
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef) {
         this.subscription = stringService.getObservable().subscribe(stringListItem => {
             this.stringListItems.push(stringListItem);
-            changeDetector.detectChanges();
+            changeDetector.markForCheck();
             if (this.interval === 0) {
                 this.interval = this.countdown();
             }
@@ -49,15 +49,15 @@ export class StringList implements OnDestroy {
             let currentTime: number = now();
             let rottenCounter: number = 0;
             forEach(this.stringListItems, item => {
-                if (currentTime - item.date > 60000 && item.status !== Statuses.ROTTEN) {
-                    item.status = Statuses.ROTTEN;
-                    this.changeDetector.detectChanges();
-                } else if (currentTime - item.date > 30000 && currentTime - item.date < 60000 && item.status !== Statuses.YESTERDAY) {
-                    item.status = Statuses.YESTERDAY;
-                    this.changeDetector.detectChanges();
-                }
-
+                let timeDifference = currentTime - item.date;
                 if (item.status === Statuses.ROTTEN) rottenCounter++;
+                if (timeDifference > 60000 && item.status !== Statuses.ROTTEN) {
+                    item.status = Statuses.ROTTEN;
+                    this.changeDetector.markForCheck();
+                } else if (timeDifference > 30000 && timeDifference < 60000 && item.status !== Statuses.YESTERDAY) {
+                    item.status = Statuses.YESTERDAY;
+                    this.changeDetector.markForCheck();
+                }
             });
             if (this.stringListItems.length === rottenCounter) {
                 clearInterval(this.interval);
