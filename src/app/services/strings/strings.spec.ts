@@ -1,6 +1,6 @@
 import {Subscription} from 'rxjs';
 import {StringsService} from './strings.service';
-import {StringListItem} from '../components/string-list/models/StringListItem';
+import {StringListItem} from '../../components/string-list/models/StringListItem';
 import {fakeAsync, tick} from '@angular/core/testing';
 
 describe('stringListItems service', function () {

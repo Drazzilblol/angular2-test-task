@@ -11,7 +11,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PipesModule} from '../pipes/pipes.module';
 import {StatusComponent} from './status/status.component';
-import {StringsService} from '../services/strings.service';
+import {StringsService} from '../services/strings/strings.service';
+import {FilterComponent} from './filter/filter.component';
+import {StringsFilterService} from '../services/strings-filter/stringsFilter.service';
 
 @NgModule({
     imports: [BrowserModule, NgbModule, FormsModule, HttpClientModule, PipesModule, TranslateModule.forRoot({
@@ -21,10 +23,10 @@ import {StringsService} from '../services/strings.service';
             deps: [HttpClient]
         }
     })],
-    declarations: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent],
-    exports: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent],
+    declarations: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
+    exports: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
     entryComponents: [LanguageDialog],
-    providers: [StringsService]
+    providers: [StringsService, StringsFilterService]
 })
 export class ComponentsModule {
 

@@ -8,7 +8,7 @@ import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {StatusComponent} from '../status/status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
-import {StringsService} from '../../services/strings.service';
+import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from './models/StringListItem';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';

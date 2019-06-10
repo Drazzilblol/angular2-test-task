@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {StringsService} from '../../services/strings.service';
+import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from '../string-list/models/StringListItem';
 
 @Component({
@@ -12,7 +12,7 @@ export class StringAdd {
     }
 
     /**
-     * Передает строку сервису StringsService для добавления в список.
+     * Передает строку сервису StringsFilterService для добавления в список.
      * @param {string} text Строка которая должна быть добавлена в список.
      */
     addItem(text: string): void {

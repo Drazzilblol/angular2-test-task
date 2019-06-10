@@ -1,0 +1,14 @@
+<div >
+    <input type="text"  [(ngModel)]="text" >
+
+    <select class="form-control" [(ngModel)]="selected">
+        <option *ngFor="let language of languagesList" [ngValue]="language">{{"LANGUAGES." + language | translate}}
+        </option>
+    </select>
+
+    <button class="btn btn-outline-secondary" (click)="filter(text)">{{"BUTTON_ADD" | translate}}
+    </button>
+</div>
+
+
+

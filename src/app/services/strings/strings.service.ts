@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {StringListItem} from '../components/string-list/models/StringListItem';
+import {StringListItem} from '../../components/string-list/models/StringListItem';
 
 @Injectable()
 export class StringsService {
