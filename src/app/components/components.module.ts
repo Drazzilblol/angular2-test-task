@@ -14,9 +14,10 @@ import {StatusComponent} from './status/status.component';
 import {StringsService} from '../services/strings/strings.service';
 import {FilterComponent} from './filter/filter.component';
 import {StringsFilterService} from '../services/strings-filter/stringsFilter.service';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
-    imports: [BrowserModule, NgbModule, FormsModule, HttpClientModule, PipesModule, TranslateModule.forRoot({
+    imports: [BrowserModule, BrowserAnimationsModule, NgbModule, FormsModule, HttpClientModule, PipesModule, TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
             useFactory: (http: HttpClient) => new TranslateHttpLoader(http, "/locales/locale-", ".json"),

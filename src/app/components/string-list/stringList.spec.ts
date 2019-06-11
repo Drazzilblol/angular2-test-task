@@ -12,6 +12,7 @@ import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from './models/StringListItem';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
+import {StringsFilterService} from "../../services/strings-filter/stringsFilter.service";
 
 describe('item list', function () {
     let component: StringList;
@@ -22,7 +23,7 @@ describe('item list', function () {
         TestBed.configureTestingModule({
             imports: [FormsModule, translateTestImport, NgbTooltipModule],
             declarations: [StringList, NumbersPipe, StatusComponent, ColorsPipe],
-            providers: [StringsService]
+            providers: [StringsService, StringsFilterService]
         }).overrideComponent(StringList, {
             set: {changeDetection: ChangeDetectionStrategy.Default}
         }).compileComponents();
@@ -44,7 +45,7 @@ describe('item list', function () {
 
         it('check item with numbers', function () {
             let resultString: string = '1234';
-            component.stringListItems = [new StringListItem('t1e2s3t4')];
+            component.filteredStringListItems = [new StringListItem('t1e2s3t4')];
             fixture.detectChanges();
 
             expect(fixture.nativeElement.querySelector('li span').innerText).toBe(resultString);
@@ -52,7 +53,7 @@ describe('item list', function () {
 
         it('check items deleting', function () {
             let resultString: string = '12345';
-            component.stringListItems = [new StringListItem(resultString)];
+            component.filteredStringListItems = [new StringListItem(resultString)];
             fixture.detectChanges();
             let firstElement = fixture.nativeElement.querySelector('li:first-of-type');
 
@@ -61,14 +62,14 @@ describe('item list', function () {
             firstElement.querySelector('button')
                 .dispatchEvent(new Event('click'));
 
-            component.stringListItems.splice(0, 1);
+            component.filteredStringListItems.splice(0, 1);
             fixture.detectChanges();
 
             expect(fixture.nativeElement.querySelector('li:first-of-type span')).toBe(null);
         });
 
         it('check item without numbers', function () {
-            component.stringListItems = [new StringListItem('test')];
+            component.filteredStringListItems = [new StringListItem('test')];
             fixture.detectChanges();
             let firstElement = fixture.nativeElement.querySelector('li:first-of-type span');
 
@@ -81,7 +82,7 @@ describe('item list', function () {
         });
 
         it('check deleteItem button localization', function () {
-            component.stringListItems = [new StringListItem('test')];
+            component.filteredStringListItems = [new StringListItem('test')];
             fixture.detectChanges();
             let delButton = fixture.nativeElement.querySelector('li:first-of-type button');
 
@@ -95,7 +96,7 @@ describe('item list', function () {
 
         it('check is status change over time', fakeAsync(function () {
             let listItem: StringListItem = new StringListItem('test');
-            component.stringListItems = [listItem];
+            component.filteredStringListItems = [listItem];
             let interval = component.countdown();
             fixture.detectChanges();
             let status = fixture.nativeElement.querySelector('status>div');

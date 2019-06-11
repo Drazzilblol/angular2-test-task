@@ -1,12 +1,14 @@
-<div >
-    <input type="text"  [(ngModel)]="text" >
-
-    <select class="form-control" [(ngModel)]="selected">
-        <option *ngFor="let language of languagesList" [ngValue]="language">{{"LANGUAGES." + language | translate}}
+<div [@openClose]="isOpen ? 'open' : 'closed'" class="filter-component">
+    <input [@showHideElements]="isOpen ? 'show' : 'hide'" type="text" class="form-control filter-input" [(ngModel)]="text">
+    <p [@showHideElements]="isOpen ? 'show' : 'hide'">{{"FILTER.TITLE" | translate}}</p>
+    <select [@showHideElements]="isOpen ? 'show' : 'hide'" class="form-control filter-input" [(ngModel)]="selected">
+        <option *ngFor="let status of getStatuses()" [ngValue]=status>{{"STATUS." + status | translate}}
         </option>
     </select>
-
-    <button class="btn btn-outline-secondary" (click)="filter(text)">{{"BUTTON_ADD" | translate}}
+    <p [@showHideElements]="isOpen ? 'show' : 'hide'">{{"FILTER.STATUS" | translate}}</p>
+    <button [@showHideElements]="isOpen ? 'show' : 'hide'" class="btn btn-secondary find-button" (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
+    </button>
+    <button class="btn btn-secondary close-side-nav-button" (click)="toggle()">{{navButtonText}}
     </button>
 </div>
 

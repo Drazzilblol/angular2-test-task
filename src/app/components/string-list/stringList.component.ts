@@ -20,15 +20,10 @@ export class StringList implements OnDestroy {
     interval: number = 0;
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef, private filterService: StringsFilterService) {
-
         this.subscription = stringService.getObservable().subscribe(stringListItem => {
             this.stringListItems.push(stringListItem);
             changeDetector.markForCheck();
-            this.filterItem = {};
             this.filter();
-            if (this.interval === 0) {
-                this.interval = this.countdown();
-            }
         });
 
         this.subscription.add(filterService.getObservable().subscribe(filterItem => {
@@ -46,20 +41,34 @@ export class StringList implements OnDestroy {
         remove(this.stringListItems, (item) => {
             return item == this.filteredStringListItems[index];
         });
-
-        this.filteredStringListItems.splice(index, 1);
+        if (this.filterItem.text || this.filterItem.status) {
+            this.filteredStringListItems.splice(index, 1);
+        }
     }
 
-
+    /**
+     * Фильрует массив элементов StringListItem согласно данным для фильтрации, выводит их и останавливает интервал,
+     * если данные для фильтрации отсутствуют то запускает интервал и выводит весь список.
+     */
     filter(): void {
-        this.filteredStringListItems = filter(this.stringListItems, item => {
-            if (this.filterItem.text || this.filterItem.status) {
-                return item.text.includes(this.filterItem.text) || item.status === this.filterItem.status
-            } else {
-                return true;
+        if (this.filterItem.text && this.filterItem.status) {
+            clearInterval(this.interval);
+            this.interval = 0;
+            this.filteredStringListItems = filter(this.stringListItems, item => {
+                return item.text.includes(this.filterItem.text) && item.status === this.filterItem.status;
+            })
+        } else if (this.filterItem.text || this.filterItem.status) {
+            clearInterval(this.interval);
+            this.interval = 0;
+            this.filteredStringListItems = filter(this.stringListItems, item => {
+                return item.text.includes(this.filterItem.text) || item.status === this.filterItem.status;
+            })
+        } else {
+            this.filteredStringListItems = this.stringListItems;
+            if (this.interval === 0) {
+                this.interval = this.countdown();
             }
-
-        });
+        }
     }
 
     ngOnDestroy(): void {
@@ -79,10 +88,10 @@ export class StringList implements OnDestroy {
             let rottenCounter: number = 0;
             forEach(this.filteredStringListItems, item => {
                 let timeDifference = currentTime - item.date;
-                if (timeDifference > 6000 && item.status !== Statuses.ROTTEN) {
+                if (timeDifference > 60000 && item.status !== Statuses.ROTTEN) {
                     item.status = Statuses.ROTTEN;
                     this.changeDetector.markForCheck();
-                } else if (timeDifference > 3000 && timeDifference < 6000 && item.status !== Statuses.YESTERDAY) {
+                } else if (timeDifference > 30000 && timeDifference < 60000 && item.status !== Statuses.YESTERDAY) {
                     item.status = Statuses.YESTERDAY;
                     this.changeDetector.markForCheck();
                 }

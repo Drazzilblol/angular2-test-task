@@ -65,3 +65,34 @@ li:hover {
 .delete-button{
     margin: 10px;
 }
+
+.filter-component{
+    position: relative;
+    padding: 20px;
+    height: 94vh;
+    float: right;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.close-side-nav-button{
+    position: absolute;
+    margin: 20px;
+    bottom: 10px;
+    left: 0;
+    transform: translate3d(0, 0, 1px);
+}
+
+.find-button{
+    float: right;
+}
+.filter-component > *{
+    margin-bottom: 10px;
+}
+.filter-component > p{
+    margin-left: 10px;
+}
+
+
+
+

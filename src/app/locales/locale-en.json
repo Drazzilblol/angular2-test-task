@@ -15,6 +15,12 @@
   "STATUS": {
     "FRESH": "Fresh",
     "YESTERDAY": "Yesterday",
-    "ROTTEN": "Rotten"
+    "ROTTEN": "Rotten",
+    "NOT_SELECTED": "Not selected"
+  },
+  "FILTER": {
+    "TITLE": "Title",
+    "STATUS": "Status",
+    "BUTTON_FIND": "Find"
   }
 }

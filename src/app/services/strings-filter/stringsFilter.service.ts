@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {StringsFilterRequest} from './stringsFilterRequest';
 
 @Injectable()
 export class StringsFilterService {
@@ -16,7 +15,7 @@ export class StringsFilterService {
 
     /**
      * Излучает элемент списка StringListItem.
-     * @param {StringsFilterRequest} request Излучаемый элемент списка.
+     * @param {any} request Излучаемый элемент списка.
      */
     filter(request: any): void {
         this.filterSource.next(request);

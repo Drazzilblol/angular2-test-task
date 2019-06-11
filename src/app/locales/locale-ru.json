@@ -15,6 +15,12 @@
   "STATUS": {
     "FRESH": "Свежий",
     "YESTERDAY": "Вчерашний",
-    "ROTTEN": "Тухлый"
+    "ROTTEN": "Тухлый",
+    "NOT_SELECTED": "Не выбран"
+  },
+  "FILTER": {
+    "TITLE": "Название",
+    "STATUS": "Статус",
+    "BUTTON_FIND": "Найти"
   }
 }
