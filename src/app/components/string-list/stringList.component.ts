@@ -5,7 +5,8 @@ import {now, forEach, filter, remove} from 'lodash'
 import {StringListItem} from './models/StringListItem';
 import {Statuses} from '../status/statuses';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
-
+import {StringsHttpService} from "../../services/getStrings/stringsHttp.service";
+import {FilterParams} from "../filter/models/filterParams";
 
 @Component({
     selector: 'strings-list',
@@ -16,18 +17,28 @@ export class StringList implements OnDestroy {
     subscription: Subscription;
     stringListItems: StringListItem[] = [];
     filteredStringListItems: StringListItem[] = [];
-    filterParams: any = {};
+    filterParams: FilterParams = new FilterParams("", null);
     interval: number = 0;
 
-    constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef, private filterService: StringsFilterService) {
+    constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
+                private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
+
         this.subscription = stringService.getObservable().subscribe(stringListItem => {
             this.stringListItems.push(stringListItem);
             changeDetector.markForCheck();
             this.filter();
         });
 
-        this.subscription.add(filterService.getObservable().subscribe(filterItem => {
-            this.filterParams = filterItem;
+        this.subscription.add(getStringsService.getStrings().subscribe((res: any[]) => {
+            res.forEach(item => {
+                this.stringListItems.push(new StringListItem(item.text, item.date, item.status));
+            });
+            changeDetector.markForCheck();
+            this.filter();
+        }));
+
+        this.subscription.add(filterService.getObservable().subscribe(filterParams => {
+            this.filterParams = filterParams;
             changeDetector.markForCheck();
             this.filter();
         }))
@@ -52,6 +63,7 @@ export class StringList implements OnDestroy {
      */
     filter(): void {
         if (this.filterParams.text && this.filterParams.status) {
+
             clearInterval(this.interval);
             this.interval = 0;
             this.filteredStringListItems = filter(this.stringListItems, item => {

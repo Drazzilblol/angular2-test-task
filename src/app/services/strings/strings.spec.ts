@@ -2,6 +2,8 @@ import {Subscription} from 'rxjs';
 import {StringsService} from './strings.service';
 import {StringListItem} from '../../components/string-list/models/StringListItem';
 import {fakeAsync, tick} from '@angular/core/testing';
+import {Statuses} from "../../components/status/statuses";
+import {now} from 'lodash';
 
 describe('stringListItems service', function () {
     let stringsService: StringsService;
@@ -15,7 +17,7 @@ describe('stringListItems service', function () {
     });
 
     it('check is getObservable() returns value', fakeAsync(function () {
-        let testString: StringListItem = new StringListItem('test');
+        let testString: StringListItem = new StringListItem('test', now(), Statuses.FRESH);
 
         let subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
             expect(result).toEqual(testString);

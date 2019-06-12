@@ -2,11 +2,12 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
 import {Statuses} from '../status/statuses';
 import {animate, animateChild, group, query, state, style, transition, trigger} from "@angular/animations";
+import {FilterParams} from "./models/filterParams";
 
 @Component({
     selector: 'filter',
     templateUrl: './filter.template.html',
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger('openClose', [
             state('open', style({
@@ -43,11 +44,12 @@ import {animate, animateChild, group, query, state, style, transition, trigger} 
         ]),
     ]
 })
-
 export class FilterComponent {
-    selected: string = "NOT_SELECTED";
     isOpen = false;
     navButtonText: string = this.isOpen ? '=>' : '<=';
+    statuses: string[] = this.getStatuses();
+    NOT_SELECTED: string = "NOT_SELECTED";
+    selected: string = this.NOT_SELECTED;
 
     constructor(private filterService: StringsFilterService) {
     }
@@ -57,8 +59,9 @@ export class FilterComponent {
      * @param {string} text Строка которая должна быть добавлена в список.
      * @param status
      */
+    /*TODO: подумать*/
     filter(text: string, status: string): void {
-        this.filterService.filter({text: text, status: status !== "NOT_SELECTED" ? status : null})
+        this.filterService.filter(new FilterParams(text ? text : null, status !== this.NOT_SELECTED ? status : null));
     }
 
     /**
@@ -67,7 +70,7 @@ export class FilterComponent {
      */
     getStatuses(): string[] {
         let statuses: string[] = Object.keys(Statuses);
-        statuses.unshift("NOT_SELECTED");
+        statuses.unshift(this.NOT_SELECTED);
         return statuses
     }
 

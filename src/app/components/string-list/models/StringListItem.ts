@@ -1,12 +1,13 @@
-import {now} from 'lodash'
 import {Statuses} from '../../status/statuses';
 
 export class StringListItem {
     text: string;
-    date: number = now();
-    status: Statuses = Statuses.FRESH;
+    date: number;
+    status: Statuses;
 
-    constructor(text: string) {
+    constructor(text: string, date: number, status: Statuses) {
         this.text = text;
+        this.date = date;
+        this.status = status
     }
 }
