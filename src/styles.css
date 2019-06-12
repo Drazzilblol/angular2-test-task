@@ -44,6 +44,9 @@ li:hover {
 .btn-outline-secondary:focus {
     box-shadow: none !important;
 }
+.btn-light:focus {
+    box-shadow: none !important;
+}
 
 .status {
     width: 20px;
