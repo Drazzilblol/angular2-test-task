@@ -16,7 +16,7 @@ export class StringList implements OnDestroy {
     subscription: Subscription;
     stringListItems: StringListItem[] = [];
     filteredStringListItems: StringListItem[] = [];
-    filterItem: any = {};
+    filterParams: any = {};
     interval: number = 0;
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef, private filterService: StringsFilterService) {
@@ -27,7 +27,7 @@ export class StringList implements OnDestroy {
         });
 
         this.subscription.add(filterService.getObservable().subscribe(filterItem => {
-            this.filterItem = filterItem;
+            this.filterParams = filterItem;
             changeDetector.markForCheck();
             this.filter();
         }))
@@ -41,7 +41,7 @@ export class StringList implements OnDestroy {
         remove(this.stringListItems, (item) => {
             return item == this.filteredStringListItems[index];
         });
-        if (this.filterItem.text || this.filterItem.status) {
+        if (this.filterParams.text || this.filterParams.status) {
             this.filteredStringListItems.splice(index, 1);
         }
     }
@@ -51,17 +51,17 @@ export class StringList implements OnDestroy {
      * если данные для фильтрации отсутствуют то запускает интервал и выводит весь список.
      */
     filter(): void {
-        if (this.filterItem.text && this.filterItem.status) {
+        if (this.filterParams.text && this.filterParams.status) {
             clearInterval(this.interval);
             this.interval = 0;
             this.filteredStringListItems = filter(this.stringListItems, item => {
-                return item.text.includes(this.filterItem.text) && item.status === this.filterItem.status;
+                return item.text.includes(this.filterParams.text) && item.status === this.filterParams.status;
             })
-        } else if (this.filterItem.text || this.filterItem.status) {
+        } else if (this.filterParams.text || this.filterParams.status) {
             clearInterval(this.interval);
             this.interval = 0;
             this.filteredStringListItems = filter(this.stringListItems, item => {
-                return item.text.includes(this.filterItem.text) || item.status === this.filterItem.status;
+                return item.text.includes(this.filterParams.text) || item.status === this.filterParams.status;
             })
         } else {
             this.filteredStringListItems = this.stringListItems;

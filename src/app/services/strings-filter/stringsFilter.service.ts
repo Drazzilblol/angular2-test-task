@@ -7,17 +7,17 @@ export class StringsFilterService {
     private filterObservable = this.filterSource.asObservable();
 
     /**
-     * Возвращает Observable, который будет возвращать элемены списка.
+     * Возвращает Observable, который будет возвращать параметры фильтрации.
      */
     getObservable(): Observable<any> {
         return this.filterObservable;
     }
 
     /**
-     * Излучает элемент списка StringListItem.
-     * @param {any} request Излучаемый элемент списка.
+     * Излучает параметры фильтрации.
+     * @param {any} params Излучаемые параметры.
      */
-    filter(request: any): void {
-        this.filterSource.next(request);
+    filter(params: any): void {
+        this.filterSource.next(params);
     }
 }

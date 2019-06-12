@@ -11,7 +11,7 @@ import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {Subscription} from "rxjs";
 import {Statuses} from "../status/statuses";
 
-describe('language', function () {
+describe('filter', function () {
     let component: FilterComponent;
     let fixture: ComponentFixture<FilterComponent>;
     let translate: TranslateService;
@@ -40,9 +40,10 @@ describe('language', function () {
         fixture = null;
         component = null;
         translate = null;
+        filterService = null;
     });
 
-    describe('filter', function () {
+    describe('component', function () {
         it('check filtration', fakeAsync(function () {
             let testString: string = 'test';
             let testStatus: Statuses = Statuses.FRESH;

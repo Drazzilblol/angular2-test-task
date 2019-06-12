@@ -13,6 +13,7 @@ import {StringListItem} from './models/StringListItem';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
 import {StringsFilterService} from "../../services/strings-filter/stringsFilter.service";
+import {Statuses} from "../status/statuses";
 
 describe('item list', function () {
     let component: StringList;
@@ -114,6 +115,31 @@ describe('item list', function () {
             expect(status.style.backgroundColor).toBe('red');
 
             clearInterval(interval);
+        }));
+
+        it('check filtration', fakeAsync(function () {
+            let testListItem1: StringListItem = new StringListItem('test1');
+            let testListItem2: StringListItem = new StringListItem('test2');
+
+            component.stringListItems = [testListItem1];
+            component.filter();
+            fixture.detectChanges();
+            tick(31000);
+            component.stringListItems.push(testListItem2);
+            component.filter();
+            fixture.detectChanges();
+
+            component.filterParams = {text: "1", status: Statuses.YESTERDAY};
+            component.filter();
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('li>span').innerText).toBe("1");
+
+            component.filterParams = {text: "2", status: Statuses.FRESH};
+            component.filter();
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('li>span').innerText).toBe("2");
         }));
     });
 });
