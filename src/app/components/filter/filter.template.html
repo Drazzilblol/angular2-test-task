@@ -1,13 +1,15 @@
 <div [@openClose]="isOpen ? 'open' : 'closed'" class="filter-component">
-    <input [@showHideElements]="isOpen ? 'show' : 'hide'" type="text" class="form-control filter-input" [(ngModel)]="text">
-    <p [@showHideElements]="isOpen ? 'show' : 'hide'">{{"FILTER.TITLE" | translate}}</p>
-    <select [@showHideElements]="isOpen ? 'show' : 'hide'" class="form-control filter-input" [(ngModel)]="selected">
-        <option *ngFor="let status of getStatuses()" [ngValue]=status>{{"STATUS." + status | translate}}
-        </option>
-    </select>
-    <p [@showHideElements]="isOpen ? 'show' : 'hide'">{{"FILTER.STATUS" | translate}}</p>
-    <button [@showHideElements]="isOpen ? 'show' : 'hide'" class="btn btn-secondary find-button" (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
-    </button>
+    <div [@showHideElements]="isOpen ? 'show' : 'hide'">
+        <input type="text" class="form-control filter-input" [(ngModel)]="text">
+        <p>{{"FILTER.TITLE" | translate}}</p>
+        <select class="form-control filter-input" [(ngModel)]="selected">
+            <option *ngFor="let status of getStatuses()" [ngValue]=status>{{"STATUS." + status | translate}}
+            </option>
+        </select>
+        <p>{{"FILTER.STATUS" | translate}}</p>
+        <button class="btn btn-secondary find-button" (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
+        </button>
+    </div>
     <button class="btn btn-secondary close-side-nav-button" (click)="toggle()">{{navButtonText}}
     </button>
 </div>

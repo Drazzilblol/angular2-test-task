@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
 import {Statuses} from '../status/statuses';
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {animate, animateChild, group, query, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
     selector: 'filter',
@@ -17,17 +17,33 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
             })),
 
             transition('closed <=> open', [
-                animate('0.5s')
+                group([
+                    animate("0.3s"),
+                    query('@showHideElements', [
+                        animateChild(),
+                    ])
+                ]),
             ]),
         ]),
         trigger('showHideElements', [
-            state('show', style({})),
-            state('hide', style({
-                display: 'none',
+            state('show', style({
+                opacity: 1,
             })),
+            state('hide', style({
+                opacity: 0,
+            })),
+            transition('show <=> hide', [
+                style({
+                    opacity: 0,
+                }),
+                animate("0.3s", style({
+                    opacity: 0,
+                }))
+            ]),
         ]),
-    ],
+    ]
 })
+
 export class FilterComponent {
     selected: string = "NOT_SELECTED";
     isOpen = false;
