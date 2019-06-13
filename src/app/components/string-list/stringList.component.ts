@@ -11,7 +11,7 @@ import {FilterParams} from "../filter/models/filterParams";
 @Component({
     selector: 'strings-list',
     templateUrl: './stringList.template.html',
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StringList implements OnDestroy {
     subscription: Subscription;
@@ -40,23 +40,15 @@ export class StringList implements OnDestroy {
         this.subscription.add(filterService.getObservable().subscribe(filterParams => {
             this.filterParams = filterParams;
             changeDetector.markForCheck();
-            if (this.filterParams.text || this.filterParams.status) {
-                clearInterval(this.interval);
-                this.interval = 0;
-            }
         }))
     }
 
     /**
      * Удаляет строку из списка.
      * @param {number} date Время созания удаляемой строки в списке.
-     * @param {StringListItem[]} filteredList Отфильтрованый список.
      */
-    deleteItem(date: number, filteredList: StringListItem[]): void {
+    deleteItem(date: number): void {
         remove(this.stringListItems, (item) => {
-            return item.date === date;
-        });
-        remove(filteredList, (item) => {
             return item.date === date;
         });
     }
@@ -64,16 +56,9 @@ export class StringList implements OnDestroy {
     /**
      * Сбразывает статус элемента, изменяет время создания на текущее.
      * @param {number} date Время созания удаляемой строки в списке.
-     * @param {StringListItem[]} filteredList Отфильтрованый список.
      */
-    resetItemStatus(date: number, filteredList: StringListItem[]): void {
+    resetItemStatus(date: number): void {
         forEach(this.stringListItems, (item) => {
-            if (item.date === date) {
-                item.date = now();
-                item.status = Statuses.FRESH
-            }
-        });
-        forEach(filteredList, (item) => {
             if (item.date === date) {
                 item.date = now();
                 item.status = Statuses.FRESH

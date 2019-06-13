@@ -1,11 +1,11 @@
 <ul class="list-group">
     <li class="list-group-item content-left"
-        *ngFor="let item of stringListItems | stringFilter:filterParams as filteredList">
+        *ngFor="let item of stringListItems | stringFilter:filterParams">
         <status [status]=item.status></status>
         <span>{{item.transformedText  | translate}}</span>
         <button class="btn btn-sm btn-danger float-right string-list-button"
-                (click)="deleteItem(item.date, filteredList)"><i class="material-icons">delete</i></button>
+                (click)="deleteItem(item.date)"><i class="material-icons">delete</i></button>
         <button class="btn btn-sm btn-primary float-right string-list-button"
-                (click)="resetItemStatus(item.date, filteredList)"><i class="material-icons">loop</i></button>
+                (click)="resetItemStatus(item.date)"><i class="material-icons">loop</i></button>
     </li>
 </ul>

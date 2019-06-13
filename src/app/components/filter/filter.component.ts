@@ -68,14 +68,12 @@ export class FilterComponent {
     }
 
     /**
-     * Передает строку сервису StringsFilterService для добавления в список.
-     * @param {string} text Строка которая должна быть добавлена в список.
-     * @param status
+     * Передает сервису параметры для фильтрации.
+     * @param {string} text
+     * @param {Statuses} status
      */
-
-    /*TODO: подумать*/
     filter(text: string, status: string): void {
-        this.filterService.filter(new FilterParams(text ? text : null, status !== this.NOT_SELECTED ? status : null));
+        this.filterService.filter(new FilterParams(text ? text : null, status !== this.NOT_SELECTED ? Statuses[status] : null));
     }
 
     /**

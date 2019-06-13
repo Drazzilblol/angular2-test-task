@@ -26,10 +26,14 @@ export class StringFilterPipe implements PipeTransform {
                 let tra: string = this.translate.instant(item.transformedText).toLowerCase();
                 return tra.includes(filterParams.text.toLowerCase()) && item.status === filterParams.status;
             })
-        } else if (filterParams.text || filterParams.status) {
+        } else if (filterParams.text) {
             result = filter(items, item => {
                 let tra: string = this.translate.instant(item.transformedText).toLowerCase();
-                return tra.includes(filterParams.text.toLowerCase()) || item.status === filterParams.status;
+                return tra.includes(filterParams.text.toLowerCase());
+            })
+        } else if (filterParams.status) {
+            result = filter(items, item => {
+                return item.status === filterParams.status;
             })
         } else {
             result = items;
