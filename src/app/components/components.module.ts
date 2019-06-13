@@ -17,6 +17,7 @@ import {StringsFilterService} from '../services/strings-filter/stringsFilter.ser
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StringsHttpService} from "../services/getStrings/stringsHttp.service";
 
+
 @NgModule({
     imports: [BrowserModule, BrowserAnimationsModule, NgbModule, FormsModule, HttpClientModule, PipesModule, TranslateModule.forRoot({
         loader: {
@@ -25,8 +26,8 @@ import {StringsHttpService} from "../services/getStrings/stringsHttp.service";
             deps: [HttpClient]
         }
     })],
-    declarations: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
-    exports: [ Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
+    declarations: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
+    exports: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
     entryComponents: [LanguageDialog],
     providers: [StringsService, StringsFilterService, StringsHttpService]
 })

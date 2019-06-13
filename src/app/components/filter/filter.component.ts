@@ -14,13 +14,16 @@ import {FilterParams} from "./models/filterParams";
                 width: '400px',
             })),
             state('closed', style({
-                width: '90px',
+                width: '50px',
             })),
 
             transition('closed <=> open', [
                 group([
                     animate("0.3s"),
                     query('@showHideElements', [
+                        animateChild(),
+                    ]),
+                    query('@rotateIcon', [
                         animateChild(),
                     ])
                 ]),
@@ -42,11 +45,21 @@ import {FilterParams} from "./models/filterParams";
                 }))
             ]),
         ]),
+        trigger('rotateIcon', [
+            state('back', style({
+                transform: 'rotate(180deg)'
+            })),
+            state('forward', style({
+                transform: 'rotate(0)'
+            })),
+            transition('back <=> forward', [
+                animate("0.3s")
+            ]),
+        ]),
     ]
 })
 export class FilterComponent {
     isOpen = false;
-    navButtonText: string = this.isOpen ? '=>' : '<=';
     NOT_SELECTED: string = "NOT_SELECTED";
     selected: string = this.NOT_SELECTED;
     statuses: string[] = this.getStatuses();
@@ -59,6 +72,7 @@ export class FilterComponent {
      * @param {string} text Строка которая должна быть добавлена в список.
      * @param status
      */
+
     /*TODO: подумать*/
     filter(text: string, status: string): void {
         this.filterService.filter(new FilterParams(text ? text : null, status !== this.NOT_SELECTED ? status : null));
@@ -79,6 +93,5 @@ export class FilterComponent {
      */
     toggle(): void {
         this.isOpen = !this.isOpen;
-        this.navButtonText = this.isOpen ? '=>' : '<='
     }
 }

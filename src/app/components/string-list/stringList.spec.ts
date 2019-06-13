@@ -86,19 +86,6 @@ describe('item list', function () {
             expect(firstElement.innerText).toBe(russian.MESSAGE);
         });
 
-        it('check deleteItem button localization', function () {
-            component.stringListItems = [new StringListItem("test", now(), Statuses.FRESH)];
-            fixture.detectChanges();
-            let delButton = fixture.nativeElement.querySelector('li:first-of-type button');
-
-            expect(delButton.innerText).toBe(english.BUTTON_DELETE);
-
-            translate.use('ru');
-            fixture.detectChanges();
-
-            expect(delButton.innerText).toBe(russian.BUTTON_DELETE);
-        });
-
         it('check is status change over time', fakeAsync(function () {
             let listItem: StringListItem = new StringListItem('test', now(), Statuses.FRESH);
             component.stringListItems = [listItem];

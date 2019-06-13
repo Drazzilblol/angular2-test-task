@@ -7,11 +7,13 @@
             </option>
         </select>
         <p>{{"FILTER.STATUS" | translate}}</p>
-        <button class="btn btn-secondary find-button" (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
+        <button class="btn btn-secondary find-button"
+                (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
         </button>
     </div>
-    <button class="btn btn-secondary close-side-nav-button" (click)="toggle()">{{navButtonText}}
-    </button>
+    <span [@rotateIcon]="isOpen ? 'back' : 'forward'" class="close-side-nav-button" (click)="toggle()"><i
+            class="material-icons md-36">arrow_back</i>
+    </span>
 </div>
 
 
