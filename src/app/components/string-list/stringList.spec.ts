@@ -68,7 +68,6 @@ describe('item list', function () {
             firstElement.querySelector('button')
                 .dispatchEvent(new Event('click'));
 
-            component.stringListItems.splice(0, 1);
             fixture.detectChanges();
 
             expect(fixture.nativeElement.querySelector('li:first-of-type span')).toBe(null);
@@ -103,7 +102,7 @@ describe('item list', function () {
         it('check is status change over time', fakeAsync(function () {
             let listItem: StringListItem = new StringListItem('test', now(), Statuses.FRESH);
             component.stringListItems = [listItem];
-            let interval = component.countdown();
+            component.countdown();
             fixture.detectChanges();
             let status = fixture.nativeElement.querySelector('status>div');
 
@@ -119,15 +118,15 @@ describe('item list', function () {
 
             expect(status.style.backgroundColor).toBe('red');
 
-            clearInterval(interval);
+            clearInterval(component.interval);
         }));
 
         it('check filter', fakeAsync(function () {
             let testListItem1: StringListItem = new StringListItem('test1', now(), Statuses.FRESH);
             let testListItem2: StringListItem = new StringListItem('test2', now(), Statuses.FRESH);
 
-            let count: number = component.countdown()
             component.stringListItems = [testListItem1];
+            component.countdown();
             fixture.detectChanges();
             tick(31000);
             component.stringListItems.push(testListItem2);
@@ -139,9 +138,28 @@ describe('item list', function () {
 
             component.filterParams = {text: "2", status: Statuses.FRESH};
             fixture.detectChanges();
-            clearInterval(count);
+            clearInterval(component.interval);
 
             expect(fixture.nativeElement.querySelector('li>span').innerText).toBe("2");
+        }));
+
+
+        it('check items refresh', fakeAsync(function () {
+            let resultString: string = '12345';
+            component.stringListItems = [new StringListItem(resultString, now(), Statuses.FRESH)];
+            component.countdown();
+            tick(31000);
+            fixture.detectChanges();
+
+            expect(fixture.nativeElement.querySelector('li:first-of-type div').style.backgroundColor).toBe("yellow");
+
+            fixture.nativeElement.querySelector('li:first-of-type button:last-of-type')
+                .dispatchEvent(new Event('click'));
+
+            fixture.detectChanges();
+
+            clearInterval(component.interval);
+            expect(fixture.nativeElement.querySelector('li:first-of-type div').style.backgroundColor).toBe("green");
         }));
     });
 });

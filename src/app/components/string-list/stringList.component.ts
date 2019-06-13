@@ -16,7 +16,6 @@ import {FilterParams} from "../filter/models/filterParams";
 export class StringList implements OnDestroy {
     subscription: Subscription;
     stringListItems: StringListItem[] = [];
-    filteredStringListItems: StringListItem[] = [];
     filterParams: FilterParams = new FilterParams("", null);
     interval: number = 0;
 
@@ -26,9 +25,7 @@ export class StringList implements OnDestroy {
         this.subscription = stringService.getObservable().subscribe(stringListItem => {
             this.stringListItems.push(stringListItem);
             changeDetector.markForCheck();
-            if (this.interval === 0) {
-                this.interval = this.countdown();
-            }
+            this.countdown();
         });
 
         this.subscription.add(getStringsService.getStrings().subscribe((res: any[]) => {
@@ -36,9 +33,8 @@ export class StringList implements OnDestroy {
                 this.stringListItems.push(new StringListItem(item.text, item.date, item.status));
             });
             changeDetector.markForCheck();
-            if (this.interval === 0) {
-                this.interval = this.countdown();
-            }
+            this.countdown();
+
         }));
 
         this.subscription.add(filterService.getObservable().subscribe(filterParams => {
@@ -67,15 +63,23 @@ export class StringList implements OnDestroy {
 
     /**
      * Удаляет строку из списка.
-     * @param {number} index Индекс удаляемой строки в списке.
+     * @param date
+     * @param filteredList
      */
-    resetItemStatus(index: number): void {
+    resetItemStatus(date: number, filteredList: StringListItem[]): void {
         forEach(this.stringListItems, (item) => {
-            if (item == this.filteredStringListItems[index]) item.date = now();
+            if (item.date === date) {
+                item.date = now();
+                item.status = Statuses.FRESH
+            }
         });
-        if (this.filterParams.text || this.filterParams.status) {
-            this.filteredStringListItems[index].date = now();
-        }
+        forEach(filteredList, (item) => {
+            if (item.date === date) {
+                item.date = now();
+                item.status = Statuses.FRESH
+            }
+        });
+        this.countdown();
     }
 
     ngOnDestroy(): void {
@@ -89,26 +93,28 @@ export class StringList implements OnDestroy {
      * получили статус ROTTEN, интервал останавливается.
      * @return {number} Возвращает номер интервала.
      */
-    countdown(): number {
-        return window.setInterval(() => {
-            let currentTime: number = now();
-            let rottenCounter: number = 0;
-            forEach(this.stringListItems, item => {
-                let timeDifference = currentTime - item.date;
-                if (timeDifference > 60000 && item.status !== Statuses.ROTTEN) {
-                    item.status = Statuses.ROTTEN;
-                    this.changeDetector.markForCheck();
-                } else if (timeDifference > 30000 && timeDifference < 60000 && item.status !== Statuses.YESTERDAY) {
-                    item.status = Statuses.YESTERDAY;
-                    this.changeDetector.markForCheck();
+    countdown(): void {
+        if (this.interval === 0) {
+            this.interval = window.setInterval(() => {
+                let currentTime: number = now();
+                let rottenCounter: number = 0;
+                forEach(this.stringListItems, item => {
+                    let timeDifference = currentTime - item.date;
+                    if (timeDifference > 60000 && item.status !== Statuses.ROTTEN) {
+                        item.status = Statuses.ROTTEN;
+                        this.changeDetector.markForCheck();
+                    } else if (timeDifference > 30000 && timeDifference < 60000 && item.status !== Statuses.YESTERDAY) {
+                        item.status = Statuses.YESTERDAY;
+                        this.changeDetector.markForCheck();
+                    }
+                    if (item.status === Statuses.ROTTEN) rottenCounter++;
+                });
+                if (this.stringListItems.length === rottenCounter) {
+                    clearInterval(this.interval);
+                    this.interval = 0;
                 }
-                if (item.status === Statuses.ROTTEN) rottenCounter++;
-            });
-            if (this.stringListItems.length === rottenCounter) {
-                clearInterval(this.interval);
-                this.interval = 0;
-            }
-        }, 1000)
+            }, 1000)
+        }
     }
 }
 

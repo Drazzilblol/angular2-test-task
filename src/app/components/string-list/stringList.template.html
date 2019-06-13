@@ -6,7 +6,7 @@
         <button class="btn btn-sm btn-danger float-right delete-button"
                 (click)="deleteItem(item.date, filteredList)">{{ "BUTTON_DELETE" | translate}}</button>
         <button class="btn btn-sm btn-danger float-right delete-button"
-                (click)="resetItemStatus(item.date)">{{ "BUTTON_RESET" | translate}}</button>
+                (click)="resetItemStatus(item.date, filteredList)">{{ "BUTTON_RESET" | translate}}</button>
     </li>
 </ul>
 
