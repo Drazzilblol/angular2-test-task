@@ -49,8 +49,8 @@ export class StringList implements OnDestroy {
 
     /**
      * Удаляет строку из списка.
-     * @param {number} date Индекс удаляемой строки в списке.
-     * @param filteredList
+     * @param {number} date Время созания удаляемой строки в списке.
+     * @param {StringListItem[]} filteredList Отфильтрованый список.
      */
     deleteItem(date: number, filteredList: StringListItem[]): void {
         remove(this.stringListItems, (item) => {
@@ -62,9 +62,9 @@ export class StringList implements OnDestroy {
     }
 
     /**
-     * Удаляет строку из списка.
-     * @param date
-     * @param filteredList
+     * Сбразывает статус элемента, изменяет время создания на текущее.
+     * @param {number} date Время созания удаляемой строки в списке.
+     * @param {StringListItem[]} filteredList Отфильтрованый список.
      */
     resetItemStatus(date: number, filteredList: StringListItem[]): void {
         forEach(this.stringListItems, (item) => {

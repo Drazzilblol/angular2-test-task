@@ -53,7 +53,7 @@ describe('item add', function () {
         let testString: string = 'test';
 
         let subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
-            expect(result.text).toBe(testString)
+            expect(result.originText).toBe(testString)
         });
 
         let input = fixture.nativeElement.querySelector('input');
@@ -75,5 +75,3 @@ describe('item add', function () {
         expect(button.innerText.trim()).toBe(russian.BUTTON_ADD);
     });
 });
-
-

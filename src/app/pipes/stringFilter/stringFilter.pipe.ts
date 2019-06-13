@@ -2,12 +2,16 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {filter} from 'lodash'
 import {FilterParams} from "../../components/filter/models/filterParams";
 import {StringListItem} from "../../components/string-list/models/StringListItem";
+import {TranslateService} from "@ngx-translate/core";
 
 @Pipe({
     name: 'stringFilter',
     pure: false
 })
 export class StringFilterPipe implements PipeTransform {
+
+    constructor(private translate: TranslateService) {
+    }
 
     /**
      * Фильрует массив элементов StringListItem согласно данным для фильтрации.
@@ -19,11 +23,13 @@ export class StringFilterPipe implements PipeTransform {
         let result: StringListItem[];
         if (filterParams.text && filterParams.status) {
             result = filter(items, item => {
-                return item.text.includes(filterParams.text) && item.status === filterParams.status;
+                let tra: string = this.translate.instant(item.transformedText).toLowerCase();
+                return tra.includes(filterParams.text.toLowerCase()) && item.status === filterParams.status;
             })
         } else if (filterParams.text || filterParams.status) {
             result = filter(items, item => {
-                return item.text.includes(filterParams.text) || item.status === filterParams.status;
+                let tra: string = this.translate.instant(item.transformedText).toLowerCase();
+                return tra.includes(filterParams.text.toLowerCase()) || item.status === filterParams.status;
             })
         } else {
             result = items;
@@ -31,6 +37,3 @@ export class StringFilterPipe implements PipeTransform {
         return result
     }
 }
-
-
-
