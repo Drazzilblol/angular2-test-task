@@ -47,9 +47,9 @@ import {FilterParams} from "./models/filterParams";
 export class FilterComponent {
     isOpen = false;
     navButtonText: string = this.isOpen ? '=>' : '<=';
-    statuses: string[] = this.getStatuses();
     NOT_SELECTED: string = "NOT_SELECTED";
     selected: string = this.NOT_SELECTED;
+    statuses: string[] = this.getStatuses();
 
     constructor(private filterService: StringsFilterService) {
     }

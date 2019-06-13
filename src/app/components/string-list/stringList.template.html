@@ -1,8 +1,12 @@
 <ul class="list-group">
-    <li class="list-group-item content-left" *ngFor="let item of filteredStringListItems; index as i">
-        <status [status] = item.status></status>
+    <li class="list-group-item content-left"
+        *ngFor="let item of stringListItems | stringFilter:filterParams as filteredList">
+        <status [status]=item.status></status>
         <span>{{item.text | numbersPipe | translate}}</span>
-        <button class="btn btn-sm btn-danger float-right delete-button" (click)="deleteItem(i)">{{ "BUTTON_DELETE" | translate}}</button>
+        <button class="btn btn-sm btn-danger float-right delete-button"
+                (click)="deleteItem(item.date, filteredList)">{{ "BUTTON_DELETE" | translate}}</button>
+        <button class="btn btn-sm btn-danger float-right delete-button"
+                (click)="resetItemStatus(item.date)">{{ "BUTTON_RESET" | translate}}</button>
     </li>
 </ul>
 

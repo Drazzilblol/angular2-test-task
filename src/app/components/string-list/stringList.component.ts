@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy,} from '@angular/core';
 import {StringsService} from '../../services/strings/strings.service';
 import {Subscription} from 'rxjs';
-import {now, forEach, filter, remove} from 'lodash'
+import {now, forEach, remove} from 'lodash'
 import {StringListItem} from './models/StringListItem';
 import {Statuses} from '../status/statuses';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
@@ -11,7 +11,7 @@ import {FilterParams} from "../filter/models/filterParams";
 @Component({
     selector: 'strings-list',
     templateUrl: './stringList.template.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class StringList implements OnDestroy {
     subscription: Subscription;
@@ -26,7 +26,9 @@ export class StringList implements OnDestroy {
         this.subscription = stringService.getObservable().subscribe(stringListItem => {
             this.stringListItems.push(stringListItem);
             changeDetector.markForCheck();
-            this.filter();
+            if (this.interval === 0) {
+                this.interval = this.countdown();
+            }
         });
 
         this.subscription.add(getStringsService.getStrings().subscribe((res: any[]) => {
@@ -34,52 +36,45 @@ export class StringList implements OnDestroy {
                 this.stringListItems.push(new StringListItem(item.text, item.date, item.status));
             });
             changeDetector.markForCheck();
-            this.filter();
+            if (this.interval === 0) {
+                this.interval = this.countdown();
+            }
         }));
 
         this.subscription.add(filterService.getObservable().subscribe(filterParams => {
             this.filterParams = filterParams;
             changeDetector.markForCheck();
-            this.filter();
+            if (this.filterParams.text || this.filterParams.status) {
+                clearInterval(this.interval);
+                this.interval = 0;
+            }
         }))
+    }
+
+    /**
+     * Удаляет строку из списка.
+     * @param {number} date Индекс удаляемой строки в списке.
+     * @param filteredList
+     */
+    deleteItem(date: number, filteredList: StringListItem[]): void {
+        remove(this.stringListItems, (item) => {
+            return item.date === date;
+        });
+        remove(filteredList, (item) => {
+            return item.date === date;
+        });
     }
 
     /**
      * Удаляет строку из списка.
      * @param {number} index Индекс удаляемой строки в списке.
      */
-    deleteItem(index: number): void {
-        remove(this.stringListItems, (item) => {
-            return item == this.filteredStringListItems[index];
+    resetItemStatus(index: number): void {
+        forEach(this.stringListItems, (item) => {
+            if (item == this.filteredStringListItems[index]) item.date = now();
         });
         if (this.filterParams.text || this.filterParams.status) {
-            this.filteredStringListItems.splice(index, 1);
-        }
-    }
-
-    /**
-     * Фильрует массив элементов StringListItem согласно данным для фильтрации, выводит их и останавливает интервал,
-     * если данные для фильтрации отсутствуют то запускает интервал и выводит весь список.
-     */
-    filter(): void {
-        if (this.filterParams.text && this.filterParams.status) {
-
-            clearInterval(this.interval);
-            this.interval = 0;
-            this.filteredStringListItems = filter(this.stringListItems, item => {
-                return item.text.includes(this.filterParams.text) && item.status === this.filterParams.status;
-            })
-        } else if (this.filterParams.text || this.filterParams.status) {
-            clearInterval(this.interval);
-            this.interval = 0;
-            this.filteredStringListItems = filter(this.stringListItems, item => {
-                return item.text.includes(this.filterParams.text) || item.status === this.filterParams.status;
-            })
-        } else {
-            this.filteredStringListItems = this.stringListItems;
-            if (this.interval === 0) {
-                this.interval = this.countdown();
-            }
+            this.filteredStringListItems[index].date = now();
         }
     }
 
@@ -98,7 +93,7 @@ export class StringList implements OnDestroy {
         return window.setInterval(() => {
             let currentTime: number = now();
             let rottenCounter: number = 0;
-            forEach(this.filteredStringListItems, item => {
+            forEach(this.stringListItems, item => {
                 let timeDifference = currentTime - item.date;
                 if (timeDifference > 60000 && item.status !== Statuses.ROTTEN) {
                     item.status = Statuses.ROTTEN;
@@ -109,7 +104,7 @@ export class StringList implements OnDestroy {
                 }
                 if (item.status === Statuses.ROTTEN) rottenCounter++;
             });
-            if (this.filteredStringListItems.length === rottenCounter) {
+            if (this.stringListItems.length === rottenCounter) {
                 clearInterval(this.interval);
                 this.interval = 0;
             }

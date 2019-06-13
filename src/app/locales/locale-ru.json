@@ -2,6 +2,7 @@
   "BUTTON_ADD": "Добавить",
   "BUTTON_DELETE": "Удалить",
   "BUTTON_LANGUAGE": "Язык",
+  "BUTTON_RESET": "Обновить",
   "MESSAGE": "Строка не содержит цифры",
   "LANGUAGES": {
     "en": "Английский",
