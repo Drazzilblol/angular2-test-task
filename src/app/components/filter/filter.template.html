@@ -3,7 +3,7 @@
         <input type="text" class="form-control filter-input" [(ngModel)]="text">
         <p>{{"FILTER.TITLE" | translate}}</p>
         <select class="form-control filter-input" [(ngModel)]="selected">
-            <option *ngFor="let status of statuses" [ngValue]=status>{{"STATUS." + status | translate}}
+            <option *ngFor="let status of statuses | keyvalue" [ngValue]=status.value>{{"STATUS." + status.value | translate}}
             </option>
         </select>
         <p>{{"FILTER.STATUS" | translate}}</p>

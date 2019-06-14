@@ -63,7 +63,7 @@ const NOT_SELECTED: string = 'NOT_SELECTED';
 export class FilterComponent {
     isOpen = false;
     selected: string = NOT_SELECTED;
-    statuses: string[] = this.getStatuses();
+    statuses: object = this.getStatuses();
 
     constructor(private filterService: StringsFilterService) {
     }
@@ -81,9 +81,14 @@ export class FilterComponent {
      * Получает массив статусов из перечисления.
      * @return {string[]} озвращает массив статусов
      */
-    getStatuses(): string[] {
-        let statuses: string[] = Object.keys(Statuses);
-        statuses.unshift(NOT_SELECTED);
+    getStatuses(): object {
+        let statuses: {} = {};
+        statuses[NOT_SELECTED] = NOT_SELECTED;
+
+        Object.keys(Statuses).forEach(status => {
+            statuses[status] = status;
+        });
+
         return statuses
     }
 
