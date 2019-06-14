@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {filter} from 'lodash'
+import {filter, startsWith} from 'lodash'
 import {FilterParams} from "../../components/filter/models/filterParams";
 import {StringListItem} from "../../components/string-list/models/StringListItem";
 import {TranslateService} from "@ngx-translate/core";
@@ -23,13 +23,13 @@ export class StringFilterPipe implements PipeTransform {
         let result: StringListItem[];
         if (filterParams.text && filterParams.status) {
             result = filter(items, item => {
-                let tra: string = this.translate.instant(item.transformedText).toLowerCase();
-                return tra.includes(filterParams.text.toLowerCase()) && item.status === filterParams.status;
+                let trans: string = this.translate.instant(item.transformedText).toLowerCase();
+                return startsWith(trans, filterParams.text.toLowerCase()) && item.status === filterParams.status;
             })
         } else if (filterParams.text) {
             result = filter(items, item => {
-                let tra: string = this.translate.instant(item.transformedText).toLowerCase();
-                return tra.includes(filterParams.text.toLowerCase());
+                let trans: string = this.translate.instant(item.transformedText).toLowerCase();
+                return startsWith(trans, filterParams.text.toLowerCase());
             })
         } else if (filterParams.status) {
             result = filter(items, item => {
