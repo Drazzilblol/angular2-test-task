@@ -34,11 +34,16 @@ export class StringList implements OnDestroy {
             });
             changeDetector.markForCheck();
             this.countdown();
-
         }));
 
         this.subscription.add(filterService.getObservable().subscribe(filterParams => {
             this.filterParams = filterParams;
+            if (filterParams.text || filterParams.status) {
+                clearInterval(this.interval);
+                this.interval = 0;
+            } else {
+                this.countdown();
+            }
             changeDetector.markForCheck();
         }))
     }
@@ -79,7 +84,7 @@ export class StringList implements OnDestroy {
      * @return {number} Возвращает номер интервала.
      */
     countdown(): void {
-        if (this.interval === 0) {
+        if (this.interval === 0 && !this.filterParams.text && !this.filterParams.status) {
             this.interval = window.setInterval(() => {
                 let currentTime: number = now();
                 let rottenCounter: number = 0;

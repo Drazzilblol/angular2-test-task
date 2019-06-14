@@ -17,13 +17,12 @@ export class ColorsPipe implements PipeTransform {
             result[input] = Colors.GREEN;
             return result;
         }
+
         if (status === Statuses.FRESH) {
             result[input] = Colors.GREEN
-        }
-        if (status === Statuses.YESTERDAY) {
+        } else if (status === Statuses.YESTERDAY) {
             result[input] = Colors.YELLOW
-        }
-        if (status === Statuses.ROTTEN) {
+        } else if (status === Statuses.ROTTEN) {
             result[input] = Colors.RED
         }
 
