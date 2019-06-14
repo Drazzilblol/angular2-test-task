@@ -1,4 +1,3 @@
-import '@angular/core/testing';
 import {ColorsPipe} from './colors.pipe';
 import {Statuses} from '../../enums/statuses.enum';
 import {Colors} from '../../enums/colors.enum';

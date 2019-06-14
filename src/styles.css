@@ -64,14 +64,16 @@ li:hover {
     display: inline-block;
     text-align: left;
     margin-top: 13px;
-    width: 75%;
+    width: 69%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .string-list-button {
     margin: 5px;
-    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: auto;
 }
 
 .string-list-button > * {
@@ -117,8 +119,8 @@ li:hover {
     font-size: 18px;
 }
 
-.material-icons.md-24 {
-    font-size: 24px;
+.material-icons.md-22 {
+    font-size: 22px;
 }
 
 .material-icons.md-36 {
