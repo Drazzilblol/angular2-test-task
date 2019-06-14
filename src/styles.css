@@ -62,8 +62,11 @@ li:hover {
 
 .list-group-item > span {
     display: inline-block;
-    text-align: center;
+    text-align: left;
     margin-top: 13px;
+    width: 75%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .string-list-button {
@@ -72,7 +75,6 @@ li:hover {
 }
 
 .string-list-button > * {
-
     margin-top: 5px;
 }
 
