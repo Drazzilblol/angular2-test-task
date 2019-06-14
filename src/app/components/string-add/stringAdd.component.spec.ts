@@ -8,8 +8,8 @@ import russian from 'app/locales/locale-ru.json';
 import {StringsService} from '../../services/strings/strings.service';
 import {Subscription} from 'rxjs';
 import {StringListItem} from '../string-list/models/StringListItem';
-import {DebugElement} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import {DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 describe('item add', function () {
     let component: StringAdd;

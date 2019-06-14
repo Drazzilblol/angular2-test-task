@@ -7,8 +7,8 @@ import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import languages from '../languages.json'
-import {By} from "@angular/platform-browser";
-import {DebugElement} from "@angular/core";
+import {By} from '@angular/platform-browser';
+import {DebugElement} from '@angular/core';
 
 describe('language', function () {
     let component: LanguageDialog;

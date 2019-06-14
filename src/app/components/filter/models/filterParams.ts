@@ -1,4 +1,4 @@
-import {Statuses} from "app/enums/statuses.enum";
+import {Statuses} from 'app/enums/statuses.enum';
 
 export class FilterParams {
     text: string;

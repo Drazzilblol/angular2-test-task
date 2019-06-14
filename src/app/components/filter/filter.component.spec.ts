@@ -2,15 +2,15 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
-import {FilterComponent} from "./filter.component";
-import {StringsFilterService} from "../../services/strings-filter/stringsFilter.service";
-import english from "../../locales/locale-en.json";
-import russian from "../../locales/locale-ru.json";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {Statuses} from "../../enums/statuses.enum";
-import {By} from "@angular/platform-browser";
-import {DebugElement} from "@angular/core";
-import {FilterParams} from "./models/filterParams";
+import {FilterComponent} from './filter.component';
+import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
+import english from '../../locales/locale-en.json';
+import russian from '../../locales/locale-ru.json';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {Statuses} from '../../enums/statuses.enum';
+import {By} from '@angular/platform-browser';
+import {DebugElement} from '@angular/core';
+import {FilterParams} from './models/filterParams';
 
 describe('filter', function () {
     let component: FilterComponent;

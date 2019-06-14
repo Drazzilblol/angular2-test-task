@@ -6,8 +6,8 @@ import {LanguageDialog} from './dialog/languageDialog.component';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
-import {DebugElement} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import {DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 describe('language', function () {
     let component: Language;

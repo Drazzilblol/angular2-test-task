@@ -11,13 +11,13 @@ import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from './models/StringListItem';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
-import {StringsFilterService} from "../../services/strings-filter/stringsFilter.service";
-import {Statuses} from "../../enums/statuses.enum";
+import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
+import {Statuses} from '../../enums/statuses.enum';
 import {now} from 'lodash';
-import {StringsHttpService} from "../../services/getStrings/stringsHttp.service";
-import {HttpClientModule} from "@angular/common/http";
-import {StringFilterPipe} from "../../pipes/stringFilter/stringFilter.pipe";
-import {By} from "@angular/platform-browser";
+import {StringsHttpService} from '../../services/getStrings/stringsHttp.service';
+import {HttpClientModule} from '@angular/common/http';
+import {StringFilterPipe} from '../../pipes/stringFilter/stringFilter.pipe';
+import {By} from '@angular/platform-browser';
 
 describe('item list', function () {
     let component: StringList;
@@ -120,16 +120,16 @@ describe('item list', function () {
             fixture.detectChanges();
             tick(31000);
             component.stringListItems.push(testListItem2);
-            component.filterParams = {text: "1", status: Statuses.YESTERDAY};
+            component.filterParams = {text: '1', status: Statuses.YESTERDAY};
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe("1");
+            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe('1');
 
-            component.filterParams = {text: "2", status: Statuses.FRESH};
+            component.filterParams = {text: '2', status: Statuses.FRESH};
             fixture.detectChanges();
             clearInterval(component.interval);
 
-            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe("2");
+            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe('2');
         }));
 
 
@@ -140,7 +140,7 @@ describe('item list', function () {
             tick(31000);
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe("yellow");
+            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe('yellow');
 
             fixtureDebug.query(By.css('li:first-of-type button:last-of-type')).nativeElement
                 .dispatchEvent(new Event('click'));
@@ -148,7 +148,7 @@ describe('item list', function () {
             fixture.detectChanges();
 
             clearInterval(component.interval);
-            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe("green");
+            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe('green');
         }));
     });
 });

@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
 import {Statuses} from '../../enums/statuses.enum';
-import {animate, animateChild, group, query, state, style, transition, trigger} from "@angular/animations";
-import {FilterParams} from "./models/filterParams";
+import {animate, animateChild, group, query, state, style, transition, trigger} from '@angular/animations';
+import {FilterParams} from './models/filterParams';
+
+const NOT_SELECTED: string = 'NOT_SELECTED';
 
 @Component({
     selector: 'filter',
@@ -19,7 +21,7 @@ import {FilterParams} from "./models/filterParams";
 
             transition('closed <=> open', [
                 group([
-                    animate("0.3s"),
+                    animate('0.3s'),
                     query('@showHideElements', [
                         animateChild(),
                     ]),
@@ -40,7 +42,7 @@ import {FilterParams} from "./models/filterParams";
                 style({
                     opacity: 0,
                 }),
-                animate("0.3s", style({
+                animate('0.3s', style({
                     opacity: 0,
                 }))
             ]),
@@ -53,15 +55,14 @@ import {FilterParams} from "./models/filterParams";
                 transform: 'rotate(0)'
             })),
             transition('back <=> forward', [
-                animate("0.3s")
+                animate('0.3s')
             ]),
         ]),
     ]
 })
 export class FilterComponent {
     isOpen = false;
-    NOT_SELECTED: string = "NOT_SELECTED";
-    selected: string = this.NOT_SELECTED;
+    selected: string = NOT_SELECTED;
     statuses: string[] = this.getStatuses();
 
     constructor(private filterService: StringsFilterService) {
@@ -73,7 +74,7 @@ export class FilterComponent {
      * @param {Statuses} status
      */
     filter(text: string, status: string): void {
-        this.filterService.filter(new FilterParams(text ? text : null, status !== this.NOT_SELECTED ? Statuses[status] : null));
+        this.filterService.filter(new FilterParams(text ? text : null, status !== NOT_SELECTED ? Statuses[status] : null));
     }
 
     /**
@@ -82,7 +83,7 @@ export class FilterComponent {
      */
     getStatuses(): string[] {
         let statuses: string[] = Object.keys(Statuses);
-        statuses.unshift(this.NOT_SELECTED);
+        statuses.unshift(NOT_SELECTED);
         return statuses
     }
 

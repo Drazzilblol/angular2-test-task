@@ -10,7 +10,7 @@ import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {Statuses} from '../../enums/statuses.enum';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
-import {By} from "@angular/platform-browser";
+import {By} from '@angular/platform-browser';
 
 describe('status', function () {
     let component: StatusComponent;
@@ -23,7 +23,7 @@ describe('status', function () {
             imports: [FormsModule, NgbTooltipModule, translateTestImport],
             declarations: [StatusComponent, ColorsPipe],
         }).overrideComponent(StatusComponent, {
-            set: { changeDetection: ChangeDetectionStrategy.Default }
+            set: {changeDetection: ChangeDetectionStrategy.Default}
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);

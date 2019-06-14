@@ -14,7 +14,7 @@ export class Language {
     /**
      * Открывает диалог выбора языка.
      */
-    open(): void{
+    open(): void {
         this.modalService.open(LanguageDialog);
     }
 

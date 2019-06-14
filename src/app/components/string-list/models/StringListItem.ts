@@ -1,5 +1,7 @@
 import {Statuses} from 'app/enums/statuses.enum';
-import {isEmpty, filter} from "lodash";
+import {isEmpty, filter} from 'lodash';
+
+const MESSAGE: string = 'MESSAGE';
 
 export class StringListItem {
     originText: string;
@@ -21,8 +23,8 @@ export class StringListItem {
      * если содержит то возвращает строку состоящую из цифр
      */
     transformString(input: string): string {
-        if (isEmpty(input)) return 'MESSAGE';
+        if (isEmpty(input)) return MESSAGE;
         let filteredArray = filter(input.split(''), element => !isNaN(+element));
-        return filteredArray.length ? filteredArray.join('') : 'MESSAGE';
+        return filteredArray.length ? filteredArray.join('') : MESSAGE;
     };
 }

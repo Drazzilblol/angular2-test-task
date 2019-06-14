@@ -5,8 +5,8 @@ import {now, forEach, remove} from 'lodash'
 import {StringListItem} from './models/StringListItem';
 import {Statuses} from '../../enums/statuses.enum';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
-import {StringsHttpService} from "../../services/getStrings/stringsHttp.service";
-import {FilterParams} from "../filter/models/filterParams";
+import {StringsHttpService} from '../../services/getStrings/stringsHttp.service';
+import {FilterParams} from '../filter/models/filterParams';
 
 @Component({
     selector: 'strings-list',
@@ -16,7 +16,7 @@ import {FilterParams} from "../filter/models/filterParams";
 export class StringList implements OnDestroy {
     subscription: Subscription;
     stringListItems: StringListItem[] = [];
-    filterParams: FilterParams = new FilterParams("", null);
+    filterParams: FilterParams = new FilterParams('', null);
     interval: number = 0;
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,

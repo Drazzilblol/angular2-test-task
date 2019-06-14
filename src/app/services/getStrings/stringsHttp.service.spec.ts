@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
-import {StringsHttpService} from "./stringsHttp.service";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {StringsHttpService} from './stringsHttp.service';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 describe('strings http service', function () {
     let httpService: StringsHttpService;
@@ -9,7 +9,7 @@ describe('strings http service', function () {
     beforeEach(function () {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [StringsHttpService]
+            providers: [StringsHttpService],
         });
 
         httpService = TestBed.get(StringsHttpService);
@@ -23,9 +23,9 @@ describe('strings http service', function () {
 
     it('check is observable returns value', function () {
         const fakeStrings = [
-            {"text": "test1", "date": 1560435761965, "status": "FRESH"},
-            {"text": "test2", "date": 1560435761966, "status": "FRESH"},
-            {"text": "test3", "date": 1560435761967, "status": "FRESH"}
+            {'text': 'test1', 'date': 1560435761965, 'status': 'FRESH'},
+            {'text': 'test2', 'date': 1560435761966, 'status': 'FRESH'},
+            {'text': 'test3', 'date': 1560435761967, 'status': 'FRESH'},
         ];
 
         httpService.getStrings().subscribe(result => {

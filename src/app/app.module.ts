@@ -2,8 +2,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {ComponentsModule} from './components/components.module';
 import {TranslateService} from '@ngx-translate/core';
-import languages from "./components/language/languages.json"
-
+import languages from './components/language/languages.json'
 
 @NgModule({
     imports: [ComponentsModule],
