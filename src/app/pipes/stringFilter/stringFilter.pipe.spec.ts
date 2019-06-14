@@ -6,7 +6,7 @@ import {StringListItem} from "../../components/string-list/models/StringListItem
 import {FilterParams} from "../../components/filter/models/filterParams";
 import {TestBed} from "@angular/core/testing";
 import {TranslateService} from "@ngx-translate/core";
-import {translateTestImport} from "../../../tests/TestTranslationConfig";
+import {translateTestImport} from "../../../tests/testTranslationConfig";
 
 describe('string filter pipe', function () {
 

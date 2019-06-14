@@ -1,5 +1,5 @@
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TestTranslationLoader} from './TestTranslationLoader';
+import {TestTranslationLoader} from './testTranslationLoader';
 
 export const translateTestImport = [
 

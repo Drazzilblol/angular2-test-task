@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
-import {translateTestImport} from 'tests/TestTranslationConfig';
+import {translateTestImport} from 'tests/testTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 import {FilterComponent} from "./filter.component";
 import {StringsFilterService} from "../../services/strings-filter/stringsFilter.service";

@@ -1,7 +1,7 @@
 import {FormsModule} from '@angular/forms';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {StringList} from './stringList.component';
-import {translateTestImport} from 'tests/TestTranslationConfig';
+import {translateTestImport} from 'tests/testTranslationConfig';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';

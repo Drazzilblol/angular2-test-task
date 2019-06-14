@@ -23,9 +23,9 @@ describe('strings http service', function () {
 
     it('check is observable returns value', function () {
         const fakeStrings = [
-            {"_id": "5d025c31767d42289092cf66", "text": "test1", "date": 1560435761965, "status": "FRESH"},
-            {"_id": "5d025c31767d42289092cf67", "text": "test2", "date": 1560435761966, "status": "FRESH"},
-            {"_id": "5d025c31767d42289092cf68", "text": "test3", "date": 1560435761967, "status": "FRESH"}
+            {"text": "test1", "date": 1560435761965, "status": "FRESH"},
+            {"text": "test2", "date": 1560435761966, "status": "FRESH"},
+            {"text": "test3", "date": 1560435761967, "status": "FRESH"}
         ];
 
         httpService.getStrings().subscribe(result => {
