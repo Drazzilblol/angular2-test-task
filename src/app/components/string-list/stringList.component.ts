@@ -83,17 +83,23 @@ export class StringList implements OnDestroy {
             this.interval = window.setInterval(() => {
                 let currentTime: number = now();
                 let rottenCounter: number = 0;
+                let isStatusChanged: boolean = false;
                 forEach(this.stringListItems, item => {
+                    if (item.status === Statuses.ROTTEN) {
+                        rottenCounter++;
+                        return;
+                    }
                     let timeDifference = currentTime - item.date;
-                    if (timeDifference > 60000 && item.status !== Statuses.ROTTEN) {
+                    if (timeDifference > 60000) {
                         item.status = Statuses.ROTTEN;
-                        this.changeDetector.markForCheck();
+                        isStatusChanged = true;
+                        rottenCounter++;
                     } else if (timeDifference > 30000 && timeDifference < 60000 && item.status !== Statuses.YESTERDAY) {
                         item.status = Statuses.YESTERDAY;
-                        this.changeDetector.markForCheck();
+                        isStatusChanged = true;
                     }
-                    if (item.status === Statuses.ROTTEN) rottenCounter++;
                 });
+                if (isStatusChanged) this.changeDetector.markForCheck();
                 if (this.stringListItems.length === rottenCounter) {
                     clearInterval(this.interval);
                     this.interval = 0;

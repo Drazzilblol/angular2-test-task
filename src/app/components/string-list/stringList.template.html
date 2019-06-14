@@ -1,8 +1,8 @@
 <ul class="list-group">
     <li class="list-group-item content-left"
-        *ngFor="let item of stringListItems | stringFilter:filterParams">
+        *ngFor="let item of stringListItems | stringFilter : filterParams">
         <status [status]=item.status></status>
-        <span>{{item.transformedText  | translate}}</span>
+        <span>{{item.transformedText | translate}}</span>
         <button class="btn btn-sm btn-danger float-right string-list-button"
                 (click)="deleteItem(item.date)"><i class="material-icons">delete</i></button>
         <button class="btn btn-sm btn-primary float-right string-list-button"
