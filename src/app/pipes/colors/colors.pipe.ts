@@ -1,5 +1,4 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import isEmpty from 'lodash/isEmpty'
 import {Statuses} from '../../enums/statuses.enum';
 import {Colors} from '../../enums/colors.enum';
 
@@ -13,16 +12,12 @@ export class ColorsPipe implements PipeTransform {
      */
     transform(input: string, status: Statuses): object {
         let result: object = {};
-        if (isEmpty(input)) {
-            result[input] = Colors.GREEN;
-            return result;
-        }
 
         if (status === Statuses.FRESH) {
             result[input] = Colors.GREEN
         } else if (status === Statuses.YESTERDAY) {
             result[input] = Colors.YELLOW
-        } else if (status === Statuses.ROTTEN) {
+        } else {
             result[input] = Colors.RED
         }
 
