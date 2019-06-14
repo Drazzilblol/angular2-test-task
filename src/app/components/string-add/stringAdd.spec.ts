@@ -8,12 +8,15 @@ import russian from 'app/locales/locale-ru.json';
 import {StringsService} from '../../services/strings/strings.service';
 import {Subscription} from 'rxjs';
 import {StringListItem} from '../string-list/models/StringListItem';
+import {DebugElement} from "@angular/core";
+import {By} from "@angular/platform-browser";
 
 describe('item add', function () {
     let component: StringAdd;
     let fixture: ComponentFixture<StringAdd>;
     let translate: TranslateService;
     let stringsService: StringsService;
+    let fixtureDebug: DebugElement;
 
     beforeEach(function () {
         TestBed.configureTestingModule({
@@ -25,6 +28,7 @@ describe('item add', function () {
         translate = TestBed.get(TranslateService);
         translate.use('en');
         fixture = TestBed.createComponent(StringAdd);
+        fixtureDebug = fixture.debugElement;
         stringsService = TestBed.get(StringsService);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -35,10 +39,11 @@ describe('item add', function () {
         component = null;
         translate = null;
         stringsService = null;
+        fixtureDebug = null;
     });
 
     it('check is add button disabled with empty input', function () {
-        let button = fixture.nativeElement.querySelector('button');
+        let button = fixtureDebug.query(By.css('button')).nativeElement;
 
         expect(button.disabled).toBe(true);
 
@@ -56,16 +61,16 @@ describe('item add', function () {
             expect(result.originText).toBe(testString)
         });
 
-        let input = fixture.nativeElement.querySelector('input');
+        let input = fixtureDebug.query(By.css('input')).nativeElement;
         input.value = testString;
         input.dispatchEvent(new Event('input'));
-        fixture.nativeElement.querySelector('button').dispatchEvent(new Event('click'));
+        fixtureDebug.query(By.css('button')).nativeElement.dispatchEvent(new Event('click'));
         tick(50);
         subscription.unsubscribe()
     }));
 
     it('check localization', function () {
-        let button = fixture.nativeElement.querySelector('button');
+        let button = fixtureDebug.query(By.css('button')).nativeElement;
 
         expect(button.innerText.trim()).toBe(english.BUTTON_ADD);
 

@@ -7,10 +7,13 @@ import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import languages from '../languages.json'
+import {By} from "@angular/platform-browser";
+import {DebugElement} from "@angular/core";
 
 describe('language', function () {
     let component: LanguageDialog;
     let fixture: ComponentFixture<LanguageDialog>;
+    let fixtureDebug: DebugElement;
     let translate: TranslateService;
 
     beforeEach(function () {
@@ -28,6 +31,7 @@ describe('language', function () {
 
         fixture = TestBed.createComponent(LanguageDialog);
         component = fixture.componentInstance;
+        fixtureDebug = fixture.debugElement;
         fixture.detectChanges();
     });
 
@@ -35,44 +39,45 @@ describe('language', function () {
         fixture = null;
         component = null;
         translate = null;
+        fixtureDebug = null;
     });
 
     describe('dialog', function () {
         it('check dialog cancel', function () {
             fixture.detectChanges();
             spyOn(component, 'cancel').and.callThrough();
-            let languageSelect = fixture.nativeElement.querySelector('select');
+            let languageSelect = fixtureDebug.query(By.css('select')).nativeElement;
 
-            expect(fixture.nativeElement.querySelector('.modal-title').textContent).toBe(english.LANGUAGE_MODAL.MESSAGE);
-            expect(fixture.nativeElement.querySelector('.btn-secondary').textContent.trim()).toBe(english.LANGUAGE_MODAL.CANCEL);
-            expect(fixture.nativeElement.querySelector('.btn-primary').textContent.trim()).toBe(english.LANGUAGE_MODAL.OK);
+            expect(fixtureDebug.query(By.css('.modal-title')).nativeElement.textContent).toBe(english.LANGUAGE_MODAL.MESSAGE);
+            expect(fixtureDebug.query(By.css('.btn-secondary')).nativeElement.textContent.trim()).toBe(english.LANGUAGE_MODAL.CANCEL);
+            expect(fixtureDebug.query(By.css('.btn-primary')).nativeElement.textContent.trim()).toBe(english.LANGUAGE_MODAL.OK);
             expect(languageSelect.options[0].innerText.trim()).toBe(english.LANGUAGES.en);
             expect(languageSelect.options[1].innerText.trim()).toBe(english.LANGUAGES.ru);
 
             languageSelect.selectedIndex = 1;
             languageSelect.dispatchEvent(new Event('change'));
-            fixture.nativeElement.querySelector('.btn-secondary').dispatchEvent(new Event('click'));
+            fixtureDebug.query(By.css('.btn-secondary')).nativeElement.dispatchEvent(new Event('click'));
             fixture.detectChanges();
 
             expect(component.cancel).toHaveBeenCalled();
-            expect(fixture.nativeElement.querySelector('.modal-title').textContent).toBe(english.LANGUAGE_MODAL.MESSAGE);
+            expect(fixtureDebug.query(By.css('.modal-title')).nativeElement.textContent).toBe(english.LANGUAGE_MODAL.MESSAGE);
         });
 
 
         it('check dialog accept', function () {
             fixture.detectChanges();
-            let languageSelect = fixture.nativeElement.querySelector('select');
+            let languageSelect = fixtureDebug.query(By.css('select')).nativeElement;
             spyOn(component, 'confirm').and.callThrough();
             languageSelect.selectedIndex = 1;
             languageSelect.dispatchEvent(new Event('change'));
-            fixture.nativeElement.querySelector('.btn-primary').dispatchEvent(new Event('click'));
+            fixtureDebug.query(By.css('.btn-primary')).nativeElement.dispatchEvent(new Event('click'));
             fixture.detectChanges();
 
             expect(component.confirm).toHaveBeenCalled();
 
-            expect(fixture.nativeElement.querySelector('.modal-title').textContent).toBe(russian.LANGUAGE_MODAL.MESSAGE);
-            expect(fixture.nativeElement.querySelector('.btn-secondary').textContent.trim()).toBe(russian.LANGUAGE_MODAL.CANCEL);
-            expect(fixture.nativeElement.querySelector('.btn-primary').textContent.trim()).toBe(russian.LANGUAGE_MODAL.OK);
+            expect(fixtureDebug.query(By.css('.modal-title')).nativeElement.textContent).toBe(russian.LANGUAGE_MODAL.MESSAGE);
+            expect(fixtureDebug.query(By.css('.btn-secondary')).nativeElement.textContent.trim()).toBe(russian.LANGUAGE_MODAL.CANCEL);
+            expect(fixtureDebug.query(By.css('.btn-primary')).nativeElement.textContent.trim()).toBe(russian.LANGUAGE_MODAL.OK);
             expect(languageSelect.options[0].innerText.trim()).toBe(russian.LANGUAGES.en);
             expect(languageSelect.options[1].innerText.trim()).toBe(russian.LANGUAGES.ru);
         });

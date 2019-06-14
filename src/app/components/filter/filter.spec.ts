@@ -10,12 +10,15 @@ import russian from "../../locales/locale-ru.json";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {Subscription} from "rxjs";
 import {Statuses} from "../status/statuses";
+import {By} from "@angular/platform-browser";
+import {DebugElement} from "@angular/core";
 
 describe('filter', function () {
     let component: FilterComponent;
     let fixture: ComponentFixture<FilterComponent>;
     let translate: TranslateService;
     let filterService: StringsFilterService;
+    let fixtureDebug: DebugElement;
 
     beforeEach(function () {
         TestBed.configureTestingModule({
@@ -31,6 +34,7 @@ describe('filter', function () {
         translate.use('en');
 
         fixture = TestBed.createComponent(FilterComponent);
+        fixtureDebug = fixture.debugElement;
         filterService = TestBed.get(StringsFilterService);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -41,6 +45,7 @@ describe('filter', function () {
         component = null;
         translate = null;
         filterService = null;
+        fixtureDebug = null;
     });
 
     describe('component', function () {
@@ -53,23 +58,23 @@ describe('filter', function () {
                 expect(result.status).toBe(testStatus);
             });
 
-            let input = fixture.nativeElement.querySelector('input');
+            let input = fixture.debugElement.query(By.css('input')).nativeElement;
             input.value = testString;
             input.dispatchEvent(new Event('input'));
-            let statusSelect = fixture.nativeElement.querySelector('select');
+            let statusSelect = fixture.debugElement.query(By.css('select')).nativeElement;
             statusSelect.selectedIndex = 1;
             statusSelect.dispatchEvent(new Event('change'));
 
-            fixture.nativeElement.querySelector('button').dispatchEvent(new Event('click'));
+            fixture.debugElement.query(By.css('button')).nativeElement.dispatchEvent(new Event('click'));
             tick(50);
             subscription.unsubscribe()
         }));
 
         it('check localization', function () {
-            let filterButton = fixture.nativeElement.querySelector('button');
-            let statusSelect = fixture.nativeElement.querySelector('select');
-            let title = fixture.nativeElement.querySelector('p:first-of-type');
-            let stat = fixture.nativeElement.querySelector('p:last-of-type');
+            let filterButton = fixture.debugElement.query(By.css('button')).nativeElement;
+            let statusSelect = fixture.debugElement.query(By.css('select')).nativeElement;
+            let title = fixture.debugElement.query(By.css('p:first-of-type')).nativeElement;
+            let stat = fixture.debugElement.query(By.css('p:last-of-type')).nativeElement;
 
             expect(filterButton.innerText.trim()).toBe(english.FILTER.BUTTON_FIND);
             expect(statusSelect.options[0].innerText.trim()).toBe(english.STATUS.NOT_SELECTED);

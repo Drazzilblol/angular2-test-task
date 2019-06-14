@@ -9,7 +9,7 @@ import {StatusComponent} from '../status/status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from './models/StringListItem';
-import {ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
 import {StringsFilterService} from "../../services/strings-filter/stringsFilter.service";
 import {Statuses} from "../status/statuses";
@@ -17,11 +17,13 @@ import {now} from 'lodash';
 import {StringsHttpService} from "../../services/getStrings/stringsHttp.service";
 import {HttpClientModule} from "@angular/common/http";
 import {StringFilterPipe} from "../../pipes/stringFilter/stringFilter.pipe";
+import {By} from "@angular/platform-browser";
 
 describe('item list', function () {
     let component: StringList;
     let fixture: ComponentFixture<StringList>;
     let translate: TranslateService;
+    let fixtureDebug: DebugElement;
 
     beforeEach(function () {
         TestBed.configureTestingModule({
@@ -35,6 +37,7 @@ describe('item list', function () {
         translate = TestBed.get(TranslateService);
         translate.use('en');
         fixture = TestBed.createComponent(StringList);
+        fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -43,6 +46,7 @@ describe('item list', function () {
         fixture = null;
         component = null;
         translate = null;
+        fixtureDebug = null;
     });
 
     describe('component', function () {
@@ -53,14 +57,14 @@ describe('item list', function () {
             component.stringListItems = [new StringListItem('t1e2s3t4', now(), Statuses.FRESH)];
             fixture.detectChanges();
 
-            expect(fixture.nativeElement.querySelector('li span').innerText).toBe(resultString);
+            expect(fixtureDebug.query(By.css('li span')).nativeElement.innerText).toBe(resultString);
         });
 
         it('check items deleting', function () {
             let resultString: string = '12345';
             component.stringListItems = [new StringListItem(resultString, now(), Statuses.FRESH)];
             fixture.detectChanges();
-            let firstElement = fixture.nativeElement.querySelector('li:first-of-type');
+            let firstElement = fixtureDebug.query(By.css('li:first-of-type')).nativeElement;
 
             expect(firstElement.querySelector('span').innerText).toBe(resultString);
 
@@ -69,13 +73,13 @@ describe('item list', function () {
 
             fixture.detectChanges();
 
-            expect(fixture.nativeElement.querySelector('li:first-of-type span')).toBe(null);
+            expect(fixtureDebug.query(By.css('li:first-of-type span'))).toBe(null);
         });
 
         it('check item without numbers', function () {
             component.stringListItems = [new StringListItem('test', now(), Statuses.FRESH)];
             fixture.detectChanges();
-            let firstElement = fixture.nativeElement.querySelector('li:first-of-type span');
+            let firstElement = fixtureDebug.query(By.css('li:first-of-type span')).nativeElement;
 
             expect(firstElement.innerText).toBe(english.MESSAGE);
 
@@ -90,19 +94,19 @@ describe('item list', function () {
             component.stringListItems = [listItem];
             component.countdown();
             fixture.detectChanges();
-            let status = fixture.nativeElement.querySelector('status>div');
+            let status = fixtureDebug.query(By.css('status>div'));
 
-            expect(status.style.backgroundColor).toBe('green');
-
-            tick(31000);
-            fixture.detectChanges();
-
-            expect(status.style.backgroundColor).toBe('yellow');
+            expect(status.styles['background-color']).toBe('green');
 
             tick(31000);
             fixture.detectChanges();
 
-            expect(status.style.backgroundColor).toBe('red');
+            expect(status.styles['background-color']).toBe('yellow');
+
+            tick(31000);
+            fixture.detectChanges();
+
+            expect(status.styles['background-color']).toBe('red');
 
             clearInterval(component.interval);
         }));
@@ -116,17 +120,16 @@ describe('item list', function () {
             fixture.detectChanges();
             tick(31000);
             component.stringListItems.push(testListItem2);
-            fixture.detectChanges();
             component.filterParams = {text: "1", status: Statuses.YESTERDAY};
             fixture.detectChanges();
 
-            expect(fixture.nativeElement.querySelector('li>span').innerText).toBe("1");
+            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe("1");
 
             component.filterParams = {text: "2", status: Statuses.FRESH};
             fixture.detectChanges();
             clearInterval(component.interval);
 
-            expect(fixture.nativeElement.querySelector('li>span').innerText).toBe("2");
+            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe("2");
         }));
 
 
@@ -137,15 +140,15 @@ describe('item list', function () {
             tick(31000);
             fixture.detectChanges();
 
-            expect(fixture.nativeElement.querySelector('li:first-of-type div').style.backgroundColor).toBe("yellow");
+            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe("yellow");
 
-            fixture.nativeElement.querySelector('li:first-of-type button:last-of-type')
+            fixtureDebug.query(By.css('li:first-of-type button:last-of-type')).nativeElement
                 .dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
 
             clearInterval(component.interval);
-            expect(fixture.nativeElement.querySelector('li:first-of-type div').style.backgroundColor).toBe("green");
+            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe("green");
         }));
     });
 });

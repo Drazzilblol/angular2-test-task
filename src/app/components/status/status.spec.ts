@@ -7,14 +7,16 @@ import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {StatusComponent} from './status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
-import {ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {Statuses} from './statuses';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
+import {By} from "@angular/platform-browser";
 
 describe('status', function () {
     let component: StatusComponent;
     let fixture: ComponentFixture<StatusComponent>;
     let translate: TranslateService;
+    let fixtureDebug: DebugElement;
 
     beforeEach(function () {
         TestBed.configureTestingModule({
@@ -27,6 +29,7 @@ describe('status', function () {
         translate = TestBed.get(TranslateService);
         translate.use('en');
         fixture = TestBed.createComponent(StatusComponent);
+        fixtureDebug = fixture.debugElement;
 
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -36,7 +39,7 @@ describe('status', function () {
         fixture = null;
         component = null;
         translate = null;
-        jasmine.clock().uninstall();
+        fixtureDebug = null;
     });
 
     describe('component', function () {
@@ -44,25 +47,25 @@ describe('status', function () {
         it('check color changing', function () {
             component.status = Statuses.FRESH;
             fixture.detectChanges();
-            let status = fixture.nativeElement.querySelector('div');
+            let status = fixtureDebug.query(By.css('div'));
 
-            expect(status.style.backgroundColor).toBe('green');
+            expect(status.styles['background-color']).toBe('green');
 
             component.status = Statuses.YESTERDAY;
             fixture.detectChanges();
 
-            expect(status.style.backgroundColor).toBe('yellow');
+            expect(status.styles['background-color']).toBe('yellow');
 
             component.status = Statuses.ROTTEN;
             fixture.detectChanges();
 
-            expect(status.style.backgroundColor).toBe('red');
+            expect(status.styles['background-color']).toBe('red');
         });
 
         it('check tooltip', function () {
             component.status = Statuses.FRESH;
             fixture.detectChanges();
-            let status = fixture.nativeElement.querySelector('div');
+            let status = fixtureDebug.query(By.css('div')).nativeElement;
             status.dispatchEvent(new Event('mouseenter'));
 
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(english.STATUS.FRESH);
@@ -86,7 +89,7 @@ describe('status', function () {
             component.status = Statuses.FRESH;
             translate.use('ru');
             fixture.detectChanges();
-            let status = fixture.nativeElement.querySelector('div');
+            let status = fixtureDebug.query(By.css('div')).nativeElement;
             status.dispatchEvent(new Event('mouseenter'));
 
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(russian.STATUS.FRESH);
