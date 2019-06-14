@@ -1,7 +1,7 @@
 import '@angular/core/testing';
 import {now} from 'lodash'
 import {StringFilterPipe} from "./stringFilter.pipe";
-import {Statuses} from "../../components/status/statuses";
+import {Statuses} from "../../enums/statuses.enum";
 import {StringListItem} from "../../components/string-list/models/StringListItem";
 import {FilterParams} from "../../components/filter/models/filterParams";
 import {TestBed} from "@angular/core/testing";

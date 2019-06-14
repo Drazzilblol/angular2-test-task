@@ -12,7 +12,7 @@ import {StringListItem} from './models/StringListItem';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
 import {StringsFilterService} from "../../services/strings-filter/stringsFilter.service";
-import {Statuses} from "../status/statuses";
+import {Statuses} from "../../enums/statuses.enum";
 import {now} from 'lodash';
 import {StringsHttpService} from "../../services/getStrings/stringsHttp.service";
 import {HttpClientModule} from "@angular/common/http";

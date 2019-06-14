@@ -1,7 +1,7 @@
 import '@angular/core/testing';
 import {ColorsPipe} from './colors.pipe';
-import {Statuses} from '../../components/status/statuses';
-import {Colors} from '../../components/status/colors';
+import {Statuses} from '../../enums/statuses.enum';
+import {Colors} from '../../enums/colors.enum';
 
 describe('colors pipe', function () {
 

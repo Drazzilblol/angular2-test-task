@@ -2,7 +2,7 @@ import {Subscription} from 'rxjs';
 import {StringsService} from './strings.service';
 import {StringListItem} from '../../components/string-list/models/StringListItem';
 import {fakeAsync, tick} from '@angular/core/testing';
-import {Statuses} from "../../components/status/statuses";
+import {Statuses} from "../../enums/statuses.enum";
 import {now} from 'lodash';
 
 describe('stringListItems service', function () {

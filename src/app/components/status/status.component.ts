@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {Statuses} from './statuses';
+import {Statuses} from '../../enums/statuses.enum';
 
 
 @Component({

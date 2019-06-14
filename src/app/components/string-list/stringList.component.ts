@@ -3,7 +3,7 @@ import {StringsService} from '../../services/strings/strings.service';
 import {Subscription} from 'rxjs';
 import {now, forEach, remove} from 'lodash'
 import {StringListItem} from './models/StringListItem';
-import {Statuses} from '../status/statuses';
+import {Statuses} from '../../enums/statuses.enum';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
 import {StringsHttpService} from "../../services/getStrings/stringsHttp.service";
 import {FilterParams} from "../filter/models/filterParams";

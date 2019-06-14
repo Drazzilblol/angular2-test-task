@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import isEmpty from 'lodash/isEmpty'
-import {Statuses} from '../../components/status/statuses';
-import {Colors} from '../../components/status/colors';
+import {Statuses} from '../../enums/statuses.enum';
+import {Colors} from '../../enums/colors.enum';
 
 @Pipe({name: 'colorsPipe'})
 export class ColorsPipe implements PipeTransform {

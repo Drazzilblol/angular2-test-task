@@ -7,7 +7,7 @@ import {StringsFilterService} from "../../services/strings-filter/stringsFilter.
 import english from "../../locales/locale-en.json";
 import russian from "../../locales/locale-ru.json";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
-import {Statuses} from "../status/statuses";
+import {Statuses} from "../../enums/statuses.enum";
 import {By} from "@angular/platform-browser";
 import {DebugElement} from "@angular/core";
 import {FilterParams} from "./models/filterParams";

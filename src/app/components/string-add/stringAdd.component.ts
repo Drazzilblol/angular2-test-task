@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from '../string-list/models/StringListItem';
 import {now} from 'lodash'
-import {Statuses} from "../status/statuses";
+import {Statuses} from "../../enums/statuses.enum";
 
 @Component({
     selector: 'string-add',

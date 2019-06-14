@@ -8,7 +8,7 @@ import russian from 'app/locales/locale-ru.json';
 import {StatusComponent} from './status.component';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
-import {Statuses} from './statuses';
+import {Statuses} from '../../enums/statuses.enum';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
 import {By} from "@angular/platform-browser";
 

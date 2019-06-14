@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
-import {Statuses} from '../status/statuses';
+import {Statuses} from '../../enums/statuses.enum';
 import {animate, animateChild, group, query, state, style, transition, trigger} from "@angular/animations";
 import {FilterParams} from "./models/filterParams";
 

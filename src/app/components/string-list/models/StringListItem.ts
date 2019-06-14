@@ -1,5 +1,5 @@
-import {Statuses} from '../../status/statuses';
-import {isEmpty, filter, isNumber} from "lodash";
+import {Statuses} from 'app/enums/statuses.enum';
+import {isEmpty, filter} from "lodash";
 
 export class StringListItem {
     originText: string;
