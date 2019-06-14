@@ -6,7 +6,7 @@
 
 body {
     background-color: white;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 ul {
@@ -44,6 +44,7 @@ li:hover {
 .btn-outline-secondary:focus {
     box-shadow: none !important;
 }
+
 .btn-light:focus {
     box-shadow: none !important;
 }
@@ -59,27 +60,32 @@ li:hover {
     padding: 0;
 }
 
-.list-group-item > span  {
+.list-group-item > span {
     display: inline-block;
     text-align: center;
     margin-top: 13px;
 }
 
-.string-list-button{
+.string-list-button {
     margin: 5px;
     padding: 3px;
 }
 
-.filter-component{
+.string-list-button > * {
+
+    margin-top: 5px;
+}
+
+.filter-component {
     position: relative;
     padding: 20px;
     height: 94vh;
     float: right;
     background-color: lightgrey;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.close-side-nav-button{
+.close-side-nav-button {
     position: absolute;
     margin: 5px;
     bottom: 5px;
@@ -93,20 +99,33 @@ li:hover {
     cursor: pointer;
 }
 
-.find-button{
+.find-button {
     float: right;
 }
-.filter-component > *{
+
+.filter-component > * {
     margin-bottom: 10px;
 }
-.filter-component  p{
+
+.filter-component p {
     margin-left: 20px;
 }
 
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
 
 
 
