@@ -1,8 +1,8 @@
 import {fakeAsync, tick} from '@angular/core/testing';
+import {StringListItem} from 'app/components/string-list/models/StringListItem';
+import {Statuses} from 'app/enums/statuses.enum';
 import {now} from 'lodash';
 import {Subscription} from 'rxjs';
-import {StringListItem} from '../../components/string-list/models/StringListItem';
-import {Statuses} from '../../enums/statuses.enum';
 import {StringsService} from './strings.service';
 
 describe('stringListItems service', function() {

@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 let CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
 
 module.exports = {
     entry: './src/main.ts',
@@ -9,7 +10,11 @@ module.exports = {
     },
     mode: "development",
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        modules: [
+            path.resolve('./src'),
+            path.resolve('./node_modules')
+        ]
     },
     module: {
         rules: [

@@ -5,9 +5,9 @@ import {By} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
+import {StringsService} from 'app/services/strings/strings.service';
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from '../string-list/models/StringListItem';
 import {StringAdd} from './stringAdd.component';
 

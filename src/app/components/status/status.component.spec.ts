@@ -4,11 +4,11 @@ import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
+import {Statuses} from 'app/enums/statuses.enum';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
+import {ColorsPipe} from 'app/pipes/colors/colors.pipe';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {Statuses} from '../../enums/statuses.enum';
-import {ColorsPipe} from '../../pipes/colors/colors.pipe';
 import {StatusComponent} from './status.component';
 
 describe('status', function() {

@@ -1,9 +1,9 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {FilterParams} from 'app/components/filter/models/filterParams';
+import {StringListItem} from 'app/components/string-list/models/StringListItem';
+import {Statuses} from 'app/enums/statuses.enum';
 import {filter, startsWith} from 'lodash';
-import {FilterParams} from '../../components/filter/models/filterParams';
-import {StringListItem} from '../../components/string-list/models/StringListItem';
-import {Statuses} from '../../enums/statuses.enum';
 
 @Pipe({
     name: 'stringFilter',

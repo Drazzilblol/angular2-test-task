@@ -1,4 +1,4 @@
-import {Statuses} from '../../enums/statuses.enum';
+import {Statuses} from 'app/enums/statuses.enum';
 import {ColorsPipe} from './colors.pipe';
 
 describe('colors pipe', function() {

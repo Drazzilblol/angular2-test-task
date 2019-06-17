@@ -1,7 +1,7 @@
 import {fakeAsync, tick} from '@angular/core/testing';
+import {FilterParams} from 'app/components/filter/models/filterParams';
+import {Statuses} from 'app/enums/statuses.enum';
 import {Subscription} from 'rxjs';
-import {FilterParams} from '../../components/filter/models/filterParams';
-import {Statuses} from '../../enums/statuses.enum';
 import {StringsFilterService} from './stringsFilter.service';
 
 describe('strings filter service', function() {

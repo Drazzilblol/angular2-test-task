@@ -1,10 +1,10 @@
 import {TestBed} from '@angular/core/testing';
 import {TranslateService} from '@ngx-translate/core';
+import {FilterParams} from 'app/components/filter/models/filterParams';
+import {StringListItem} from 'app/components/string-list/models/StringListItem';
+import {Statuses} from 'app/enums/statuses.enum';
 import {now} from 'lodash';
-import {translateTestImport} from '../../../tests/testTranslationConfig';
-import {FilterParams} from '../../components/filter/models/filterParams';
-import {StringListItem} from '../../components/string-list/models/StringListItem';
-import {Statuses} from '../../enums/statuses.enum';
+import {translateTestImport} from 'tests/testTranslationConfig';
 import {StringFilterPipe} from './stringFilter.pipe';
 
 describe('string filter pipe', function() {

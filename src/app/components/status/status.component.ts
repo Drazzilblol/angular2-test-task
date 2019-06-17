@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {Statuses} from '../../enums/statuses.enum';
+import {Statuses} from 'app/enums/statuses.enum';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

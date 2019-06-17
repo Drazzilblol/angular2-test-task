@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {Statuses} from 'app/enums/statuses.enum';
+import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
+import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
+import {StringsService} from 'app/services/strings/strings.service';
 import {forEach, now, remove} from 'lodash';
 import {Subscription} from 'rxjs';
-import {Statuses} from '../../enums/statuses.enum';
-import {StringsHttpService} from '../../services/getStrings/stringsHttp.service';
-import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
-import {StringsService} from '../../services/strings/strings.service';
 import {FilterParams} from '../filter/models/filterParams';
 import {StringListItem} from './models/StringListItem';
 

@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Statuses} from 'app/enums/statuses.enum';
+import {StringsService} from 'app/services/strings/strings.service';
 import {now} from 'lodash';
-import {Statuses} from '../../enums/statuses.enum';
-import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from '../string-list/models/StringListItem';
 
 @Component({

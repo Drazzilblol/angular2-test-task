@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
+import {FilterParams} from 'app/components/filter/models/filterParams';
 import {Observable, Subject} from 'rxjs';
-import {FilterParams} from '../../components/filter/models/filterParams';
 
 @Injectable()
 export class StringsFilterService {

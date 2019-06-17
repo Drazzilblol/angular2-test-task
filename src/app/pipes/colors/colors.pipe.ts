@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Statuses} from '../../enums/statuses.enum';
+import {Statuses} from 'app/enums/statuses.enum';
 
 const colorsMap = {
     [Statuses.FRESH]: 'status-green',

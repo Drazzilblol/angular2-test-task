@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {Statuses} from '../../enums/statuses.enum';
-import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
+import {Statuses} from 'app/enums/statuses.enum';
+import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
 import {FilterParams} from './models/filterParams';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';

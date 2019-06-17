@@ -3,12 +3,12 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
+import {Statuses} from 'app/enums/statuses.enum';
+import english from 'app/locales/locale-en.json';
+import russian from 'app/locales/locale-ru.json';
+import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
 import {findIndex} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {Statuses} from '../../enums/statuses.enum';
-import english from '../../locales/locale-en.json';
-import russian from '../../locales/locale-ru.json';
-import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
 import {FilterComponent} from './filter.component';
 import {FilterParams} from './models/filterParams';
 
