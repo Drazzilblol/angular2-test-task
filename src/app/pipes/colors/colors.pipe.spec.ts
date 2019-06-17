@@ -23,5 +23,3 @@ describe('colors pipe', function() {
     });
 
 });
-
-

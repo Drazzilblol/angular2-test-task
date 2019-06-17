@@ -67,7 +67,6 @@ describe('language', function() {
                 .toBe(english.LANGUAGE_MODAL.MESSAGE);
         });
 
-
         it('check dialog accept', function() {
             fixture.detectChanges();
             const languageSelect = fixtureDebug.query(By.css('select')).nativeElement;
@@ -90,6 +89,3 @@ describe('language', function() {
         });
     });
 });
-
-
-

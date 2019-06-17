@@ -19,7 +19,6 @@ export class StringList implements OnDestroy {
     public subscription: Subscription;
     public stringListItems: StringListItem[] = [];
 
-
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
                 private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
 
@@ -116,7 +115,3 @@ export class StringList implements OnDestroy {
         }
     }
 }
-
-
-
-

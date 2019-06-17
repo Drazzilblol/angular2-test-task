@@ -38,5 +38,3 @@ describe('strings http service', function() {
         req.flush(fakeStrings);
     });
 });
-
-

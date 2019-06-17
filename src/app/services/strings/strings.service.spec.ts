@@ -28,5 +28,3 @@ describe('stringListItems service', function() {
         subscription.unsubscribe();
     }));
 });
-
-

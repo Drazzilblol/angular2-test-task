@@ -132,7 +132,6 @@ describe('item list', function() {
             expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe('2');
         }));
 
-
         it('check items refresh', fakeAsync(function() {
             const resultString: string = '12345';
             component.stringListItems = [new StringListItem(resultString, now(), Statuses.FRESH)];

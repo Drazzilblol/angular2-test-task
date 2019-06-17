@@ -27,5 +27,3 @@ describe('strings filter service', function() {
         subscription.unsubscribe();
     }));
 });
-
-

@@ -110,5 +110,3 @@ describe('status', function() {
 
     });
 });
-
-

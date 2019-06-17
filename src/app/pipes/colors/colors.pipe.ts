@@ -20,6 +20,3 @@ export class ColorsPipe implements PipeTransform {
         return {[input]: colorsMap[status]};
     }
 }
-
-
-
