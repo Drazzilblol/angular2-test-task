@@ -10,7 +10,7 @@ export class StringsFilterService {
     /**
      * Возвращает Observable, который будет возвращать параметры фильтрации.
      */
-    getObservable(): Observable<FilterParams> {
+    public getObservable(): Observable<FilterParams> {
         return this.filterObservable;
     }
 
@@ -18,7 +18,7 @@ export class StringsFilterService {
      * Излучает параметры фильтрации.
      * @param {any} params Излучаемые параметры.
      */
-    filter(params: FilterParams): void {
+    public filter(params: FilterParams): void {
         this.filterSource.next(params);
     }
 }

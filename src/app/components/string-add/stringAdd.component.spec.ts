@@ -1,28 +1,28 @@
+import {DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
-import {StringAdd} from './stringAdd.component';
-import {translateTestImport} from 'tests/testTranslationConfig';
+import {By} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
-import {StringsService} from '../../services/strings/strings.service';
 import {Subscription} from 'rxjs';
+import {translateTestImport} from 'tests/testTranslationConfig';
+import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from '../string-list/models/StringListItem';
-import {DebugElement} from '@angular/core';
-import {By} from '@angular/platform-browser';
+import {StringAdd} from './stringAdd.component';
 
-describe('item add', function () {
+describe('item add', function() {
     let component: StringAdd;
     let fixture: ComponentFixture<StringAdd>;
     let translate: TranslateService;
     let stringsService: StringsService;
     let fixtureDebug: DebugElement;
 
-    beforeEach(function () {
+    beforeEach(function() {
         TestBed.configureTestingModule({
-            imports: [FormsModule, translateTestImport],
             declarations: [StringAdd],
-            providers: [StringsService]
+            imports: [FormsModule, translateTestImport],
+            providers: [StringsService],
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
@@ -34,7 +34,7 @@ describe('item add', function () {
         fixture.detectChanges();
     });
 
-    afterAll(function () {
+    afterAll(function() {
         fixture = null;
         component = null;
         translate = null;
@@ -42,35 +42,35 @@ describe('item add', function () {
         fixtureDebug = null;
     });
 
-    it('check is add button disabled with empty input', function () {
-        let button = fixtureDebug.query(By.css('button')).nativeElement;
+    it('check is add button disabled with empty input', function() {
+        const button = fixtureDebug.query(By.css('button')).nativeElement;
 
         expect(button.disabled).toBe(true);
 
-        let input = fixture.nativeElement.querySelector('input');
+        const input = fixture.nativeElement.querySelector('input');
         input.value = '                ';
         input.dispatchEvent(new Event('input'));
 
         expect(button.disabled).toBe(true);
     });
 
-    it('check add item', fakeAsync(function () {
-        let testString: string = 'test';
+    it('check add item', fakeAsync(function() {
+        const testString: string = 'test';
 
-        let subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
-            expect(result.originText).toBe(testString)
+        const subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
+            expect(result.originText).toBe(testString);
         });
 
-        let input = fixtureDebug.query(By.css('input')).nativeElement;
+        const input = fixtureDebug.query(By.css('input')).nativeElement;
         input.value = testString;
         input.dispatchEvent(new Event('input'));
         fixtureDebug.query(By.css('button')).nativeElement.dispatchEvent(new Event('click'));
         tick(50);
-        subscription.unsubscribe()
+        subscription.unsubscribe();
     }));
 
-    it('check localization', function () {
-        let button = fixtureDebug.query(By.css('button')).nativeElement;
+    it('check localization', function() {
+        const button = fixtureDebug.query(By.css('button')).nativeElement;
 
         expect(button.innerText.trim()).toBe(english.BUTTON_ADD);
 

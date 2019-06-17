@@ -1,19 +1,18 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {filter, startsWith} from 'lodash'
+import {TranslateService} from '@ngx-translate/core';
+import {filter, startsWith} from 'lodash';
 import {FilterParams} from '../../components/filter/models/filterParams';
 import {StringListItem} from '../../components/string-list/models/StringListItem';
-import {TranslateService} from '@ngx-translate/core';
 import {Statuses} from '../../enums/statuses.enum';
 
 @Pipe({
     name: 'stringFilter',
-    pure: false
+    pure: false,
 })
 export class StringFilterPipe implements PipeTransform {
 
     constructor(private translate: TranslateService) {
     }
-
 
     public transform(items: StringListItem[], filterParams: FilterParams) {
         if (!filterParams.text && !filterParams.status) {
@@ -30,10 +29,10 @@ export class StringFilterPipe implements PipeTransform {
      * @return {StringListItem[]} Возвращает отфильтрованый список.
      */
     private filterFn(items: StringListItem[], filterParams: FilterParams): StringListItem[] {
-        return filter(items, item => {
+        return filter(items, (item) => {
             return this.isStringStartsWith(item.transformedText, filterParams.text)
-                && StringFilterPipe.isStatusEqualsFilterStatus(item.status, filterParams.status);
-        })
+                && this.isStatusEqualsFilterStatus(item.status, filterParams.status);
+        });
     }
 
     /**
@@ -43,10 +42,11 @@ export class StringFilterPipe implements PipeTransform {
      * @return {boolean} Возвращает результат проверки.
      */
     private isStringStartsWith(str: string, filterString: string) {
-        if (!filterString) return true;
-
-        let trans: string = this.translate.instant(str).toLowerCase();
-        return startsWith(trans, filterString.toLowerCase())
+        if (!filterString) {
+            return true;
+        }
+        const trans: string = this.translate.instant(str).toLowerCase();
+        return startsWith(trans, filterString.toLowerCase());
     }
 
     /**
@@ -55,7 +55,7 @@ export class StringFilterPipe implements PipeTransform {
      * @param filterStatus Статус для фильтрации
      * @return {boolean} Возвращает результат проверки.
      */
-    private static isStatusEqualsFilterStatus(status: Statuses, filterStatus: Statuses) {
+    private isStatusEqualsFilterStatus(status: Statuses, filterStatus: Statuses) {
         return !filterStatus || status === filterStatus;
     }
 }

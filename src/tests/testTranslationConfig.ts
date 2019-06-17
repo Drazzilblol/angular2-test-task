@@ -4,6 +4,6 @@ import {TestTranslationLoader} from './testTranslationLoader';
 export const translateTestImport = [
 
     TranslateModule.forRoot({
-        loader: {provide: TranslateLoader, useClass: TestTranslationLoader}
-    })
+        loader: {provide: TranslateLoader, useClass: TestTranslationLoader},
+    }),
 ];

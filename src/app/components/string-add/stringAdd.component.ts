@@ -1,13 +1,13 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {now} from 'lodash';
+import {Statuses} from '../../enums/statuses.enum';
 import {StringsService} from '../../services/strings/strings.service';
 import {StringListItem} from '../string-list/models/StringListItem';
-import {now} from 'lodash'
-import {Statuses} from '../../enums/statuses.enum';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'string-add',
     templateUrl: './stringAdd.template.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StringAdd {
     constructor(private stringService: StringsService) {
@@ -17,7 +17,7 @@ export class StringAdd {
      * Передает строку сервису StringsFilterService для добавления в список.
      * @param {string} text Строка которая должна быть добавлена в список.
      */
-    addItem(text: string): void {
-        this.stringService.addString(new StringListItem(text, now(), Statuses.FRESH))
+    public addItem(text: string): void {
+        this.stringService.addString(new StringListItem(text, now(), Statuses.FRESH));
     }
 }

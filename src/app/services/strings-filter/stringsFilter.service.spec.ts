@@ -1,24 +1,24 @@
-import {Subscription} from 'rxjs';
 import {fakeAsync, tick} from '@angular/core/testing';
-import {StringsFilterService} from './stringsFilter.service';
-import {Statuses} from '../../enums/statuses.enum';
+import {Subscription} from 'rxjs';
 import {FilterParams} from '../../components/filter/models/filterParams';
+import {Statuses} from '../../enums/statuses.enum';
+import {StringsFilterService} from './stringsFilter.service';
 
-describe('strings filter service', function () {
+describe('strings filter service', function() {
     let filterService: StringsFilterService;
 
-    beforeEach(function () {
-        filterService = new StringsFilterService()
+    beforeEach(function() {
+        filterService = new StringsFilterService();
     });
 
-    afterAll(function () {
+    afterAll(function() {
         filterService = null;
     });
 
-    it('check is getObservable() returns value', fakeAsync(function () {
-        let testObject: FilterParams = new FilterParams('test', Statuses.FRESH);
+    it('check is getObservable() returns value', fakeAsync(function() {
+        const testObject: FilterParams = new FilterParams('test', Statuses.FRESH);
 
-        let subscription: Subscription = filterService.getObservable().subscribe(result => {
+        const subscription: Subscription = filterService.getObservable().subscribe((result) => {
             expect(result).toEqual(testObject);
         });
 

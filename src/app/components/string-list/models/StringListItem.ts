@@ -1,13 +1,13 @@
 import {Statuses} from 'app/enums/statuses.enum';
-import {isEmpty, filter} from 'lodash';
+import {filter, isEmpty} from 'lodash';
 
 const MESSAGE: string = 'MESSAGE';
 
 export class StringListItem {
-    originText: string;
-    transformedText: string;
-    date: number;
-    status: Statuses;
+    public date: number;
+    public originText: string;
+    public status: Statuses;
+    public transformedText: string;
 
     constructor(text: string, date: number, status: Statuses) {
         this.originText = text;
@@ -22,9 +22,11 @@ export class StringListItem {
      * @return {string} Если строка не содержит цифры возвращает сообщение,
      * если содержит то возвращает строку состоящую из цифр
      */
-    transformString(input: string): string {
-        if (isEmpty(input)) return MESSAGE;
-        let filteredArray = filter(input.split(''), element => !isNaN(+element));
+    public transformString(input: string): string {
+        if (isEmpty(input)) {
+            return MESSAGE;
+        }
+        const filteredArray = filter(input.split(''), (element) => !isNaN(+element));
         return filteredArray.length ? filteredArray.join('') : MESSAGE;
-    };
+    }
 }

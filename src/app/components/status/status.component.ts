@@ -3,16 +3,12 @@ import {Statuses} from '../../enums/statuses.enum';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'status',
     templateUrl: './status.template.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusComponent {
-    @Input() status: Statuses;
-
-    constructor() {
-    }
-
+    @Input() public status: Statuses;
 }
 
 

@@ -1,15 +1,12 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
-import {Statuses} from '../../enums/statuses.enum';
 import {animate, animateChild, group, query, state, style, transition, trigger} from '@angular/animations';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Statuses} from '../../enums/statuses.enum';
+import {StringsFilterService} from '../../services/strings-filter/stringsFilter.service';
 import {FilterParams} from './models/filterParams';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';
 
 @Component({
-    selector: 'filter',
-    templateUrl: './filter.template.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger('openClose', [
             state('open', style({
@@ -27,7 +24,7 @@ const NOT_SELECTED: string = 'NOT_SELECTED';
                     ]),
                     query('@rotateIcon', [
                         animateChild(),
-                    ])
+                    ]),
                 ]),
             ]),
         ]),
@@ -44,32 +41,35 @@ const NOT_SELECTED: string = 'NOT_SELECTED';
                 }),
                 animate('0.3s', style({
                     opacity: 0,
-                }))
+                })),
             ]),
         ]),
         trigger('rotateIcon', [
             state('back', style({
-                transform: 'rotate(180deg)'
+                transform: 'rotate(180deg)',
             })),
             state('forward', style({
-                transform: 'rotate(0)'
+                transform: 'rotate(0)',
             })),
             transition('back <=> forward', [
-                animate('0.3s')
+                animate('0.3s'),
             ]),
         ]),
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'filter',
+    templateUrl: './filter.template.html',
 })
 export class FilterComponent {
-    isOpen = false;
-    statuses = {
+    public isOpen = false;
+    public statuses = {
         [NOT_SELECTED]: null,
         [Statuses.FRESH]: Statuses.FRESH,
         [Statuses.YESTERDAY]: Statuses.YESTERDAY,
-        [Statuses.ROTTEN]: Statuses.ROTTEN
+        [Statuses.ROTTEN]: Statuses.ROTTEN,
     };
 
-    selected: string = this.statuses[NOT_SELECTED];
+    public selected: string = this.statuses[NOT_SELECTED];
 
     constructor(private filterService: StringsFilterService) {
     }
@@ -79,14 +79,14 @@ export class FilterComponent {
      * @param {string} text
      * @param {Statuses} status
      */
-    filter(text: string, status: string): void {
+    public filter(text: string, status: string): void {
         this.filterService.filter(new FilterParams(text ? text : null, this.statuses[status]));
     }
 
     /**
      * Сворачивает или разворачивает SideNav.
      */
-    toggle(): void {
+    public toggle(): void {
         this.isOpen = !this.isOpen;
     }
 }

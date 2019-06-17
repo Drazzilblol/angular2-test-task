@@ -10,7 +10,7 @@ export class StringsService {
     /**
      * Возвращает Observable, который будет возвращать элемены списка.
      */
-    getObservable(): Observable<StringListItem> {
+    public getObservable(): Observable<StringListItem> {
         return this.stringsObservable;
     }
 
@@ -18,7 +18,7 @@ export class StringsService {
      * Излучает элемент списка StringListItem.
      * @param {StringListItem} stringListItem Излучаемый элемент списка.
      */
-    addString(stringListItem: StringListItem): void {
+    public addString(stringListItem: StringListItem): void {
         this.stringsSource.next(stringListItem);
     }
 }

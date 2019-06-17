@@ -1,28 +1,28 @@
-import {FormsModule} from '@angular/forms';
+import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {translateTestImport} from 'tests/testTranslationConfig';
+import {FormsModule} from '@angular/forms';
+import {By} from '@angular/platform-browser';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
-import {StatusComponent} from './status.component';
-import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
-import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
+import {translateTestImport} from 'tests/testTranslationConfig';
 import {Statuses} from '../../enums/statuses.enum';
 import {ColorsPipe} from '../../pipes/colors/colors.pipe';
-import {By} from '@angular/platform-browser';
+import {StatusComponent} from './status.component';
 
-describe('status', function () {
+describe('status', function() {
     let component: StatusComponent;
     let fixture: ComponentFixture<StatusComponent>;
     let translate: TranslateService;
     let fixtureDebug: DebugElement;
 
-    beforeEach(function () {
+    beforeEach(function() {
         TestBed.configureTestingModule({
-            imports: [FormsModule, NgbTooltipModule, translateTestImport],
             declarations: [StatusComponent, ColorsPipe],
+            imports: [FormsModule, NgbTooltipModule, translateTestImport],
         }).overrideComponent(StatusComponent, {
-            set: {changeDetection: ChangeDetectionStrategy.Default}
+            set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
@@ -34,19 +34,19 @@ describe('status', function () {
         fixture.detectChanges();
     });
 
-    afterAll(function () {
+    afterAll(function() {
         fixture = null;
         component = null;
         translate = null;
         fixtureDebug = null;
     });
 
-    describe('component', function () {
+    describe('component', function() {
 
-        it('check color changing', function () {
+        it('check color changing', function() {
             component.status = Statuses.FRESH;
             fixture.detectChanges();
-            let status = fixtureDebug.query(By.css('div'));
+            const status = fixtureDebug.query(By.css('div'));
 
             expect(status.styles['background-color']).toBe('green');
 
@@ -61,10 +61,10 @@ describe('status', function () {
             expect(status.styles['background-color']).toBe('red');
         });
 
-        it('check tooltip', function () {
+        it('check tooltip', function() {
             component.status = Statuses.FRESH;
             fixture.detectChanges();
-            let status = fixtureDebug.query(By.css('div')).nativeElement;
+            const status = fixtureDebug.query(By.css('div')).nativeElement;
             status.dispatchEvent(new Event('mouseenter'));
 
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(english.STATUS.FRESH);
@@ -84,11 +84,11 @@ describe('status', function () {
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(english.STATUS.ROTTEN);
         });
 
-        it('check tooltip translation', function () {
+        it('check tooltip translation', function() {
             component.status = Statuses.FRESH;
             translate.use('ru');
             fixture.detectChanges();
-            let status = fixtureDebug.query(By.css('div')).nativeElement;
+            const status = fixtureDebug.query(By.css('div')).nativeElement;
             status.dispatchEvent(new Event('mouseenter'));
 
             expect(document.querySelector('ngb-tooltip-window').textContent).toBe(russian.STATUS.FRESH);
