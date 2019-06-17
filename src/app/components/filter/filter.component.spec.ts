@@ -2,7 +2,6 @@ import {DebugElement} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateService} from '@ngx-translate/core';
 import {findIndex} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
@@ -23,7 +22,7 @@ describe('filter', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [FilterComponent],
-            imports: [FormsModule, translateTestImport, NoopAnimationsModule],
+            imports: [FormsModule, translateTestImport],
             providers: [
                 StringsFilterService,
             ],

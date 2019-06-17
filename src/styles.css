@@ -134,11 +134,53 @@ li:hover {
 .status-green {
     background-color: green;
 }
+
 .status-yellow {
     background-color: yellow;
 }
+
 .status-red {
     background-color: red;
+}
+
+.side-nav-button-back {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.side-nav-button-forward {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+}
+
+.side-nav-form-open {
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+    opacity: 1;
+}
+
+.side-nav-form-closed {
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.side-nav-opened {
+    -webkit-transition: opacity 0.5s;
+    transition: width 0.5s;
+    width: 400px
+}
+
+.side-nav-closed {
+    -webkit-transition: opacity 0.5s;
+    transition: width 0.5s;
+    width: 50px
 }
 
 
