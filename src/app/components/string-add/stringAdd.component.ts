@@ -10,6 +10,8 @@ import {StringListItem} from '../string-list/models/StringListItem';
     templateUrl: './stringAdd.template.html',
 })
 export class StringAdd {
+    public text: string;
+
     constructor(private stringService: StringsService) {
     }
 

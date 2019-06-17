@@ -10,7 +10,6 @@ import {Statuses} from '../../enums/statuses.enum';
     pure: false,
 })
 export class StringFilterPipe implements PipeTransform {
-
     constructor(private translate: TranslateService) {
     }
 
@@ -18,7 +17,6 @@ export class StringFilterPipe implements PipeTransform {
         if (!filterParams.text && !filterParams.status) {
             return items;
         }
-
         return this.filterFn(items, filterParams);
     }
 

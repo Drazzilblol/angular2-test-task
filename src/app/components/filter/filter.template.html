@@ -3,7 +3,8 @@
         <input type="text" class="form-control filter-input" [(ngModel)]="text">
         <p>{{"FILTER.TITLE" | translate}}</p>
         <select class="form-control filter-input" [(ngModel)]="selected">
-            <option *ngFor="let status of statuses | keyvalue" [ngValue]=status.value>{{"STATUS." + status.key | translate}}
+            <option *ngFor="let status of statuses"
+                    [ngValue]=status>{{"STATUS." + status | translate}}
             </option>
         </select>
         <p>{{"FILTER.STATUS" | translate}}</p>
@@ -11,8 +12,8 @@
                 (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
         </button>
     </div>
-    <span [@rotateIcon]="isOpen ? 'back' : 'forward'" class="close-side-nav-button" (click)="toggle()"><i
-            class="material-icons md-36">arrow_back</i>
+    <span [@rotateIcon]="isOpen ? 'back' : 'forward'" class="close-side-nav-button" (click)="toggle()">
+        <i class="material-icons md-36">arrow_back</i>
     </span>
 </div>
 

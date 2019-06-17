@@ -8,12 +8,14 @@ export class StringListItem {
     public originText: string;
     public status: Statuses;
     public transformedText: string;
+    public id: string;
 
     constructor(text: string, date: number, status: Statuses) {
         this.originText = text;
         this.date = date;
         this.status = status;
         this.transformedText = this.transformString(text);
+        this.id = this.generateId();
     }
 
     /**
@@ -28,5 +30,9 @@ export class StringListItem {
         }
         const filteredArray = filter(input.split(''), (element) => !isNaN(+element));
         return filteredArray.length ? filteredArray.join('') : MESSAGE;
+    }
+
+    private generateId(): string {
+        return Math.random().toString(36).substr(2, 16);
     }
 }

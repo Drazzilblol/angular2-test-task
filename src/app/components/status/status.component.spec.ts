@@ -48,17 +48,17 @@ describe('status', function() {
             fixture.detectChanges();
             const status = fixtureDebug.query(By.css('div'));
 
-            expect(status.styles['background-color']).toBe('green');
+            expect(status.classes['status-green']).toBe(true);
 
             component.status = Statuses.YESTERDAY;
             fixture.detectChanges();
 
-            expect(status.styles['background-color']).toBe('yellow');
+            expect(status.classes['status-yellow']).toBe(true);
 
             component.status = Statuses.ROTTEN;
             fixture.detectChanges();
 
-            expect(status.styles['background-color']).toBe('red');
+            expect(status.classes['status-red']).toBe(true);
         });
 
         it('check tooltip', function() {

@@ -96,17 +96,17 @@ describe('item list', function() {
             fixture.detectChanges();
             const status = fixtureDebug.query(By.css('status>div'));
 
-            expect(status.styles['background-color']).toBe('green');
+            expect(status.classes['status-green']).toBe(true);
 
             tick(31000);
             fixture.detectChanges();
 
-            expect(status.styles['background-color']).toBe('yellow');
+            expect(status.classes['status-yellow']).toBe(true);
 
             tick(31000);
             fixture.detectChanges();
 
-            expect(status.styles['background-color']).toBe('red');
+            expect(status.classes['status-red']).toBe(true);
 
             clearInterval(component.interval);
         }));
@@ -139,7 +139,7 @@ describe('item list', function() {
             tick(31000);
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe('yellow');
+            expect(fixtureDebug.query(By.css('li:first-of-type div')).classes['status-yellow']).toBe(true);
 
             fixtureDebug.query(By.css('li:first-of-type button:last-of-type')).nativeElement
                 .dispatchEvent(new Event('click'));
@@ -147,7 +147,7 @@ describe('item list', function() {
             fixture.detectChanges();
 
             clearInterval(component.interval);
-            expect(fixtureDebug.query(By.css('li:first-of-type div')).styles['background-color']).toBe('green');
+            expect(fixtureDebug.query(By.css('li:first-of-type div')).classes['status-green']).toBe(true);
         }));
     });
 });

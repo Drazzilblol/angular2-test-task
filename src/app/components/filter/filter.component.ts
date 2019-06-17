@@ -5,6 +5,12 @@ import {StringsFilterService} from '../../services/strings-filter/stringsFilter.
 import {FilterParams} from './models/filterParams';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';
+const statusesMap = {
+    [NOT_SELECTED]: null,
+    [Statuses.FRESH]: Statuses.FRESH,
+    [Statuses.YESTERDAY]: Statuses.YESTERDAY,
+    [Statuses.ROTTEN]: Statuses.ROTTEN,
+};
 
 @Component({
     animations: [
@@ -62,14 +68,9 @@ const NOT_SELECTED: string = 'NOT_SELECTED';
 })
 export class FilterComponent {
     public isOpen = false;
-    public statuses = {
-        [NOT_SELECTED]: null,
-        [Statuses.FRESH]: Statuses.FRESH,
-        [Statuses.YESTERDAY]: Statuses.YESTERDAY,
-        [Statuses.ROTTEN]: Statuses.ROTTEN,
-    };
-
-    public selected: string = this.statuses[NOT_SELECTED];
+    public statuses = Object.keys(statusesMap);
+    public selected: string = NOT_SELECTED;
+    public text: string;
 
     constructor(private filterService: StringsFilterService) {
     }
@@ -80,7 +81,7 @@ export class FilterComponent {
      * @param {Statuses} status
      */
     public filter(text: string, status: string): void {
-        this.filterService.filter(new FilterParams(text ? text : null, this.statuses[status]));
+        this.filterService.filter(new FilterParams(text ? text : null, statusesMap[status]));
     }
 
     /**

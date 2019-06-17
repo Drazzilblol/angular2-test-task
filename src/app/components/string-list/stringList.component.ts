@@ -50,21 +50,21 @@ export class StringList implements OnDestroy {
 
     /**
      * Удаляет строку из списка.
-     * @param {number} date Время созания удаляемой строки в списке.
+     * @param {string} id Уникальный идентификатор.
      */
-    public deleteItem(date: number): void {
+    public deleteItem(id: string): void {
         remove(this.stringListItems, (item) => {
-            return item.date === date;
+            return item.id === id;
         });
     }
 
     /**
      * Сбразывает статус элемента, изменяет время создания на текущее.
-     * @param {number} date Время созания удаляемой строки в списке.
+     * @param {string} id Уникальный идентификатор.
      */
-    public resetItemStatus(date: number): void {
+    public resetItemStatus(id: string): void {
         forEach(this.stringListItems, (item) => {
-            if (item.date === date) {
+            if (item.id === id) {
                 item.date = now();
                 item.status = Statuses.FRESH;
             }

@@ -131,6 +131,17 @@ li:hover {
     font-size: 48px;
 }
 
+.status-green {
+    background-color: green;
+}
+.status-yellow {
+    background-color: yellow;
+}
+.status-red {
+    background-color: red;
+}
+
+
 
 
 
