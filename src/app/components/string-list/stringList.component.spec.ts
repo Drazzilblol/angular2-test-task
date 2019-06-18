@@ -107,8 +107,6 @@ describe('item list', function() {
             fixture.detectChanges();
 
             expect(status.classes['status-red']).toBe(true);
-
-            clearInterval(component.interval);
         }));
 
         it('check filter', fakeAsync(function() {
@@ -127,9 +125,9 @@ describe('item list', function() {
 
             component.filterParams = {text: '2', status: Statuses.FRESH};
             fixture.detectChanges();
-            clearInterval(component.interval);
 
             expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe('2');
+            component.intervalSub.unsubscribe();
         }));
 
         it('check items refresh', fakeAsync(function() {
@@ -146,8 +144,8 @@ describe('item list', function() {
 
             fixture.detectChanges();
 
-            clearInterval(component.interval);
             expect(fixtureDebug.query(By.css('li:first-of-type div')).classes['status-green']).toBe(true);
+            component.intervalSub.unsubscribe();
         }));
     });
 });

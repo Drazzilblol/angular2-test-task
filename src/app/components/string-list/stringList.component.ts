@@ -4,7 +4,7 @@ import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
 import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
 import {StringsService} from 'app/services/strings/strings.service';
 import {forEach, now, remove} from 'lodash';
-import {Subscription} from 'rxjs';
+import {interval, Subscription} from 'rxjs';
 import {FilterParams} from '../filter/models/filterParams';
 import {StringListItem} from './models/StringListItem';
 
@@ -14,10 +14,10 @@ import {StringListItem} from './models/StringListItem';
     templateUrl: './stringList.template.html',
 })
 export class StringList implements OnDestroy {
-    public interval: number = 0;
     public filterParams: FilterParams = new FilterParams('', null);
     public subscription: Subscription;
     public stringListItems: StringListItem[] = [];
+    public intervalSub: Subscription;
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
                 private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
@@ -39,8 +39,7 @@ export class StringList implements OnDestroy {
         this.subscription.add(filterService.getObservable().subscribe((filterParams) => {
             this.filterParams = filterParams;
             if (filterParams.text || filterParams.status) {
-                clearInterval(this.interval);
-                this.interval = 0;
+                this.intervalSub.unsubscribe();
             } else {
                 this.countdown();
             }
@@ -49,7 +48,7 @@ export class StringList implements OnDestroy {
     }
 
     /**
-     * Удаляет строку из списка.
+     * Удаляет строку из списка
      * @param {string} id Уникальный идентификатор.
      */
     public deleteItem(id: string): void {
@@ -74,7 +73,9 @@ export class StringList implements OnDestroy {
 
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
-        clearInterval(this.interval);
+        if (this.intervalSub) {
+            this.intervalSub.unsubscribe();
+        }
     }
 
     /**
@@ -84,8 +85,8 @@ export class StringList implements OnDestroy {
      * @return {number} Возвращает номер интервала.
      */
     public countdown(): void {
-        if (this.interval === 0 && !this.filterParams.text && !this.filterParams.status) {
-            this.interval = window.setInterval(() => {
+        if ((!this.intervalSub || this.intervalSub.closed) && !this.filterParams.text && !this.filterParams.status) {
+            this.intervalSub = interval(1000).subscribe(() => {
                 const currentTime: number = now();
                 let rottenCounter: number = 0;
                 let isStatusChanged: boolean = false;
@@ -108,10 +109,9 @@ export class StringList implements OnDestroy {
                     this.changeDetector.markForCheck();
                 }
                 if (this.stringListItems.length === rottenCounter) {
-                    clearInterval(this.interval);
-                    this.interval = 0;
+                    this.intervalSub.unsubscribe();
                 }
-            }, 1000);
+            });
         }
     }
 }
