@@ -9,22 +9,6 @@ body {
     overflow: hidden;
 }
 
-ul {
-    list-style-type: none;
-    width: 500px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 93vh;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-li:hover {
-    background: #eee;
-    cursor: pointer;
-}
-
 .string-add {
     position: absolute;
     left: 50%;
@@ -49,11 +33,21 @@ li:hover {
     box-shadow: none !important;
 }
 
-.status {
-    width: 20px;
-    height: 100%;
-    float: left;
-    margin-right: 15px;
+/*String list component*/
+ul {
+    list-style-type: none;
+    width: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 93vh;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+li:hover {
+    background: #eee;
+    cursor: pointer;
 }
 
 .list-group-item {
@@ -80,6 +74,44 @@ li:hover {
     margin-top: 5px;
 }
 
+/*Icons sizes*/
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-22 {
+    font-size: 22px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+/*Statuses component*/
+.status {
+    width: 20px;
+    height: 100%;
+    float: left;
+    margin-right: 15px;
+}
+
+.status-green {
+    background-color: green;
+}
+
+.status-yellow {
+    background-color: yellow;
+}
+
+.status-red {
+    background-color: red;
+}
+
+/*Filter component*/
 .filter-component {
     position: relative;
     padding: 20px;
@@ -113,34 +145,6 @@ li:hover {
 
 .filter-component p {
     margin-left: 20px;
-}
-
-.material-icons.md-18 {
-    font-size: 18px;
-}
-
-.material-icons.md-22 {
-    font-size: 22px;
-}
-
-.material-icons.md-36 {
-    font-size: 36px;
-}
-
-.material-icons.md-48 {
-    font-size: 48px;
-}
-
-.status-green {
-    background-color: green;
-}
-
-.status-yellow {
-    background-color: yellow;
-}
-
-.status-red {
-    background-color: red;
 }
 
 .side-nav-button-back {
@@ -182,8 +186,3 @@ li:hover {
     transition: width 0.5s;
     width: 50px
 }
-
-
-
-
-

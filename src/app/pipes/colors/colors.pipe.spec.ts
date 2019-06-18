@@ -14,8 +14,8 @@ describe('colors pipe', function() {
     });
 
     it('should return object which contain color', function() {
-        expect(colorsPipe.transform(Statuses.FRESH)).toEqual({'status-green': true});
-        expect(colorsPipe.transform(Statuses.YESTERDAY)).toEqual({'status-yellow': true});
-        expect(colorsPipe.transform(Statuses.ROTTEN)).toEqual({'status-red': true});
+        expect(colorsPipe.transform(Statuses.FRESH)).toBe('status-green');
+        expect(colorsPipe.transform(Statuses.YESTERDAY)).toBe('status-yellow');
+        expect(colorsPipe.transform(Statuses.ROTTEN)).toBe('status-red');
     });
 });

@@ -1,5 +1,6 @@
 import {Statuses} from 'app/enums/statuses.enum';
 import {filter, isEmpty} from 'lodash';
+import {IdGenerator} from '../../../utils/idGenerator';
 
 const MESSAGE: string = 'MESSAGE';
 
@@ -15,7 +16,7 @@ export class StringListItem {
         this.date = date;
         this.status = status;
         this.transformedText = this.transformString(text);
-        this.id = this.generateId();
+        this.id = IdGenerator.generateId();
     }
 
     /**
@@ -30,9 +31,5 @@ export class StringListItem {
         }
         const filteredArray = filter(input.split(''), (element) => !isNaN(+element));
         return filteredArray.length ? filteredArray.join('') : MESSAGE;
-    }
-
-    private generateId(): string {
-        return Math.random().toString(36).substr(2, 16);
     }
 }

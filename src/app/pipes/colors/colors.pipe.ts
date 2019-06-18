@@ -14,7 +14,7 @@ export class ColorsPipe implements PipeTransform {
      * @param {Statuses} status текущий статус.
      * @return {string} Возвращает цвет компонета в зависимости от текщего статуса.
      */
-    public transform(status: Statuses): object {
-        return {[colorsMap[status]]: true};
+    public transform(status: Statuses): string {
+        return colorsMap[status];
     }
 }
