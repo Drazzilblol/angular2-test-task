@@ -12,9 +12,9 @@
                 (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
         </button>
     </div>
-    <span [ngClass]="{'side-nav-button-forward' : !isOpen, 'side-nav-button-back' : isOpen}"
-          class="close-side-nav-button" (click)="toggle()">
-        <i class="material-icons md-36">arrow_back</i>
+    <span class="close-side-nav-button" (click)="toggle()">
+        <i [ngClass]="{'side-nav-button-forward' : !isOpen, 'side-nav-button-back' : isOpen}"
+           class="material-icons md-36">arrow_back</i>
     </span>
 </div>
 
