@@ -22,7 +22,7 @@ export class StringList implements OnDestroy {
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
                 private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
 
-        this.subscription = stringService.getObservable().subscribe((stringListItem) => {
+        this.subscription = stringService.getObservable().subscribe((stringListItem: StringListItem) => {
             this.stringListItems.push(stringListItem);
             changeDetector.markForCheck();
             this.countdown();
@@ -36,7 +36,7 @@ export class StringList implements OnDestroy {
             this.countdown();
         }));
 
-        this.subscription.add(filterService.getObservable().subscribe((filterParams) => {
+        this.subscription.add(filterService.getObservable().subscribe((filterParams: FilterParams) => {
             this.filterParams = filterParams;
             if (filterParams.text || filterParams.status) {
                 this.intervalSub.unsubscribe();

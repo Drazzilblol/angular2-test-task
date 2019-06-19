@@ -22,7 +22,7 @@ describe('strings http service', function() {
     });
 
     it('check is observable returns value', function() {
-        const fakeStrings = [
+        const data = [
             {text: 'test1', date: 1560435761965, status: 'FRESH'},
             {text: 'test2', date: 1560435761966, status: 'FRESH'},
             {text: 'test3', date: 1560435761967, status: 'FRESH'},
@@ -30,11 +30,11 @@ describe('strings http service', function() {
 
         httpService.getStrings().subscribe((result) => {
             expect(result.length).toBe(3);
-            expect(result).toEqual(fakeStrings);
+            expect(result).toEqual(data);
         });
 
         const req = httpMock.expectOne('http://localhost:3000/strings');
         expect(req.request.method).toBe('GET');
-        req.flush(fakeStrings);
+        req.flush(data);
     });
 });
