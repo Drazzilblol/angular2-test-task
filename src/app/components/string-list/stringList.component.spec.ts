@@ -54,7 +54,7 @@ describe('item list', function() {
         it('check item with numbers', function() {
             const resultString: string = '1234';
 
-            component.stringListItems = [new StringListItem('t1e2s3t4', now(), Statuses.FRESH)];
+            component.stringListItems = [new StringListItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('li span')).nativeElement.innerText).toBe(resultString);
@@ -62,7 +62,7 @@ describe('item list', function() {
 
         it('check items deleting', function() {
             const resultString: string = '12345';
-            component.stringListItems = [new StringListItem(resultString, now(), Statuses.FRESH)];
+            component.stringListItems = [new StringListItem(resultString, new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
             const firstElement = fixtureDebug.query(By.css('li:first-of-type')).nativeElement;
 
@@ -77,7 +77,7 @@ describe('item list', function() {
         });
 
         it('check item without numbers', function() {
-            component.stringListItems = [new StringListItem('test', now(), Statuses.FRESH)];
+            component.stringListItems = [new StringListItem('test', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
             const firstElement = fixtureDebug.query(By.css('li:first-of-type span')).nativeElement;
 
@@ -90,7 +90,7 @@ describe('item list', function() {
         });
 
         it('check is status change over time', fakeAsync(function() {
-            const listItem: StringListItem = new StringListItem('test', now(), Statuses.FRESH);
+            const listItem: StringListItem = new StringListItem('test', new Date(now()), Statuses.FRESH);
             component.stringListItems = [listItem];
             component.countdown();
             fixture.detectChanges();
@@ -110,8 +110,8 @@ describe('item list', function() {
         }));
 
         it('check filter', fakeAsync(function() {
-            const testListItem1: StringListItem = new StringListItem('test1', now(), Statuses.FRESH);
-            const testListItem2: StringListItem = new StringListItem('test2', now(), Statuses.FRESH);
+            const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.FRESH);
+            const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
 
             component.stringListItems = [testListItem1];
             component.countdown();
@@ -132,7 +132,7 @@ describe('item list', function() {
 
         it('check items refresh', fakeAsync(function() {
             const resultString: string = '12345';
-            component.stringListItems = [new StringListItem(resultString, now(), Statuses.FRESH)];
+            component.stringListItems = [new StringListItem(resultString, new Date(now()), Statuses.FRESH)];
             component.countdown();
             tick(31000);
             fixture.detectChanges();

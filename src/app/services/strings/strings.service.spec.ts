@@ -17,7 +17,7 @@ describe('stringListItems service', function() {
     });
 
     it('check is getObservable() returns value', fakeAsync(function() {
-        const testString: StringListItem = new StringListItem('test', now(), Statuses.FRESH);
+        const testString: StringListItem = new StringListItem('test', new Date(now()), Statuses.FRESH);
 
         const subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
             expect(result).toEqual(testString);

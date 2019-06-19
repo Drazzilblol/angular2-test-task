@@ -2,8 +2,9 @@
     <li class="list-group-item content-left"
         *ngFor="let item of stringListItems | stringFilter : filterParams">
         <status [status]=item.status></status>
-        <span placement="left" [ngbTooltip]="item.transformedText | translate"
+        <span class="content" placement="left" [ngbTooltip]="item.transformedText | translate"
               container="body">{{item.transformedText | translate}}</span>
+        <span class="date">{{item.parsedDate}}</span>
         <button class="btn btn-sm btn-danger float-right string-list-button"
                 (click)="deleteItem(item.id)"><i class="material-icons md-22">delete</i></button>
         <button class="btn btn-sm btn-primary float-right string-list-button"

@@ -20,6 +20,6 @@ export class StringAdd {
      * @param {string} text Строка которая должна быть добавлена в список.
      */
     public addItem(text: string): void {
-        this.stringService.addString(new StringListItem(text, now(), Statuses.FRESH));
+        this.stringService.addString(new StringListItem(text, new Date(now()), Statuses.FRESH));
     }
 }

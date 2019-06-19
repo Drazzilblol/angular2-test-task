@@ -22,7 +22,7 @@ describe('string filter pipe', function() {
     });
 
     it('should return object which contain color', function() {
-        const testItem: StringListItem = new StringListItem('123', now(), Statuses.FRESH);
+        const testItem: StringListItem = new StringListItem('123', new Date(now()), Statuses.FRESH);
         const stringItems: StringListItem[] = [testItem];
 
         expect(stringFilter.transform(stringItems, new FilterParams('123', null))).toEqual([testItem]);

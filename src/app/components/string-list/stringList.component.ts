@@ -64,7 +64,7 @@ export class StringList implements OnDestroy {
     public resetItemStatus(id: string): void {
         forEach(this.stringListItems, (item) => {
             if (item.id === id) {
-                item.date = now();
+                item.date = new Date(now());
                 item.status = Statuses.FRESH;
             }
         });
@@ -95,7 +95,7 @@ export class StringList implements OnDestroy {
                         rottenCounter++;
                         return;
                     }
-                    const timeDifference = currentTime - item.date;
+                    const timeDifference = currentTime - item.date.getTime();
                     if (timeDifference > 60000) {
                         item.status = Statuses.ROTTEN;
                         isStatusChanged = true;
