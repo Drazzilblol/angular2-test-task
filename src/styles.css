@@ -149,6 +149,11 @@ li:hover {
     float: right;
 }
 
+.reset-button {
+    float: right;
+    margin-left: 10px;
+}
+
 .filter-component > * {
     margin-bottom: 10px;
 }

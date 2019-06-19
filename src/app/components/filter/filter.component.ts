@@ -35,6 +35,15 @@ export class FilterComponent {
     }
 
     /**
+     * Сбрасывает параметры фильтрации.
+     */
+    public resetFilter(): void {
+        this.selected = NOT_SELECTED;
+        this.text = '';
+        this.filterService.filter(new FilterParams(null, null));
+    }
+
+    /**
      * Сворачивает или разворачивает SideNav.
      */
     public toggle(): void {

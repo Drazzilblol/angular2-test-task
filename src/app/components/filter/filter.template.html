@@ -8,6 +8,9 @@
             </option>
         </select>
         <p>{{"FILTER.STATUS" | translate}}</p>
+        <button class="btn btn-secondary reset-button"
+                (click)="resetFilter()">{{"FILTER.BUTTON_RESET" | translate}}
+        </button>
         <button class="btn btn-secondary find-button"
                 (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
         </button>

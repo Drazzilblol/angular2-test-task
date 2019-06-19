@@ -22,6 +22,7 @@
   "FILTER": {
     "TITLE": "Название",
     "STATUS": "Статус",
-    "BUTTON_FIND": "Найти"
+    "BUTTON_FIND": "Найти",
+    "BUTTON_RESET": "Сбросить"
   }
 }
