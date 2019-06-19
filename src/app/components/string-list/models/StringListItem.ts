@@ -41,7 +41,7 @@ export class StringListItem {
      * @return {string} Преобразованя дата.
      */
     private parseDate(): string {
-        return moment(this.dateMils.getTime()).format('DD-MM-YYYY HH:mm');
+        return moment(this.dateMils.getTime()).format('DD-MM-YYYY HH:mm:ss');
     }
 
     set date(date: Date) {

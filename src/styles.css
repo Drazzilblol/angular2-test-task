@@ -61,7 +61,7 @@ li:hover {
     display: inline-block;
     float: left;
     margin-top: 13px;
-    width: 400px;
+    width: 380px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
