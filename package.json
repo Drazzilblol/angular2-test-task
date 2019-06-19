@@ -21,7 +21,7 @@
     "core-js": "2.6.5",
     "lodash": "4.17.11",
     "material-design-icons": "3.0.1",
-    "moment": "^2.24.0",
+    "moment": "2.24.0",
     "rxjs": "6.5.2",
     "zone.js": "0.9.1"
   },

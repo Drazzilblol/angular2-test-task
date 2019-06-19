@@ -30,7 +30,7 @@ export class StringList implements OnDestroy {
 
         this.subscription.add(getStringsService.getStrings().subscribe((res: any[]) => {
             forEach(res, (item) => {
-                this.stringListItems.push(new StringListItem(item.text, item.date, item.status));
+                this.stringListItems.push(new StringListItem(item.text, new Date(item.date), item.status));
             });
             changeDetector.markForCheck();
             this.countdown();

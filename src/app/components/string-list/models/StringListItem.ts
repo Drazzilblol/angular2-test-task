@@ -1,6 +1,6 @@
 import {Statuses} from 'app/enums/statuses.enum';
+import {IdGenerator} from 'app/utils/idGenerator';
 import {filter, isEmpty} from 'lodash';
-import {IdGenerator} from '../../../utils/idGenerator';
 import moment = require('moment');
 
 const MESSAGE: string = 'MESSAGE';
@@ -37,11 +37,11 @@ export class StringListItem {
     }
 
     /**
-     * Преобразует дату в строку формата DD-MM-YYYY hh:mm.
+     * Преобразует дату в строку формата DD-MM-YYYY HH:mm.
      * @return {string} Преобразованя дата.
      */
     private parseDate(): string {
-        return moment(this.dateMils.getTime()).format('DD-MM-YYYY hh:mm');
+        return moment(this.dateMils.getTime()).format('DD-MM-YYYY HH:mm');
     }
 
     set date(date: Date) {
