@@ -29,7 +29,7 @@ export class StringList implements OnDestroy {
         });
 
         this.subscription.add(getStringsService.getStrings().subscribe((res: any[]) => {
-            res.forEach((item) => {
+            forEach(res, (item) => {
                 this.stringListItems.push(new StringListItem(item.text, item.date, item.status));
             });
             changeDetector.markForCheck();
