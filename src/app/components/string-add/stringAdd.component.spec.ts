@@ -46,12 +46,6 @@ describe('item add', function() {
         const button = fixtureDebug.query(By.css('button')).nativeElement;
 
         expect(button.disabled).toBe(true);
-
-        const input = fixture.nativeElement.querySelector('input');
-        input.value = '                ';
-        input.dispatchEvent(new Event('input'));
-
-        expect(button.disabled).toBe(true);
     });
 
     it('check add item', fakeAsync(function() {

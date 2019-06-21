@@ -29,10 +29,10 @@ export class StringListItem {
      * если содержит то возвращает строку состоящую из цифр.
      */
     public transformString(input: string): string {
-        if (isEmpty(input)) {
+        if (isEmpty(input.trim())) {
             return MESSAGE;
         }
-        const filteredArray = filter(input.split(''), (element) => !isNaN(+element));
+        const filteredArray = filter(input.trim().split(''), (element) => !isNaN(+element));
         return filteredArray.length ? filteredArray.join('') : MESSAGE;
     }
 

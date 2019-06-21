@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
 import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
 import {FilterParams} from './models/filterParams';
@@ -16,30 +17,41 @@ const statusesMap = {
     selector: 'filter',
     templateUrl: './filter.template.html',
 })
-export class FilterComponent {
+export class FilterComponent implements OnInit {
     public isOpen = false;
     public statuses = Object.keys(statusesMap);
-    public selected: string = NOT_SELECTED;
-    public text: string;
+    public filterForm: FormGroup;
 
     constructor(private filterService: StringsFilterService) {
     }
 
+    public ngOnInit(): void {
+        this.filterForm = new FormGroup({
+            filterString: new FormControl('', [
+                Validators.pattern('[\\w\\s\\dА-Яа-я]{0,10}'),
+            ]),
+            statusSelect: new FormControl(NOT_SELECTED),
+        });
+    }
+
     /**
      * Передает сервису параметры для фильтрации.
-     * @param {string} text
-     * @param {Statuses} status
      */
-    public filter(text: string, status: string): void {
-        this.filterService.filter(new FilterParams(text ? text : null, statusesMap[status]));
+    public filter(): void {
+        const filterFormValue = this.filterForm.value;
+        this.filterService.filter(new FilterParams(
+            filterFormValue.filterString ? filterFormValue.filterString : null,
+            statusesMap[this.filterForm.value.statusSelect]),
+        );
     }
 
     /**
      * Сбрасывает параметры фильтрации.
      */
     public resetFilter(): void {
-        this.selected = NOT_SELECTED;
-        this.text = '';
+        const filterFormValue = this.filterForm;
+        filterFormValue.controls.statusSelect.setValue(NOT_SELECTED);
+        filterFormValue.controls.filterString.setValue('');
         this.filterService.filter(new FilterParams(null, null));
     }
 

@@ -1,8 +1,9 @@
 <div [ngClass]="{'side-nav-closed' : !isOpen, 'side-nav-opened' : isOpen}" class="filter-component">
-    <div [ngClass]="{'side-nav-form-closed' : !isOpen, 'side-nav-form-open' : isOpen}">
-        <input type="text" class="form-control filter-input" [(ngModel)]="text">
+    <form [formGroup]="filterForm" novalidate
+          [ngClass]="{'side-nav-form-closed' : !isOpen, 'side-nav-form-open' : isOpen}">
+        <input formControlName="filterString" type="text" class="form-control filter-input">
         <p>{{"FILTER.TITLE" | translate}}</p>
-        <select class="form-control filter-input" [(ngModel)]="selected">
+        <select formControlName="statusSelect" class="form-control filter-input">
             <option *ngFor="let status of statuses"
                     [ngValue]=status>{{"STATUS." + status | translate}}
             </option>
@@ -11,10 +12,10 @@
         <button class="btn btn-secondary reset-button"
                 (click)="resetFilter()">{{"FILTER.BUTTON_RESET" | translate}}
         </button>
-        <button class="btn btn-secondary find-button"
-                (click)="filter(text, selected)">{{"FILTER.BUTTON_FIND" | translate}}
+        <button [disabled]="filterForm.invalid" class="btn btn-secondary find-button"
+                (click)="filter()">{{"FILTER.BUTTON_FIND" | translate}}
         </button>
-    </div>
+    </form>
     <div class="close-side-nav-button" (click)="toggle()">
         <i [ngClass]="{'side-nav-button-forward' : !isOpen, 'side-nav-button-back' : isOpen}"
            class="material-icons md-36">arrow_back</i>

@@ -1,6 +1,6 @@
 import {DebugElement} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import {Statuses} from 'app/enums/statuses.enum';
@@ -22,7 +22,7 @@ describe('filter.styles.css', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [FilterComponent],
-            imports: [FormsModule, translateTestImport],
+            imports: [FormsModule, ReactiveFormsModule, translateTestImport],
             providers: [
                 StringsFilterService,
             ],
@@ -77,11 +77,8 @@ describe('filter.styles.css', function() {
             statusSelect.dispatchEvent(new Event('change'));
             fixture.debugElement.query(By.css('.reset-button')).nativeElement.dispatchEvent(new Event('click'));
 
-            fixture.whenStable().then(() => {
-                expect(input.value).toBe('');
-                expect(statusSelect.selectedIndex).toBe(0);
-            });
-
+            expect(input.value).toBe('');
+            expect(statusSelect.selectedIndex).toBe(0);
             expect(filterService.filter).toHaveBeenCalledWith(filterParams);
         });
 
