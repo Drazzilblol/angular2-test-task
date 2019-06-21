@@ -17,6 +17,10 @@ body {
     transform: translate(-50%, 0);
 }
 
+input.ng-touched.ng-invalid {border:solid red 1px;}
+
+input.ng-touched.ng-valid {border:solid green 1px;}
+
 .lang-select {
     margin: 5px;
     padding: 5px;

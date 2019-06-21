@@ -1,5 +1,6 @@
 {
   "BUTTON_ADD": "Add",
+  "ADD_TOOLTIP": "Enter 3 - 15 symbols",
   "BUTTON_DELETE": "Delete",
   "BUTTON_LANGUAGE": "Language",
   "BUTTON_RESET": "Reset",

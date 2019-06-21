@@ -1,6 +1,6 @@
 import {DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
@@ -21,7 +21,7 @@ describe('item add', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [StringAdd],
-            imports: [FormsModule, translateTestImport],
+            imports: [FormsModule, ReactiveFormsModule, translateTestImport],
             providers: [StringsService],
         }).compileComponents();
 

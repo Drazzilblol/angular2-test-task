@@ -1,10 +1,12 @@
-<div class="input-group">
-    <input type="text" class="form-control" [(ngModel)]="text" aria-describedby="basic-addon2">
-    <div class="input-group-append">
-        <button [disabled]="!text" class="btn btn-light" (click)="addItem(text)">{{"BUTTON_ADD" | translate}}
-        </button>
+<form [formGroup]="addForm" novalidate>
+    <div class="form-group input-group">
+        <input formControlName="text" name="text" type="text" class="form-control" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button [disabled]="addForm.invalid" class="btn btn-light" (click)="addItem()">{{"BUTTON_ADD" | translate}}
+            </button>
+        </div>
     </div>
-</div>
+</form>
 
 
 

@@ -1,6 +1,6 @@
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import {StringList} from './string-list/stringList.component';
     declarations: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
     entryComponents: [LanguageDialog],
     exports: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
-    imports: [BrowserModule, NgbModule, FormsModule, HttpClientModule, PipesModule,
+    imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
         TranslateModule.forRoot({
             loader: {
                 deps: [HttpClient],
