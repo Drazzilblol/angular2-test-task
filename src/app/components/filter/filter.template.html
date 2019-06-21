@@ -1,5 +1,5 @@
 <div [ngClass]="{'side-nav-closed' : !isOpen, 'side-nav-opened' : isOpen}" class="filter-component">
-    <form [formGroup]="filterForm" novalidate
+    <form [formGroup]="filterForm" novalidate autocomplete="off"
           [ngClass]="{'side-nav-form-closed' : !isOpen, 'side-nav-form-open' : isOpen}">
         <input formControlName="filterString" type="text" class="form-control filter-input">
         <p>{{"FILTER.TITLE" | translate}}</p>

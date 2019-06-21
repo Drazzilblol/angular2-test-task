@@ -41,7 +41,7 @@ export class FilterComponent implements OnInit {
         const filterFormValue = this.filterForm.value;
         this.filterService.filter(new FilterParams(
             filterFormValue.filterString ? filterFormValue.filterString : null,
-            statusesMap[this.filterForm.value.statusSelect]),
+            statusesMap[filterFormValue.statusSelect]),
         );
     }
 
