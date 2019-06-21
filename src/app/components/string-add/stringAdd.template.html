@@ -1,5 +1,7 @@
 <form [formGroup]="addForm" novalidate autocomplete="off" class="input-group">
-    <input formControlName="text" name="text" type="text" class="form-control" aria-describedby="basic-addon2">
+    <input placement="bottom" [ngbTooltip]="'ADD_TOOLTIP' | translate" [disableTooltip]="addForm.valid"
+           container="body" formControlName="text" name="text" type="text" class="form-control"
+           aria-describedby="basic-addon2">
     <div class="input-group-append">
         <button [disabled]="addForm.invalid" class="btn btn-light" (click)="addItem()">{{"BUTTON_ADD" | translate}}
         </button>

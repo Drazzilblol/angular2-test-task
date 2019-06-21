@@ -28,7 +28,7 @@ describe('item list', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [StringList, StatusComponent, ColorsPipe, StringFilterPipe],
-            imports: [FormsModule, translateTestImport, NgbTooltipModule, HttpClientModule],
+            imports: [translateTestImport, NgbTooltipModule, HttpClientModule],
             providers: [StringsService, StringsFilterService, StringsHttpService],
         }).overrideComponent(StringList, {
             set: {changeDetection: ChangeDetectionStrategy.Default},

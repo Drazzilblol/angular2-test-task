@@ -2,6 +2,7 @@ import {DebugElement} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
+import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {Statuses} from 'app/enums/statuses.enum';
 import english from 'app/locales/locale-en.json';
@@ -22,7 +23,7 @@ describe('filter.styles.css', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [FilterComponent],
-            imports: [FormsModule, ReactiveFormsModule, translateTestImport],
+            imports: [NgbTooltipModule, ReactiveFormsModule, translateTestImport],
             providers: [
                 StringsFilterService,
             ],

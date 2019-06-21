@@ -1,7 +1,8 @@
 <div [ngClass]="{'side-nav-closed' : !isOpen, 'side-nav-opened' : isOpen}" class="filter-component">
     <form [formGroup]="filterForm" novalidate autocomplete="off"
           [ngClass]="{'side-nav-form-closed' : !isOpen, 'side-nav-form-open' : isOpen}">
-        <input formControlName="filterString" type="text" class="form-control filter-input">
+        <input placement="bottom" [ngbTooltip]="'FILTER_TOOLTIP' | translate" [disableTooltip]="filterForm.valid"
+               container="body" formControlName="filterString" type="text" class="form-control filter-input">
         <p>{{"FILTER.TITLE" | translate}}</p>
         <select formControlName="statusSelect" class="form-control filter-input">
             <option *ngFor="let status of statuses"

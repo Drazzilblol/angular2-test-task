@@ -1,6 +1,7 @@
 {
   "BUTTON_ADD": "Добавить",
   "ADD_TOOLTIP": "Введите 3 - 15 символов",
+  "FILTER_TOOLTIP": "Введите не более 10 символов",
   "BUTTON_DELETE": "Удалить",
   "BUTTON_LANGUAGE": "Язык",
   "BUTTON_RESET": "Обновить",

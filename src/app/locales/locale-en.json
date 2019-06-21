@@ -1,6 +1,7 @@
 {
   "BUTTON_ADD": "Add",
-  "ADD_TOOLTIP": "Enter 3 - 15 symbols",
+  "ADD_TOOLTIP": "Enter 3 - 15 characters",
+  "FILTER_TOOLTIP": "Enter no more than 10 characters",
   "BUTTON_DELETE": "Delete",
   "BUTTON_LANGUAGE": "Language",
   "BUTTON_RESET": "Reset",

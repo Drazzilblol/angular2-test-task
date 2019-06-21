@@ -2,6 +2,7 @@ import {DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
+import {NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
@@ -21,7 +22,7 @@ describe('item add', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [StringAdd],
-            imports: [FormsModule, ReactiveFormsModule, translateTestImport],
+            imports: [NgbTooltipModule, ReactiveFormsModule, translateTestImport],
             providers: [StringsService],
         }).compileComponents();
 
