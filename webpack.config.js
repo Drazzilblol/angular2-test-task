@@ -6,9 +6,9 @@ const path = require('path');
 module.exports = {
     entry: './src/main.ts',
     output: {
-        filename: 'app.bundle.js'
+        filename: '[name].bundle.js'
     },
-    mode: "development",
+    mode: "production",
     resolve: {
         extensions: ['.ts', '.js'],
         modules: [
@@ -58,6 +58,7 @@ module.exports = {
                     enforce: true,
                 },
             },
+            chunks: "all"
         },
     },
 };

@@ -1,15 +1,17 @@
-<ul class="list-group">
-    <li class="list-group-item content-left"
-        *ngFor="let item of stringListItems | stringFilter : filterParams">
-        <status [status]=item.status></status>
-        <span class="content" placement="left" [ngbTooltip]="item.transformedText | translate"
-              container="body">{{item.transformedText | translate}}</span>
-        <span class="date">{{item.parsedDate}}</span>
-        <button placement="left" [ngbTooltip]="'BUTTON_DELETE' | translate"
-                container="body" class="btn btn-sm btn-danger float-right string-list-button"
-                (click)="deleteItem(item.id)"><i class="material-icons md-22">delete</i></button>
-        <button placement="left" [ngbTooltip]="'BUTTON_RESET' | translate"
-                container="body" class="btn btn-sm btn-primary float-right string-list-button"
-                (click)="resetItemStatus(item.id)"><i class="material-icons md-22">loop</i></button>
-    </li>
-</ul>
+<div class="list-group grid-container">
+    <div class="cont">
+        <div class="grid-row content-left"
+             *ngFor="let item of stringListItems | stringFilter : filterParams">
+            <status class="status" [status]=item.status></status>
+            <span class="content" placement="left" [ngbTooltip]="item.transformedText | translate"
+                  container="body">{{item.transformedText | translate}}</span>
+            <span class="date">{{item.parsedDate}}</span>
+            <button placement="left" [ngbTooltip]="'BUTTON_DELETE' | translate"
+                    container="body" class="btn btn-sm btn-danger float-right string-list-button"
+                    (click)="deleteItem(item.id)"><i class="material-icons md-22">delete</i></button>
+            <button placement="left" [ngbTooltip]="'BUTTON_RESET' | translate"
+                    container="body" class="btn btn-sm btn-primary float-right string-list-button"
+                    (click)="resetItemStatus(item.id)"><i class="material-icons md-22">loop</i></button>
+        </div>
+    </div>
+</div>

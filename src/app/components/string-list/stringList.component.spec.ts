@@ -56,14 +56,14 @@ describe('item list', function() {
             component.stringListItems = [new StringListItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li span')).nativeElement.innerText).toBe(resultString);
+            expect(fixtureDebug.query(By.css('.grid-row span')).nativeElement.innerText).toBe(resultString);
         });
 
         it('check items deleting', function() {
             const resultString: string = '12345';
             component.stringListItems = [new StringListItem(resultString, new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
-            const firstElement = fixtureDebug.query(By.css('li:first-of-type')).nativeElement;
+            const firstElement = fixtureDebug.query(By.css('.grid-row:first-of-type')).nativeElement;
 
             expect(firstElement.querySelector('span').innerText).toBe(resultString);
 
@@ -78,7 +78,7 @@ describe('item list', function() {
         it('check item without numbers', function() {
             component.stringListItems = [new StringListItem('test', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
-            const firstElement = fixtureDebug.query(By.css('li:first-of-type span')).nativeElement;
+            const firstElement = fixtureDebug.query(By.css('.grid-row:first-of-type span')).nativeElement;
 
             expect(firstElement.innerText).toBe(english.MESSAGE);
 
@@ -120,12 +120,12 @@ describe('item list', function() {
             component.filterParams = {text: '1', status: Statuses.YESTERDAY};
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe('1');
+            expect(fixtureDebug.query(By.css('.grid-row>span')).nativeElement.innerText).toBe('1');
 
             component.filterParams = {text: '2', status: Statuses.FRESH};
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li>span')).nativeElement.innerText).toBe('2');
+            expect(fixtureDebug.query(By.css('.grid-row>span')).nativeElement.innerText).toBe('2');
             component.intervalSub.unsubscribe();
         }));
 
@@ -136,14 +136,14 @@ describe('item list', function() {
             tick(31000);
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li:first-of-type div')).classes['status-yellow']).toBe(true);
+            expect(fixtureDebug.query(By.css('.grid-row:first-of-type div')).classes['status-yellow']).toBe(true);
 
-            fixtureDebug.query(By.css('li:first-of-type button:last-of-type')).nativeElement
+            fixtureDebug.query(By.css('.grid-row:first-of-type button:last-of-type')).nativeElement
                 .dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('li:first-of-type div')).classes['status-green']).toBe(true);
+            expect(fixtureDebug.query(By.css('.grid-row:first-of-type div')).classes['status-green']).toBe(true);
             component.intervalSub.unsubscribe();
         }));
     });
