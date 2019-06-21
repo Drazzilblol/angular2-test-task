@@ -56,7 +56,7 @@ describe('filter.styles.css', function() {
             input.dispatchEvent(new Event('input'));
             const statusSelect = fixture.debugElement.query(By.css('select')).nativeElement;
             statusSelect.selectedIndex = findIndex(statusSelect.options, (item: HTMLOptionElement) => {
-                return item.label === 'Fresh';
+                return item.value === Statuses.FRESH;
             });
             statusSelect.dispatchEvent(new Event('change'));
             fixture.debugElement.query(By.css('.find-button')).nativeElement.dispatchEvent(new Event('click'));
@@ -72,7 +72,7 @@ describe('filter.styles.css', function() {
             input.dispatchEvent(new Event('input'));
             const statusSelect = fixture.debugElement.query(By.css('select')).nativeElement;
             statusSelect.selectedIndex = findIndex(statusSelect.options, (item: HTMLOptionElement) => {
-                return item.label === 'Fresh';
+                return item.value === Statuses.FRESH;
             });
 
             statusSelect.dispatchEvent(new Event('change'));
@@ -90,7 +90,7 @@ describe('filter.styles.css', function() {
             const title = fixture.debugElement.query(By.css('p:first-of-type')).nativeElement;
             const stat = fixture.debugElement.query(By.css('p:last-of-type')).nativeElement;
             const index: number = findIndex(statusSelect.options, (item: HTMLOptionElement) => {
-                return item.label === 'Not selected';
+                return item.value === 'NOT_SELECTED';
             });
 
             expect(findButton.innerText.trim()).toBe(english.FILTER.BUTTON_FIND);

@@ -6,7 +6,7 @@
         <p>{{"FILTER.TITLE" | translate}}</p>
         <select formControlName="statusSelect" class="form-control filter-input">
             <option *ngFor="let status of statuses"
-                    [ngValue]=status>{{"STATUS." + status | translate}}
+                    [value]=status>{{"STATUS." + status | translate}}
             </option>
         </select>
         <p>{{"FILTER.STATUS" | translate}}</p>
