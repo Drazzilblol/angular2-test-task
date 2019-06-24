@@ -135,7 +135,7 @@ input.ng-dirty.ng-valid {
     width: 50px
 }
 
-/*String grig component*/
+/*String grid component*/
 .grid-container {
     display: -ms-grid;
     display: grid;
