@@ -1,0 +1,15 @@
+<div class="list-group grid-container">
+    <div class="cont">
+        <strings-grid-header (onSort)="sort($event)"></strings-grid-header>
+        <div class="grid-row hoverable-row"
+             *ngFor="let item of stringListItems | stringFilter : filterParams">
+            <div>
+                <status class="status" [status]=item.status></status>
+            </div>
+            <div class="content" placement="left" [ngbTooltip]="item.transformedText | translate"
+                 container="body">{{item.transformedText | translate}}</div>
+            <div class="content">{{item.originText}}</div>
+            <div class="content-date">{{item.parsedDate}}</div>
+        </div>
+    </div>
+</div>

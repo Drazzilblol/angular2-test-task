@@ -1,0 +1,15 @@
+<div class="grid-row content-left">
+    <div class="header-content"></div>
+    <div class="header-content"
+         (click)="sort(sortParams.TRANSFORMED)">{{'STRING_GRID_HEADER.TRANSFORMED_TEXT' | translate}}<i
+            *ngIf="sortParams.TRANSFORMED  === currentSort.column"
+            class="material-icons md-14 icon-right">{{icon}}</i></div>
+    <div class="header-content"
+         (click)="sort(sortParams.ORIGIN)">{{'STRING_GRID_HEADER.ORIGIN_TEXT' | translate}}<i
+            *ngIf="sortParams.ORIGIN  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
+    </div>
+    <div class="header-content"
+         (click)="sort(sortParams.DATE)">{{'STRING_GRID_HEADER.DATE' | translate}}<i
+            *ngIf="sortParams.DATE  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
+    </div>
+</div>

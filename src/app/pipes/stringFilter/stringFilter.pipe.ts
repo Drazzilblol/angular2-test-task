@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {FilterParams} from 'app/components/filter/models/filterParams';
-import {StringListItem} from 'app/components/string-list/models/StringListItem';
+import {StringListItem} from 'app/components/string-grid-container/models/StringListItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {filter, startsWith} from 'lodash';
 
@@ -21,7 +21,7 @@ export class StringFilterPipe implements PipeTransform {
     }
 
     /**
-     * Фильрует массив элементов StringListItem согласно данным для фильтрации.
+     * Фильрует массив элементов SortParams согласно данным для фильтрации.
      * @param items Массив элементов.
      * @param filterParams Прараметры фильрации.
      * @return {StringListItem[]} Возвращает отфильтрованый список.

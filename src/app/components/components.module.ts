@@ -14,12 +14,14 @@ import {LanguageDialog} from './language/dialog/languageDialog.component';
 import {Language} from './language/language.component';
 import {StatusComponent} from './status/status.component';
 import {StringAdd} from './string-add/stringAdd.component';
-import {StringList} from './string-list/stringList.component';
+import {StringList} from './string-grid-container/stringGridContainer.component';
+import {StringsGridHeader} from './string-grid-header/stringGridHeader.component';
 
 @NgModule({
-    declarations: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
+    declarations: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent,
+        StringsGridHeader],
     entryComponents: [LanguageDialog],
-    exports: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent],
+    exports: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent, StringsGridHeader],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
         TranslateModule.forRoot({
             loader: {

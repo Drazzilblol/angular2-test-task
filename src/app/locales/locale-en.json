@@ -26,5 +26,10 @@
     "STATUS": "Status",
     "BUTTON_FIND": "Find",
     "BUTTON_RESET": "Reset"
+  },
+  "STRING_GRID_HEADER": {
+    "ORIGIN_TEXT": "Origin Text",
+    "TRANSFORMED_TEXT": "Transformed Text",
+    "DATE": "Date"
   }
 }

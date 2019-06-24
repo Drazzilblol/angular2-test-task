@@ -9,7 +9,7 @@ import russian from 'app/locales/locale-ru.json';
 import {StringsService} from 'app/services/strings/strings.service';
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {StringListItem} from '../string-list/models/StringListItem';
+import {StringListItem} from '../string-grid-container/models/StringListItem';
 import {StringAdd} from './stringAdd.component';
 
 describe('item add', function() {

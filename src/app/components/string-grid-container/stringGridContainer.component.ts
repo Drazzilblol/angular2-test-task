@@ -3,15 +3,17 @@ import {Statuses} from 'app/enums/statuses.enum';
 import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
 import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
 import {StringsService} from 'app/services/strings/strings.service';
-import {forEach, now, remove} from 'lodash';
+import {forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
+import {Order} from '../../enums/order.enum';
 import {FilterParams} from '../filter/models/filterParams';
+import {SortParams} from '../string-grid-header/models/SortParams';
 import {StringListItem} from './models/StringListItem';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    selector: 'strings-list',
-    templateUrl: './stringList.template.html',
+    selector: 'strings-grid',
+    templateUrl: './stringGridContainer.template.html',
 })
 export class StringList implements OnDestroy {
     public filterParams: FilterParams = new FilterParams('', null);
@@ -45,30 +47,6 @@ export class StringList implements OnDestroy {
             }
             changeDetector.markForCheck();
         }));
-    }
-
-    /**
-     * Удаляет строку из списка
-     * @param {string} id Уникальный идентификатор.
-     */
-    public deleteItem(id: string): void {
-        remove(this.stringListItems, (item) => {
-            return item.id === id;
-        });
-    }
-
-    /**
-     * Сбразывает статус элемента, изменяет время создания на текущее.
-     * @param {string} id Уникальный идентификатор.
-     */
-    public resetItemStatus(id: string): void {
-        forEach(this.stringListItems, (item) => {
-            if (item.id === id) {
-                item.date = new Date(now());
-                item.status = Statuses.FRESH;
-            }
-        });
-        this.countdown();
     }
 
     public ngOnDestroy(): void {
@@ -113,5 +91,19 @@ export class StringList implements OnDestroy {
                 }
             });
         }
+    }
+
+    /**
+     * Сортирует элементы в порядке указаном в params.
+     * @param params
+     */
+    public sort(params: SortParams): void {
+        this.stringListItems.sort((a, b) => {
+            return a[params.column].localeCompare(b[params.column], undefined, {numeric: true, sensitivity: 'base'});
+        });
+        if (params.order === Order.DESC) {
+            this.stringListItems = this.stringListItems.reverse();
+        }
+        this.changeDetector.markForCheck();
     }
 }

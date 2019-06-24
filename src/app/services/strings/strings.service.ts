@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {StringListItem} from 'app/components/string-list/models/StringListItem';
+import {StringListItem} from 'app/components/string-grid-container/models/StringListItem';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class StringsService {
     }
 
     /**
-     * Излучает элемент списка StringListItem.
+     * Излучает элемент списка SortParams.
      * @param {StringListItem} stringListItem Излучаемый элемент списка.
      */
     public addString(stringListItem: StringListItem): void {

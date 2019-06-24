@@ -14,9 +14,13 @@ import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.se
 import {StringsService} from 'app/services/strings/strings.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
+import {Order} from 'app/enums/order.enum';
+import {Sort} from 'app/enums/sort.enum';
 import {StatusComponent} from '../status/status.component';
+import {SortParams} from '../string-grid-header/models/SortParams';
+import {StringsGridHeader} from '../string-grid-header/stringGridHeader.component';
 import {StringListItem} from './models/StringListItem';
-import {StringList} from './stringList.component';
+import {StringList} from './stringGridContainer.component';
 
 describe('item list', function() {
     let component: StringList;
@@ -26,7 +30,7 @@ describe('item list', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [StringList, StatusComponent, ColorsPipe, StringFilterPipe],
+            declarations: [StringList, StatusComponent, ColorsPipe, StringFilterPipe, StringsGridHeader],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule],
             providers: [StringsService, StringsFilterService, StringsHttpService],
         }).overrideComponent(StringList, {
@@ -56,29 +60,13 @@ describe('item list', function() {
             component.stringListItems = [new StringListItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('.grid-row span')).nativeElement.innerText).toBe(resultString);
-        });
-
-        it('check items deleting', function() {
-            const resultString: string = '12345';
-            component.stringListItems = [new StringListItem(resultString, new Date(now()), Statuses.FRESH)];
-            fixture.detectChanges();
-            const firstElement = fixtureDebug.query(By.css('.grid-row:first-of-type')).nativeElement;
-
-            expect(firstElement.querySelector('span').innerText).toBe(resultString);
-
-            firstElement.querySelector('button')
-                .dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-
-            expect(fixtureDebug.query(By.css('li:first-of-type span'))).toBe(null);
+            expect(fixtureDebug.query(By.css('.content')).nativeElement.innerText).toBe(resultString);
         });
 
         it('check item without numbers', function() {
             component.stringListItems = [new StringListItem('test', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
-            const firstElement = fixtureDebug.query(By.css('.grid-row:first-of-type span')).nativeElement;
+            const firstElement = fixtureDebug.query(By.css('.content')).nativeElement;
 
             expect(firstElement.innerText).toBe(english.MESSAGE);
 
@@ -120,31 +108,37 @@ describe('item list', function() {
             component.filterParams = {text: '1', status: Statuses.YESTERDAY};
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('.grid-row>span')).nativeElement.innerText).toBe('1');
+            expect(fixtureDebug.query(By.css('.content')).nativeElement.innerText).toBe('1');
 
             component.filterParams = {text: '2', status: Statuses.FRESH};
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('.grid-row>span')).nativeElement.innerText).toBe('2');
+            expect(fixtureDebug.query(By.css('.content')).nativeElement.innerText).toBe('2');
             component.intervalSub.unsubscribe();
         }));
 
-        it('check items refresh', fakeAsync(function() {
-            const resultString: string = '12345';
-            component.stringListItems = [new StringListItem(resultString, new Date(now()), Statuses.FRESH)];
-            component.countdown();
-            tick(31000);
+        it('check sorting', function() {
+            const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.FRESH);
+            const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
+
+            component.stringListItems = [testListItem2, testListItem1];
+            component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));
             fixture.detectChanges();
+            let row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 
-            expect(fixtureDebug.query(By.css('.grid-row:first-of-type div')).classes['status-yellow']).toBe(true);
+            expect(row[0].query(By.css('.content')).nativeElement.innerText)
+                .toBe('1');
+            expect(row[1].query(By.css('.content')).nativeElement.innerText)
+                .toBe('2');
 
-            fixtureDebug.query(By.css('.grid-row:first-of-type button:last-of-type')).nativeElement
-                .dispatchEvent(new Event('click'));
-
+            component.sort(new SortParams(Sort.TRANSFORMED, Order.DESC));
             fixture.detectChanges();
+            row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 
-            expect(fixtureDebug.query(By.css('.grid-row:first-of-type div')).classes['status-green']).toBe(true);
-            component.intervalSub.unsubscribe();
-        }));
+            expect(row[0].query(By.css('.content')).nativeElement.innerText)
+                .toBe('2');
+            expect(row[1].query(By.css('.content')).nativeElement.innerText)
+                .toBe('1');
+        });
     });
 });
