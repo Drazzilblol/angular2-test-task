@@ -20,7 +20,7 @@ export class StringAdd implements OnInit {
         this.addForm = new FormGroup({
             text: new FormControl('', [
                 Validators.required,
-                Validators.pattern('[\\w\\s\\dА-Яа-я]{3,15}'),
+                Validators.pattern('[\\w\\s\\dА-Яа-я]{3,}'),
             ]),
         });
     }

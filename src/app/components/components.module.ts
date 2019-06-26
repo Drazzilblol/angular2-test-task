@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {AngularResizedEventModule} from 'angular-resize-event';
 import {PipesModule} from '../pipes/pipes.module';
 import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
 import {StringsFilterService} from '../services/strings-filter/stringsFilter.service';
@@ -22,7 +23,7 @@ import {StringsGridHeader} from './string-grid-header/stringGridHeader.component
         StringsGridHeader],
     entryComponents: [LanguageDialog],
     exports: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent, StringsGridHeader],
-    imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
+    imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule, AngularResizedEventModule,
         TranslateModule.forRoot({
             loader: {
                 deps: [HttpClient],

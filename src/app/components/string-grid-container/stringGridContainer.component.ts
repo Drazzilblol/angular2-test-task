@@ -1,11 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {Order} from 'app/enums/order.enum';
 import {Statuses} from 'app/enums/statuses.enum';
 import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
 import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
 import {StringsService} from 'app/services/strings/strings.service';
 import {forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
-import {Order} from '../../enums/order.enum';
+import {Columns} from '../../enums/columns.enum';
 import {FilterParams} from '../filter/models/filterParams';
 import {SortParams} from '../string-grid-header/models/SortParams';
 import {StringListItem} from './models/StringListItem';
@@ -20,6 +21,13 @@ export class StringList implements OnDestroy {
     public subscription: Subscription;
     public stringListItems: StringListItem[] = [];
     public intervalSub: Subscription;
+    public columns = Columns;
+
+    public columnsWidth = {
+        [Columns.DATE]: 220,
+        [Columns.ORIGIN]: 280,
+        [Columns.TRANSFORMED]: 280,
+    };
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
                 private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
@@ -105,5 +113,16 @@ export class StringList implements OnDestroy {
             this.stringListItems = this.stringListItems.reverse();
         }
         this.changeDetector.markForCheck();
+    }
+
+    /**
+     * Изменяет ширину столбца исходя из ширины столбца в шапке, так же изменяет соседний столбец в зависимости от того
+     * как изменяется основной столбец.
+     * @param params Параметры изменения, содержит основной столбец, соседний столбец и ширину
+     */
+    public resize(params): void {
+        const diff: number = this.columnsWidth[params.column] - params.width;
+        this.columnsWidth[params.column] = params.width;
+        this.columnsWidth[params.nextColumn] = this.columnsWidth[params.nextColumn] + diff;
     }
 }
