@@ -48,9 +48,7 @@ input.ng-dirty.ng-valid {
     width: 20px;
     height: 50px;
     float: left;
-    margin-right: 15px;
     border-bottom: 1px solid #ddd;;
-    border-right: 1px solid #ddd;;
 }
 
 .status-green {
@@ -144,7 +142,7 @@ input.ng-dirty.ng-valid {
     overflow-y: auto;
     overflow-x: hidden;
     position: absolute;
-    width: 800px;
+    width: 818px;
     left: 50%;
     transform: translate(-50%, 0);
 }
@@ -165,6 +163,7 @@ input.ng-dirty.ng-valid {
     grid-column: 1;
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
+    box-sizing: border-box;
     min-height: 50px;
     max-height: 50px;
     min-width: 20px;
@@ -204,6 +203,7 @@ input.ng-dirty.ng-valid {
 
 .cont {
     height: 94vh;
+    width: 800px;
 }
 
 .content {
