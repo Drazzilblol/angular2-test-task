@@ -1,6 +1,7 @@
 <div class="grid-row">
     <div class="header-content"></div>
     <div class="header-content transformed-column" (mousedown)="sort(sortParams.TRANSFORMED)"
+         [title]="columns.TRANSFORMED"
          [ngStyle]="{'width.px' : columnsWidth[columns.TRANSFORMED].toString()}">
         <i *ngIf="sortParams.TRANSFORMED  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
         <span placement="left" [ngbTooltip]="'STRING_GRID_HEADER.TRANSFORMED_TEXT' | translate"
@@ -9,7 +10,7 @@
              <span class="grid-border"></span>
         </span>
     </div>
-    <div class="header-content origin-column" (mousedown)="sort(sortParams.ORIGIN)"
+    <div class="header-content origin-column" (mousedown)="sort(sortParams.ORIGIN)" [title]="columns.ORIGIN"
          [ngStyle]="{'width.px' : columnsWidth[columns.ORIGIN].toString()}">
         <i *ngIf="sortParams.ORIGIN  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
         <span placement="left" [ngbTooltip]="'STRING_GRID_HEADER.ORIGIN_TEXT' | translate"
@@ -18,7 +19,7 @@
             <span class="grid-border"></span>
         </span>
     </div>
-    <div class="header-content date-column" (mousedown)="sort(sortParams.DATE)"
+    <div class="header-content date-column" (mousedown)="sort(sortParams.DATE)" [title]="columns.DATE"
          [ngStyle]="{'width.px' : columnsWidth[columns.DATE].toString()}">
         <i *ngIf="sortParams.DATE  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
         <span placement="left" [ngbTooltip]="'STRING_GRID_HEADER.DATE' | translate"

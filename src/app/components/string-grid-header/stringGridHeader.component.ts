@@ -1,7 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
 import {Sort} from 'app/enums/sort.enum';
+import {forEach, size} from 'lodash';
 import {Columns} from '../../enums/columns.enum';
+import {ColumnOptions} from '../string-grid-column/models/ColumnOptions';
 import {SortParams} from './models/SortParams';
 
 @Component({
@@ -17,7 +19,7 @@ export class StringsGridHeader {
     public currentSort: SortParams = new SortParams(Sort.DATE, Order.ASC);
     public columns = Columns;
     public columnsWidth = {
-        [Columns.DATE]: 220,
+        [Columns.DATE]: 216,
         [Columns.ORIGIN]: 280,
         [Columns.TRANSFORMED]: 280,
     };
@@ -27,6 +29,8 @@ export class StringsGridHeader {
     private startWidth: any;
     private nextElementStartWidth: number;
     private nextElement: HTMLElement;
+    private mouseMove: () => void;
+    private mouseUp: () => void;
 
     constructor(private renderer: Renderer2) {
     }
@@ -49,42 +53,45 @@ export class StringsGridHeader {
 
     /**
      * Отсылает изменения столбцов.
-     * @param column Изменяемы столбец.
-     * @param nextColumn Соседний столбец, который изменяется в зависимости от изменений основного столбца.
-     * @param width Новая ширина основного столбца.
+     * @param options
      */
-    public resize(column: string, nextColumn: string, width: number) {
-        this.onResize.emit({column, nextColumn, width});
+    public resize(options: ColumnOptions) {
+        this.onResize.emit(options);
+    }
+
+    public recalculateHeaderColumns(oldOpt, newOpt): void {
+        const diff: number = oldOpt - newOpt;
+        forEach(this.columnsWidth, (value, key) => {
+            if (key !== newOpt.title) {
+                this.columnsWidth[key] = value + diff / (size(this.columnsWidth) - 1);
+            }
+        });
     }
 
     /**
      * Отслеживает перемещения мыши после нажатия и изменяет ширину колонок в шапке.
      */
     private initResizableColumns() {
-        this.renderer.listen('body', 'mousemove', (event) => {
+        this.mouseMove = this.renderer.listen('body', 'mousemove', (event) => {
                 if (this.pressed) {
-                    const diff = (event.x - this.startX);
+                    const diff = (event.pageX - this.startX);
                     const width = this.startWidth + diff;
-                    if (this.nextElementStartWidth - diff > 110 && width > 110) {
-                        if (this.start.parentElement.classList.contains(Columns.DATE)) {
-                            this.columnsWidth[Columns.DATE] = width;
-                            this.resize(Columns.DATE, '', width);
-                        } else if (this.start.parentElement.classList.contains(Columns.ORIGIN)) {
-                            this.columnsWidth[Columns.ORIGIN] = width;
-                            this.columnsWidth[Columns.DATE] = this.nextElementStartWidth - diff;
-                            this.resize(Columns.ORIGIN, Columns.DATE, width);
-                        } else if (this.start.parentElement.classList.contains(Columns.TRANSFORMED)) {
-                            this.columnsWidth[Columns.TRANSFORMED] = width;
-                            this.columnsWidth[Columns.ORIGIN] = this.nextElementStartWidth - diff;
-                            this.resize(Columns.TRANSFORMED, Columns.ORIGIN, width);
-                        }
+                    const nextElementWidth = this.nextElementStartWidth - diff;
+
+                    if (nextElementWidth > 110 && width > 110) {
+                        const column = this.start.parentElement.title;
+                        this.recalculateHeaderColumns(this.columnsWidth[column], width);
+                        this.columnsWidth[column] = width;
+                        this.resize(new ColumnOptions(column, width));
                     }
                 }
             },
         );
-        this.renderer.listen('body', 'mouseup', () => {
+        this.mouseUp = this.renderer.listen('body', 'mouseup', () => {
             if (this.pressed) {
                 this.pressed = false;
+                this.mouseMove();
+                this.mouseUp();
             }
         });
     }
@@ -93,15 +100,16 @@ export class StringsGridHeader {
      * При нажатии на ЛКМ начинает отслеживание перемещений мыши.
      */
     private onMouseDown(event) {
+        event.stopPropagation();
         this.start = event.target;
         this.pressed = true;
-        this.startX = event.x;
+        this.startX = event.pageX;
         this.startWidth = this.start.parentElement.offsetWidth;
         this.nextElement = this.start.parentElement.nextElementSibling as HTMLElement;
         if (this.nextElement) {
             this.nextElementStartWidth = this.nextElement.offsetWidth;
         }
         this.initResizableColumns();
-        event.stopPropagation();
     }
+
 }

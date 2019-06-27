@@ -6,7 +6,7 @@ import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.se
 import {StringsService} from 'app/services/strings/strings.service';
 import {forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
-import {Columns} from '../../enums/columns.enum';
+import {GridOptionsTransmitterService} from '../../services/grid-options-transmitter/gridOptionsTransmitter.service';
 import {FilterParams} from '../filter/models/filterParams';
 import {SortParams} from '../string-grid-header/models/SortParams';
 import {StringListItem} from './models/StringListItem';
@@ -21,16 +21,10 @@ export class StringList implements OnDestroy {
     public subscription: Subscription;
     public stringListItems: StringListItem[] = [];
     public intervalSub: Subscription;
-    public columns = Columns;
-
-    public columnsWidth = {
-        [Columns.DATE]: 220,
-        [Columns.ORIGIN]: 280,
-        [Columns.TRANSFORMED]: 280,
-    };
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
-                private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
+                private filterService: StringsFilterService, private getStringsService: StringsHttpService,
+                private transmittr: GridOptionsTransmitterService) {
 
         this.subscription = stringService.getObservable().subscribe((stringListItem: StringListItem) => {
             this.stringListItems.push(stringListItem);
@@ -121,8 +115,6 @@ export class StringList implements OnDestroy {
      * @param params Параметры изменения, содержит основной столбец, соседний столбец и ширину
      */
     public resize(params): void {
-        const diff: number = this.columnsWidth[params.column] - params.width;
-        this.columnsWidth[params.column] = params.width;
-        this.columnsWidth[params.nextColumn] = this.columnsWidth[params.nextColumn] + diff;
+        this.transmittr.send(params);
     }
 }

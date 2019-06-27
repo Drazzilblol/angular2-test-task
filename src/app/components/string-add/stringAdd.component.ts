@@ -26,7 +26,7 @@ export class StringAdd implements OnInit {
     }
 
     /**
-     * Передает строку сервису StringsFilterService для добавления в список.
+     * Передает строку сервису GridOptionsTransmitterService для добавления в список.
      */
     public addItem(): void {
         this.stringService.addString(new StringListItem(this.addForm.value.text, new Date(now()), Statuses.FRESH));
