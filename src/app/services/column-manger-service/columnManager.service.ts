@@ -7,7 +7,7 @@ import {Column} from './column';
 @Injectable()
 export class ColumnManagerService {
 
-    private columns = {
+    public columns = {
         [Columns.STATUS]: new Column(Columns.STATUS, 22, 1, false),
         [Columns.DATE]: new Column(Columns.DATE, 216, 4, true),
         [Columns.ORIGIN]: new Column(Columns.ORIGIN, 280, 3, true),
@@ -34,17 +34,19 @@ export class ColumnManagerService {
      * @param width
      */
     public changeWidth(title: string, width: number): void {
-        this.recalculateHeaderColumns(this.columns[title].width, width);
+        this.recalculateColumns(this.columns[title], {title, width});
         this.columns[title].width = width;
-        this.stringsSource.next({title, width});
+        this.stringsSource.next();
 
     }
 
-    private recalculateHeaderColumns(oldOpt, newOpt): void {
-        const diff: number = oldOpt - newOpt;
+    private recalculateColumns(oldOpt, newOpt): void {
+        const diff: number = oldOpt.width - newOpt.width;
         forEach(this.columns, (value, key) => {
-            if (key !== newOpt.title && value.resizable) {
-                this.columns[key].width = value.width + diff / (size(filter(this.columns, 'resizable')) - 1);
+            if (key !== newOpt.title && value.resizable && oldOpt.position < value.position) {
+                this.columns[key].width = value.width + diff / (size(filter(this.columns, (col) => {
+                    return col.resizable && oldOpt.position < col.position && col.width >= 110;
+                })));
             }
         });
     }

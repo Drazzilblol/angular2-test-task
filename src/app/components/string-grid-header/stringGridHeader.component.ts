@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
 import {Sort} from 'app/enums/sort.enum';
-import {forEach, size} from 'lodash';
+import {filter, forEach, size} from 'lodash';
 import {Columns} from '../../enums/columns.enum';
 import {ColumnManagerService} from '../../services/column-manger-service/columnManager.service';
 import {SortParams} from './models/SortParams';
@@ -54,10 +54,13 @@ export class StringsGridHeader {
 
     public recalculateHeaderColumns(column, width): void {
         const diff: number = this.columnsWidth[column] - width;
+        const columns = this.columnManagerService.columns;
 
-        forEach(this.columnsWidth, (value, key) => {
-            if (key !== column) {
-                this.columnsWidth[key] = value + diff / (size(this.columnsWidth) - 1);
+        forEach(columns, (value, key) => {
+            if (key !== column && value.resizable && columns[column].position < value.position) {
+                this.columnsWidth[key] = this.columnsWidth[key] + diff / (size(filter(columns, (col) => {
+                    return col.resizable && columns[column].position < col.position && this.columnsWidth[col.title] >= 110;
+                })));
             }
         });
     }
@@ -74,7 +77,7 @@ export class StringsGridHeader {
                     width = this.startWidth + diff;
                     const nextElementWidth = this.nextElementStartWidth - diff;
 
-                    if (nextElementWidth > 110 && width > 110) {
+                    if (nextElementWidth > 110 && width >= 110) {
                         this.recalculateHeaderColumns(column, width);
                         this.columnsWidth[column] = width;
                         this.changeDetector.markForCheck();
