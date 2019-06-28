@@ -1,0 +1,26 @@
+<div class="grid-row">
+    <strings-grid-cell [column]="columns.STATUS">
+        <status class="status" [status]=item.status></status>
+    </strings-grid-cell>
+
+    <strings-grid-cell placement="left" [ngbTooltip]="item.transformedText | translate" container="body"
+                       [column]="columns.TRANSFORMED" class="content transformed-column">
+        {{item.transformedText | translate}}
+        <span class="border-container">
+            <span class="grid-border"></span>
+        </span>
+    </strings-grid-cell>
+
+    <strings-grid-cell placement="left" [ngbTooltip]="item.originText | translate" container="body"
+                       [column]="columns.ORIGIN" class="content origin-column">
+        {{item.originText}}
+        <span class="border-container">
+            <span class="grid-border"></span>
+        </span>
+    </strings-grid-cell>
+
+    <strings-grid-cell placement="left" [ngbTooltip]="item.parsedDate | translate" container="body"
+                       [column]="columns.DATE" class="content date-column">
+        {{item.parsedDate}}
+    </strings-grid-cell>
+</div>

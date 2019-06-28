@@ -1,32 +1,9 @@
 <div class="grid-container">
     <div class="cont">
-        <strings-grid-header (onSort)="sort($event)" (onResize)="resize($event)"></strings-grid-header>
+        <strings-grid-header (onSort)="sort($event)"></strings-grid-header>
 
-        <strings-grid-column-manager [items]=stringListItems></strings-grid-column-manager>
-        <!--        <div class="grid-row hoverable-row"
-                     *ngFor="let item of stringListItems | stringFilter : filterParams">
-                    <div>
-                        <status class="status" [status]=item.status></status>
-                    </div>
-                    <div class="content transformed-column" placement="left" container="body"
-                         [ngbTooltip]="item.transformedText | translate"
-                         [ngStyle]="{'width.px' : columnsWidth[columns.TRANSFORMED].toString()}">{{item.transformedText | translate}}
-                        <span class="border-container">
-                            <span class="grid-border"></span>
-                        </span>
-                    </div>
-
-                    <div class="content origin-column" placement="left" [ngbTooltip]="item.originText | translate"
-                         container="body"
-                         [ngStyle]="{'width.px' : columnsWidth[columns.ORIGIN].toString()}">{{item.originText}}
-                        <span class="border-container">
-                            <span class="grid-border"></span>
-                        </span>
-                    </div>
-
-                    <div class="content date-column" placement="left" [ngbTooltip]="item.parsedDate | translate"
-                         container="body" [ngStyle]="{'width.px' : columnsWidth[columns.DATE].toString()}">{{item.parsedDate}}
-                    </div>
-                </div>-->
+        <div class="grid-row">
+            <strings-grid-row *ngFor="let item of stringListItems" [item]="item"></strings-grid-row>
+        </div>
     </div>
 </div>

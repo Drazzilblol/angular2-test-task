@@ -8,7 +8,7 @@ module.exports = {
     output: {
         filename: '[name].bundle.js'
     },
-    mode: "production",
+    mode: "development",
     resolve: {
         extensions: ['.ts', '.js'],
         modules: [

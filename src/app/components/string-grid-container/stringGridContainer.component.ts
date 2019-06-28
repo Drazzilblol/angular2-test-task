@@ -6,7 +6,6 @@ import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.se
 import {StringsService} from 'app/services/strings/strings.service';
 import {forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
-import {GridOptionsTransmitterService} from '../../services/grid-options-transmitter/gridOptionsTransmitter.service';
 import {FilterParams} from '../filter/models/filterParams';
 import {SortParams} from '../string-grid-header/models/SortParams';
 import {StringListItem} from './models/StringListItem';
@@ -23,8 +22,7 @@ export class StringList implements OnDestroy {
     public intervalSub: Subscription;
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
-                private filterService: StringsFilterService, private getStringsService: StringsHttpService,
-                private transmittr: GridOptionsTransmitterService) {
+                private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
 
         this.subscription = stringService.getObservable().subscribe((stringListItem: StringListItem) => {
             this.stringListItems.push(stringListItem);
@@ -107,14 +105,5 @@ export class StringList implements OnDestroy {
             this.stringListItems = this.stringListItems.reverse();
         }
         this.changeDetector.markForCheck();
-    }
-
-    /**
-     * Изменяет ширину столбца исходя из ширины столбца в шапке, так же изменяет соседний столбец в зависимости от того
-     * как изменяется основной столбец.
-     * @param params Параметры изменения, содержит основной столбец, соседний столбец и ширину
-     */
-    public resize(params): void {
-        this.transmittr.send(params);
     }
 }
