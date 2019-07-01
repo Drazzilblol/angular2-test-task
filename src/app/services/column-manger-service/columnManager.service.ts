@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {filter, forEach, size} from 'lodash';
+import {Columns} from 'app/enums/columns.enum';
+import {find} from 'lodash';
 import {Observable, Subject} from 'rxjs';
-import {Columns} from '../../enums/columns.enum';
 import {Column} from './column';
 
 @Injectable()
@@ -29,25 +29,39 @@ export class ColumnManagerService {
     }
 
     /**
-     * Излучает элемент списка SortParams.
+     * Сообщает что необходимо перерисовать тело таблицы.
+     * @param title
+     */
+    public changeBodyWidth(title: string): void {
+        this.stringsSource.next({type: 'body'});
+    }
+
+    /**
+     * Сообщает что необходимо перерисовать шапку таблицы.
      * @param title
      * @param width
      */
-    public changeWidth(title: string, width: number): void {
-        this.recalculateColumns(this.columns[title], {title, width});
-        this.columns[title].width = width;
-        this.stringsSource.next();
-
+    public changeHeaderWidth(title: string, width: number): void {
+        if (width < 600 && width > 60) {
+            this.recalculateColumns(this.columns[title], {title, width});
+            this.stringsSource.next({type: 'header'});
+        }
     }
 
+    /**
+     * Перерасчитывает ширину колонок таблицы.
+     * @param oldOpt
+     * @param newOpt
+     */
     private recalculateColumns(oldOpt, newOpt): void {
         const diff: number = oldOpt.width - newOpt.width;
-        forEach(this.columns, (value, key) => {
-            if (key !== newOpt.title && value.resizable && oldOpt.position < value.position) {
-                this.columns[key].width = value.width + diff / (size(filter(this.columns, (col) => {
-                    return col.resizable && oldOpt.position < col.position && col.width >= 110;
-                })));
-            }
+        const next = find(this.columns, (item) => {
+            return this.columns[newOpt.title].position + 1 === item.position;
         });
+
+        if ((next.width > 60 && newOpt.width > 60) || diff > 0) {
+            this.columns[newOpt.title].width = newOpt.width;
+            next.width += diff;
+        }
     }
 }

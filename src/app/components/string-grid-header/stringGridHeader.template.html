@@ -1,28 +1,34 @@
-<div class="grid-row">
-    <div class="header-content"></div>
-    <div class="header-content transformed-column" (mousedown)="sort(sortParams.TRANSFORMED)"
-         [title]="columns.TRANSFORMED"
-         [ngStyle]="{'width.px' : columnsWidth[columns.TRANSFORMED].toString()}">
+<div class="header-row">
+    <header-grid-cell [column]="columns.STATUS">
+        <div class="header-content"></div>
+    </header-grid-cell>
+
+    <header-grid-cell class="header-content transformed-column" (mousedown)="sort(sortParams.TRANSFORMED)"
+                      [column]="columns.TRANSFORMED"
+                      [id]="columns.TRANSFORMED">
         <i *ngIf="sortParams.TRANSFORMED  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
         <span placement="left" [ngbTooltip]="'STRING_GRID_HEADER.TRANSFORMED_TEXT' | translate"
               container="body">{{'STRING_GRID_HEADER.TRANSFORMED_TEXT' | translate}}</span>
         <span class="ui-column-resizer" (mousedown)="onMouseDown($event)">
              <span class="grid-border"></span>
         </span>
-    </div>
-    <div class="header-content origin-column" (mousedown)="sort(sortParams.ORIGIN)" [title]="columns.ORIGIN"
-         [ngStyle]="{'width.px' : columnsWidth[columns.ORIGIN].toString()}">
+    </header-grid-cell>
+
+    <header-grid-cell class="header-content origin-column" (mousedown)="sort(sortParams.ORIGIN)"
+                      [column]="columns.ORIGIN"
+                      [id]="columns.ORIGIN">
         <i *ngIf="sortParams.ORIGIN  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
         <span placement="left" [ngbTooltip]="'STRING_GRID_HEADER.ORIGIN_TEXT' | translate"
               container="body">{{'STRING_GRID_HEADER.ORIGIN_TEXT' | translate}}</span>
         <span class="ui-column-resizer" (mousedown)="onMouseDown($event)">
             <span class="grid-border"></span>
         </span>
-    </div>
-    <div class="header-content date-column" (mousedown)="sort(sortParams.DATE)" [title]="columns.DATE"
-         [ngStyle]="{'width.px' : columnsWidth[columns.DATE].toString()}">
+    </header-grid-cell>
+
+    <header-grid-cell class="header-content date-column" (mousedown)="sort(sortParams.DATE)" [id]="columns.DATE"
+                      [column]="columns.DATE">
         <i *ngIf="sortParams.DATE  === currentSort.column" class="material-icons md-14 icon-right">{{icon}}</i>
         <span placement="left" [ngbTooltip]="'STRING_GRID_HEADER.DATE' | translate"
               container="body">{{'STRING_GRID_HEADER.DATE' | translate}}</span>
-    </div>
+    </header-grid-cell>
 </div>

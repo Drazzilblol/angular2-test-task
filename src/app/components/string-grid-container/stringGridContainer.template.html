@@ -1,9 +1,6 @@
 <div class="grid-container">
     <div class="cont">
         <strings-grid-header (onSort)="sort($event)"></strings-grid-header>
-
-        <div class="grid-row">
-            <strings-grid-row *ngFor="let item of stringListItems" [item]="item"></strings-grid-row>
-        </div>
+        <strings-grid-row *ngFor="let item of stringListItems" [item]="item"></strings-grid-row>
     </div>
 </div>

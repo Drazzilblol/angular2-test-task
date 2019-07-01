@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {Columns} from '../../enums/columns.enum';
+import {Columns} from 'app/enums/columns.enum';
 import {StringListItem} from '../string-grid-container/models/StringListItem';
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
     selector: 'strings-grid-row',
     templateUrl: './stringGridRow.template.html',
 })

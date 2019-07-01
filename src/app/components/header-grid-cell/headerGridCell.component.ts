@@ -1,19 +1,28 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Input,
+    OnInit,
+    Renderer2,
+} from '@angular/core';
 import {Columns} from 'app/enums/columns.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    selector: 'strings-grid-cell',
-    templateUrl: './stringGridCell.template.html',
+    selector: 'header-grid-cell',
+    templateUrl: './headerGridCell.template.html',
 })
-export class StringsGridCell implements OnInit {
+export class HeaderGridCell implements OnInit {
 
     @Input() public column: Columns;
 
-    constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService) {
+    constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService,
+                private changeDetector: ChangeDetectorRef) {
         columnManager.getObservable().subscribe((options) => {
-            if (options.type === 'body') {
+            if (options.type === 'header') {
                 this.changeCell();
             }
         });
@@ -33,5 +42,6 @@ export class StringsGridCell implements OnInit {
         this.renderer.setStyle(this.elementRef.nativeElement,
             'width',
             this.columnManager.getColumn(this.column).width + 'px');
+        this.changeDetector.markForCheck();
     }
 }

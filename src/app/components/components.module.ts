@@ -12,6 +12,7 @@ import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
 import {StringsFilterService} from '../services/strings-filter/stringsFilter.service';
 import {StringsService} from '../services/strings/strings.service';
 import {FilterComponent} from './filter/filter.component';
+import {HeaderGridCell} from './header-grid-cell/headerGridCell.component';
 import {LanguageDialog} from './language/dialog/languageDialog.component';
 import {Language} from './language/language.component';
 import {StatusComponent} from './status/status.component';
@@ -24,10 +25,10 @@ import {StringsGridRow} from './string-grid-row/stringGridRow.component';
 
 @NgModule({
     declarations: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent,
-        StringsGridHeader, StringsGridRow, StringsGridCell],
+        StringsGridHeader, StringsGridRow, StringsGridCell, HeaderGridCell],
     entryComponents: [LanguageDialog],
     exports: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent, StringsGridHeader,
-        StringsGridRow, StringsGridCell],
+        StringsGridRow, StringsGridCell, HeaderGridCell],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
         AngularResizedEventModule, TranslateModule.forRoot({
             loader: {

@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
 import {Sort} from 'app/enums/sort.enum';
-import {filter, forEach, size} from 'lodash';
-import {Columns} from '../../enums/columns.enum';
-import {ColumnManagerService} from '../../services/column-manger-service/columnManager.service';
+import {Columns} from 'app/enums/columns.enum';
+import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {SortParams} from './models/SortParams';
 
 @Component({
@@ -18,11 +17,7 @@ export class StringsGridHeader {
     public icon: string = 'expand_more';
     public currentSort: SortParams = new SortParams(Sort.DATE, Order.ASC);
     public columns = Columns;
-    public columnsWidth = {
-        [Columns.DATE]: 216,
-        [Columns.ORIGIN]: 280,
-        [Columns.TRANSFORMED]: 280,
-    };
+
     private start: HTMLElement;
     private pressed: boolean;
     private startX: any;
@@ -32,8 +27,7 @@ export class StringsGridHeader {
     private mouseMove: () => void;
     private mouseUp: () => void;
 
-    constructor(private renderer: Renderer2, private columnManagerService: ColumnManagerService,
-                private changeDetector: ChangeDetectorRef) {
+    constructor(private renderer: Renderer2, private columnManagerService: ColumnManagerService) {
     }
 
     /**
@@ -52,42 +46,23 @@ export class StringsGridHeader {
         this.onSort.emit(this.currentSort);
     }
 
-    public recalculateHeaderColumns(column, width): void {
-        const diff: number = this.columnsWidth[column] - width;
-        const columns = this.columnManagerService.columns;
-
-        forEach(columns, (value, key) => {
-            if (key !== column && value.resizable && columns[column].position < value.position) {
-                this.columnsWidth[key] = this.columnsWidth[key] + diff / (size(filter(columns, (col) => {
-                    return col.resizable && columns[column].position < col.position && this.columnsWidth[col.title] >= 110;
-                })));
-            }
-        });
-    }
-
     /**
      * Отслеживает перемещения мыши после нажатия и изменяет ширину колонок в шапке.
      */
     private initResizableColumns() {
-        const column: string = this.start.parentElement.title;
+        const column: string = this.start.parentElement.id;
         let width: number;
         this.mouseMove = this.renderer.listen('body', 'mousemove', (event) => {
                 if (this.pressed) {
                     const diff = (event.pageX - this.startX);
                     width = this.startWidth + diff;
-                    const nextElementWidth = this.nextElementStartWidth - diff;
-
-                    if (nextElementWidth > 110 && width >= 110) {
-                        this.recalculateHeaderColumns(column, width);
-                        this.columnsWidth[column] = width;
-                        this.changeDetector.markForCheck();
-                    }
+                    this.columnManagerService.changeHeaderWidth(column, width);
                 }
             },
         );
         this.mouseUp = this.renderer.listen('body', 'mouseup', () => {
             if (this.pressed) {
-                this.columnManagerService.changeWidth(column, this.columnsWidth[column]);
+                this.columnManagerService.changeBodyWidth(column);
                 this.pressed = false;
                 this.mouseMove();
                 this.mouseUp();
