@@ -28,8 +28,9 @@
     "BUTTON_RESET": "Reset"
   },
   "STRING_GRID_HEADER": {
-    "ORIGIN_TEXT": "Origin Text",
-    "TRANSFORMED_TEXT": "Transformed Text",
-    "DATE": "Date"
+    "origin-text-column": "Origin Text",
+    "transformed-text-column": "Transformed Text",
+    "date-column": "Date",
+    "status-column": "Status"
   }
 }

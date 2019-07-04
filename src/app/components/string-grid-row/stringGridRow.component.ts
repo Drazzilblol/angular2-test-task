@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {Columns} from 'app/enums/columns.enum';
+import {Column} from 'app/services/column-manger-service/column';
+import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {StringListItem} from '../string-grid-container/models/StringListItem';
 
 @Component({
@@ -9,6 +10,9 @@ import {StringListItem} from '../string-grid-container/models/StringListItem';
 })
 export class StringsGridRow {
     @Input() public item: StringListItem;
+    public columns: Column[];
 
-    public columns = Columns;
+    constructor(columnManagerService: ColumnManagerService) {
+        this.columns = columnManagerService.getColumns();
+    }
 }

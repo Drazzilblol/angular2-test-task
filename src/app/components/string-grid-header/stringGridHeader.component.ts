@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
-import {Sort} from 'app/enums/sort.enum';
-import {Columns} from 'app/enums/columns.enum';
+import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {SortParams} from './models/SortParams';
 
@@ -13,11 +12,9 @@ import {SortParams} from './models/SortParams';
 export class StringsGridHeader {
     @Output() public onSort = new EventEmitter<SortParams>();
     @Output() public onResize = new EventEmitter<any>();
-    public sortParams = Sort;
+    public columns: Column[];
     public icon: string = 'expand_more';
-    public currentSort: SortParams = new SortParams(Sort.DATE, Order.ASC);
-    public columns = Columns;
-
+    public currentSort: SortParams;
     private start: HTMLElement;
     private pressed: boolean;
     private startX: any;
@@ -28,13 +25,15 @@ export class StringsGridHeader {
     private mouseUp: () => void;
 
     constructor(private renderer: Renderer2, private columnManagerService: ColumnManagerService) {
+        this.columns = columnManagerService.getColumns();
+        this.currentSort = new SortParams(this.columns[1].dataFieldName, Order.ASC);
     }
 
     /**
      * Отсылает параметры сортировки.
      * @param params Параметры сортировкию
      */
-    public sort(params: Sort) {
+    public sort(params: Column) {
         if (this.currentSort.order === Order.ASC) {
             this.currentSort.order = Order.DESC;
             this.icon = 'expand_less';
@@ -42,27 +41,26 @@ export class StringsGridHeader {
             this.currentSort.order = Order.ASC;
             this.icon = 'expand_more';
         }
-        this.currentSort.column = params;
+        this.currentSort.column = params.dataFieldName;
         this.onSort.emit(this.currentSort);
     }
 
     /**
      * Отслеживает перемещения мыши после нажатия и изменяет ширину колонок в шапке.
      */
-    private initResizableColumns() {
-        const column: string = this.start.parentElement.id;
+    private initResizableColumns(index) {
         let width: number;
         this.mouseMove = this.renderer.listen('body', 'mousemove', (event) => {
                 if (this.pressed) {
                     const diff = (event.pageX - this.startX);
                     width = this.startWidth + diff;
-                    this.columnManagerService.changeHeaderWidth(column, width);
+                    this.columnManagerService.changeHeaderWidth(index, width);
                 }
             },
         );
         this.mouseUp = this.renderer.listen('body', 'mouseup', () => {
             if (this.pressed) {
-                this.columnManagerService.changeBodyWidth(column);
+                this.columnManagerService.changeBodyWidth(index);
                 this.pressed = false;
                 this.mouseMove();
                 this.mouseUp();
@@ -73,7 +71,7 @@ export class StringsGridHeader {
     /**
      * При нажатии на ЛКМ начинает отслеживание перемещений мыши.
      */
-    private onMouseDown(event) {
+    private onMouseDown(event, index) {
         event.stopPropagation();
         this.start = event.target;
         this.pressed = true;
@@ -83,6 +81,6 @@ export class StringsGridHeader {
         if (this.nextElement) {
             this.nextElementStartWidth = this.nextElement.offsetWidth;
         }
-        this.initResizableColumns();
+        this.initResizableColumns(index);
     }
 }

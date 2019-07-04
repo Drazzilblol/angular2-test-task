@@ -28,8 +28,9 @@
     "BUTTON_RESET": "Сбросить"
   },
   "STRING_GRID_HEADER": {
-    "ORIGIN_TEXT": "Изначальный текст",
-    "TRANSFORMED_TEXT": "Преобразованый текст",
-    "DATE": "Дата"
+    "origin-text-column": "Изначальный текст",
+    "transformed-text-column": "Преобразованый текст",
+    "date-column": "Дата",
+    "status-column": "Статус"
   }
 }

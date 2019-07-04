@@ -14,10 +14,7 @@ import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.se
 import {StringsService} from 'app/services/strings/strings.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {Order} from 'app/enums/order.enum';
-import {Sort} from 'app/enums/sort.enum';
 import {StatusComponent} from '../status/status.component';
-import {SortParams} from '../string-grid-header/models/SortParams';
 import {StringsGridHeader} from '../string-grid-header/stringGridHeader.component';
 import {StringListItem} from './models/StringListItem';
 import {StringList} from './stringGridContainer.component';
@@ -122,7 +119,7 @@ describe('item list', function() {
             const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
 
             component.stringListItems = [testListItem2, testListItem1];
-            component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));
+            //    component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));
             fixture.detectChanges();
             let row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 
@@ -131,7 +128,7 @@ describe('item list', function() {
             expect(row[1].query(By.css('.content')).nativeElement.innerText)
                 .toBe('2');
 
-            component.sort(new SortParams(Sort.TRANSFORMED, Order.DESC));
+            //   component.sort(new SortParams(Sort.TRANSFORMED, Order.DESC));
             fixture.detectChanges();
             row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 

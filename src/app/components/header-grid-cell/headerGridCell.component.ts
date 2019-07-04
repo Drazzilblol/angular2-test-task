@@ -1,14 +1,6 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    Input,
-    OnInit,
-    Renderer2,
-} from '@angular/core';
-import {Columns} from 'app/enums/columns.enum';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {Column} from '../../services/column-manger-service/column';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,10 +9,10 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 })
 export class HeaderGridCell implements OnInit {
 
-    @Input() public column: Columns;
+    @Input() public column: Column;
+    @Input() public index: number;
 
-    constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService,
-                private changeDetector: ChangeDetectorRef) {
+    constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService) {
         columnManager.getObservable().subscribe((options) => {
             if (options.type === 'header') {
                 this.changeCell();
@@ -33,15 +25,21 @@ export class HeaderGridCell implements OnInit {
     }
 
     public changeCell(): void {
+
+        this.renderer.setStyle(this.elementRef.nativeElement,
+            'width',
+            this.column.width + 'px');
+        this.renderer.setStyle(this.elementRef.nativeElement,
+            '-ms-grid-column',
+            this.index + 1);
+        this.renderer.setStyle(this.elementRef.nativeElement,
+            '-ms-grid-row',
+            1);
         this.renderer.setStyle(this.elementRef.nativeElement,
             'grid-column',
-            this.columnManager.getColumn(this.column).position);
+            this.index + 1);
         this.renderer.setStyle(this.elementRef.nativeElement,
             'grid-row',
             1);
-        this.renderer.setStyle(this.elementRef.nativeElement,
-            'width',
-            this.columnManager.getColumn(this.column).width + 'px');
-        this.changeDetector.markForCheck();
     }
 }

@@ -6,6 +6,8 @@ import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.se
 import {StringsService} from 'app/services/strings/strings.service';
 import {forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
+import {Column} from '../../services/column-manger-service/column';
+import {ColumnManagerService} from '../../services/column-manger-service/columnManager.service';
 import {FilterParams} from '../filter/models/filterParams';
 import {SortParams} from '../string-grid-header/models/SortParams';
 import {StringListItem} from './models/StringListItem';
@@ -20,9 +22,13 @@ export class StringList implements OnDestroy {
     public subscription: Subscription;
     public stringListItems: StringListItem[] = [];
     public intervalSub: Subscription;
+    public columns: Column[];
 
     constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
-                private filterService: StringsFilterService, private getStringsService: StringsHttpService) {
+                private filterService: StringsFilterService, private getStringsService: StringsHttpService,
+                private columnManager: ColumnManagerService) {
+
+        this.columns = columnManager.getColumns();
 
         this.subscription = stringService.getObservable().subscribe((stringListItem: StringListItem) => {
             this.stringListItems.push(stringListItem);
@@ -99,7 +105,9 @@ export class StringList implements OnDestroy {
      */
     public sort(params: SortParams): void {
         this.stringListItems.sort((a, b) => {
-            return a[params.column].localeCompare(b[params.column], undefined, {numeric: true, sensitivity: 'base'});
+            return a[params.column].localeCompare(b[params.column],
+                undefined,
+                {numeric: true, sensitivity: 'base'});
         });
         if (params.order === Order.DESC) {
             this.stringListItems = this.stringListItems.reverse();

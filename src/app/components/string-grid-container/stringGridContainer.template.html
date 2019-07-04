@@ -1,6 +1,8 @@
 <div class="grid-container">
+    <strings-grid-header class="grid-row header" (onSort)="sort($event)"></strings-grid-header>
     <div class="cont">
-        <strings-grid-header (onSort)="sort($event)"></strings-grid-header>
-        <strings-grid-row *ngFor="let item of stringListItems" [item]="item"></strings-grid-row>
+        <strings-grid-row class="grid-row hoverable-row"
+                          *ngFor="let item of stringListItems | stringFilter: filterParams" [item]="item">
+        </strings-grid-row>
     </div>
 </div>
