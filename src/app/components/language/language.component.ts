@@ -1,13 +1,13 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {LanguageDialog} from './dialog/languageDialog.component';
+import {LanguageDialogComponent} from './dialog/languageDialog.component';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'language',
     templateUrl: './language.template.html',
 })
-export class Language {
+export class LanguageComponent {
     constructor(private modalService: NgbModal) {
     }
 
@@ -15,7 +15,7 @@ export class Language {
      * Открывает диалог выбора языка.
      */
     public open(): void {
-        this.modalService.open(LanguageDialog);
+        this.modalService.open(LanguageDialogComponent);
     }
 
 }

@@ -27,7 +27,7 @@
     "BUTTON_FIND": "Find",
     "BUTTON_RESET": "Reset"
   },
-  "STRING_GRID_HEADER": {
+  "GRID_HEADER": {
     "origin-text-column": "Origin Text",
     "transformed-text-column": "Transformed Text",
     "date-column": "Date",

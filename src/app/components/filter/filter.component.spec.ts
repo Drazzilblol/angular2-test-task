@@ -7,7 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Statuses} from 'app/enums/statuses.enum';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
-import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
+import {FilterService} from 'app/services/strings-filter/filter.service';
 import {findIndex} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {FilterComponent} from './filter.component';
@@ -17,7 +17,7 @@ describe('filter.styles.css', function() {
     let component: FilterComponent;
     let fixture: ComponentFixture<FilterComponent>;
     let translate: TranslateService;
-    let filterService: StringsFilterService;
+    let filterService: FilterService;
     let fixtureDebug: DebugElement;
 
     beforeEach(function() {
@@ -25,7 +25,7 @@ describe('filter.styles.css', function() {
             declarations: [FilterComponent],
             imports: [NgbTooltipModule, ReactiveFormsModule, translateTestImport],
             providers: [
-                StringsFilterService,
+                FilterService,
             ],
         }).compileComponents();
 
@@ -34,7 +34,7 @@ describe('filter.styles.css', function() {
 
         fixture = TestBed.createComponent(FilterComponent);
         fixtureDebug = fixture.debugElement;
-        filterService = TestBed.get(StringsFilterService);
+        filterService = TestBed.get(FilterService);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

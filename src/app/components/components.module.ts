@@ -6,28 +6,24 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PipesModule} from '../pipes/pipes.module';
-import {ColumnManagerService} from '../services/column-manger-service/columnManager.service';
 import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
-import {StringsFilterService} from '../services/strings-filter/stringsFilter.service';
-import {StringsService} from '../services/strings/strings.service';
+import {FilterService} from '../services/strings-filter/filter.service';
+import {GridAddService} from '../services/strings/grid-add.service';
 import {FilterComponent} from './filter/filter.component';
-import {HeaderGridCell} from './header-grid-cell/headerGridCell.component';
-import {LanguageDialog} from './language/dialog/languageDialog.component';
-import {Language} from './language/language.component';
-import {StatusComponent} from './status/status.component';
-import {StringAdd} from './string-add/stringAdd.component';
-import {StringsGridCell} from './string-grid-cell/stringGridCell.component';
-
-import {StringList} from './string-grid-container/stringGridContainer.component';
-import {StringsGridHeader} from './string-grid-header/stringGridHeader.component';
-import {StringsGridRow} from './string-grid-row/stringGridRow.component';
+import {GridHeaderCellComponent} from './header-grid-cell/gridHeaderCell.component';
+import {LanguageDialogComponent} from './language/dialog/languageDialog.component';
+import {LanguageComponent} from './language/language.component';
+import {StringAddComponent} from './string-add/stringAdd.component';
+import {GridCellComponent} from './string-grid-cell/gridCell.component';
+import {GridComponent} from './string-grid-container/grid.component';
+import {GridHeaderComponent} from './string-grid-header/gridHeader.component';
+import {GridRowComponent} from './string-grid-row/gridRow.component';
 
 @NgModule({
-    declarations: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent,
-        StringsGridHeader, StringsGridRow, StringsGridCell, HeaderGridCell],
-    entryComponents: [LanguageDialog],
-    exports: [Language, LanguageDialog, StringAdd, StringList, StatusComponent, FilterComponent, StringsGridHeader,
-        StringsGridRow, StringsGridCell, HeaderGridCell],
+    declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
+        FilterComponent, GridHeaderComponent, GridRowComponent, GridCellComponent, GridHeaderCellComponent],
+    entryComponents: [LanguageDialogComponent],
+    exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
         TranslateModule.forRoot({
             loader: {
@@ -36,7 +32,7 @@ import {StringsGridRow} from './string-grid-row/stringGridRow.component';
                 useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/locales/locale-', '.json'),
             },
         })],
-    providers: [StringsService, StringsFilterService, StringsHttpService, ColumnManagerService],
+    providers: [GridAddService, FilterService, StringsHttpService],
 })
 export class ComponentsModule {
 }

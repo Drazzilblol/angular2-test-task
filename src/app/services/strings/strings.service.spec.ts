@@ -3,13 +3,13 @@ import {StringListItem} from 'app/components/string-grid-container/models/String
 import {Statuses} from 'app/enums/statuses.enum';
 import {now} from 'lodash';
 import {Subscription} from 'rxjs';
-import {StringsService} from './strings.service';
+import {GridAddService} from './grid-add.service';
 
-describe('stringListItems service', function() {
-    let stringsService: StringsService;
+describe('items service', function() {
+    let stringsService: GridAddService;
 
     beforeEach(function() {
-        stringsService = new StringsService();
+        stringsService = new GridAddService();
     });
 
     afterAll(function() {
@@ -23,7 +23,7 @@ describe('stringListItems service', function() {
             expect(result).toEqual(testString);
         });
 
-        stringsService.addString(testString);
+        stringsService.addItem(testString);
         tick(50);
         subscription.unsubscribe();
     }));

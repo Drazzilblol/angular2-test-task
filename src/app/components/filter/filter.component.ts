@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
-import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
+import {FilterService} from 'app/services/strings-filter/filter.service';
 import {FilterParams} from './models/filterParams';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';
@@ -22,7 +22,7 @@ export class FilterComponent implements OnInit {
     public statuses = Object.keys(statusesMap);
     public filterForm: FormGroup;
 
-    constructor(private filterService: StringsFilterService) {
+    constructor(private filterService: FilterService) {
     }
 
     public ngOnInit(): void {

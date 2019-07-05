@@ -3,7 +3,7 @@ import {FilterParams} from 'app/components/filter/models/filterParams';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable()
-export class StringsFilterService {
+export class FilterService {
     private filterSource = new Subject<FilterParams>();
     private filterObservable = this.filterSource.asObservable();
 

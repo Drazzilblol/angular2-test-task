@@ -7,7 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
     selector: 'modal-content',
     templateUrl: './languageDialog.template.html',
 })
-export class LanguageDialog {
+export class LanguageDialogComponent {
     /**
      * Массив языков для выпадающего списка.
      */

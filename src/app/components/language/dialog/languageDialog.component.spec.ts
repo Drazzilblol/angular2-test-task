@@ -8,17 +8,17 @@ import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import languages from '../languages.json';
-import {LanguageDialog} from './languageDialog.component';
+import {LanguageDialogComponent} from './languageDialog.component';
 
 describe('language', function() {
-    let component: LanguageDialog;
-    let fixture: ComponentFixture<LanguageDialog>;
+    let component: LanguageDialogComponent;
+    let fixture: ComponentFixture<LanguageDialogComponent>;
     let fixtureDebug: DebugElement;
     let translate: TranslateService;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [LanguageDialog],
+            declarations: [LanguageDialogComponent],
             imports: [FormsModule, translateTestImport, NgbModalModule],
             providers: [
                 NgbActiveModal,
@@ -29,7 +29,7 @@ describe('language', function() {
         translate.addLangs(languages.languagesList);
         translate.use('en');
 
-        fixture = TestBed.createComponent(LanguageDialog);
+        fixture = TestBed.createComponent(LanguageDialogComponent);
         component = fixture.componentInstance;
         fixtureDebug = fixture.debugElement;
         fixture.detectChanges();

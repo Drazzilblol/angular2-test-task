@@ -6,29 +6,29 @@ import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/tes
 import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {LanguageDialog} from './dialog/languageDialog.component';
-import {Language} from './language.component';
+import {LanguageDialogComponent} from './dialog/languageDialog.component';
+import {LanguageComponent} from './language.component';
 
 describe('language', function() {
-    let component: Language;
-    let fixture: ComponentFixture<Language>;
+    let component: LanguageComponent;
+    let fixture: ComponentFixture<LanguageComponent>;
     let translate: TranslateService;
     let fixtureDebug: DebugElement;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [Language, LanguageDialog],
+            declarations: [LanguageComponent, LanguageDialogComponent],
             imports: [FormsModule, translateTestImport, NgbModalModule],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
-                entryComponents: [LanguageDialog],
+                entryComponents: [LanguageDialogComponent],
             },
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
         translate.use('en');
 
-        fixture = TestBed.createComponent(Language);
+        fixture = TestBed.createComponent(LanguageComponent);
         fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
         fixture.detectChanges();

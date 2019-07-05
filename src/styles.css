@@ -160,8 +160,6 @@ input.ng-dirty.ng-valid {
     width: 800px;
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 20px 6fr 6fr 4fr;
-    grid-template-columns: 20px 6fr 6fr 4fr;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
@@ -172,31 +170,33 @@ input.ng-dirty.ng-valid {
 }
 
 .status-column {
-    display: -ms-grid;
-    display: grid;
     border-right: 1px solid #ddd;
     min-height: 50px;
     max-height: 50px;
     min-width: 23px;
     max-width: 23px;
+    position: relative;
 }
 
 .transformed-text-column {
-    min-width: 50px;
+    min-width: 65px;
     min-height: 50px;
     max-height: 50px;
+    position: relative;
 }
 
 .origin-text-column {
-    min-width: 50px;
+    min-width: 65px;
     min-height: 50px;
     max-height: 50px;
+    position: relative;
 }
 
 .date-column {
-    min-width: 50px;
+    min-width: 65px;
     min-height: 50px;
     max-height: 50px;
+    position: relative;
 }
 
 .content {
@@ -261,7 +261,8 @@ input.ng-dirty.ng-valid {
     font-size: 48px;
 }
 
-.icon-right {
+.icon-left {
     float: left;
-    padding-right: 8px;
+    padding-left: 8px;
+    padding-top: 12px;
 }

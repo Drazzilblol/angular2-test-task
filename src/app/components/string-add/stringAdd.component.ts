@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
-import {StringsService} from 'app/services/strings/strings.service';
+import {GridAddService} from 'app/services/strings/grid-add.service';
 import {now} from 'lodash';
 import {StringListItem} from '../string-grid-container/models/StringListItem';
 
@@ -10,10 +10,10 @@ import {StringListItem} from '../string-grid-container/models/StringListItem';
     selector: 'string-add',
     templateUrl: './stringAdd.template.html',
 })
-export class StringAdd implements OnInit {
+export class StringAddComponent implements OnInit {
     public addForm: FormGroup;
 
-    constructor(private stringService: StringsService) {
+    constructor(private stringService: GridAddService) {
     }
 
     public ngOnInit(): void {
@@ -29,6 +29,6 @@ export class StringAdd implements OnInit {
      * Передает строку сервису GridOptionsTransmitterService для добавления в список.
      */
     public addItem(): void {
-        this.stringService.addString(new StringListItem(this.addForm.value.text, new Date(now()), Statuses.FRESH));
+        this.stringService.addItem(new StringListItem(this.addForm.value.text, new Date(now()), Statuses.FRESH));
     }
 }

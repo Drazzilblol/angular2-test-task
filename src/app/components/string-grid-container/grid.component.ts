@@ -1,44 +1,39 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
 import {Statuses} from 'app/enums/statuses.enum';
+import {Column} from 'app/services/column-manger-service/column';
 import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
-import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
-import {StringsService} from 'app/services/strings/strings.service';
+import {FilterService} from 'app/services/strings-filter/filter.service';
+import {GridAddService} from 'app/services/strings/grid-add.service';
 import {forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
-import {Column} from '../../services/column-manger-service/column';
-import {ColumnManagerService} from '../../services/column-manger-service/columnManager.service';
 import {FilterParams} from '../filter/models/filterParams';
 import {SortParams} from '../string-grid-header/models/SortParams';
-import {StringListItem} from './models/StringListItem';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    selector: 'strings-grid',
-    templateUrl: './stringGridContainer.template.html',
+    selector: 'grid',
+    templateUrl: './grid.template.html',
 })
-export class StringList implements OnDestroy {
+export class GridComponent implements OnDestroy {
     public filterParams: FilterParams = new FilterParams('', null);
     public subscription: Subscription;
-    public stringListItems: StringListItem[] = [];
+    public items: any[] = [];
     public intervalSub: Subscription;
-    public columns: Column[];
+    @Input() public columns: Column[] = [];
 
-    constructor(private stringService: StringsService, private changeDetector: ChangeDetectorRef,
-                private filterService: StringsFilterService, private getStringsService: StringsHttpService,
-                private columnManager: ColumnManagerService) {
+    constructor(private gridAddService: GridAddService, private changeDetector: ChangeDetectorRef,
+                private filterService: FilterService, private stringsHttpService: StringsHttpService) {
 
-        this.columns = columnManager.getColumns();
-
-        this.subscription = stringService.getObservable().subscribe((stringListItem: StringListItem) => {
-            this.stringListItems.push(stringListItem);
+        this.subscription = gridAddService.getObservable().subscribe((item: any) => {
+            this.items.push(item);
             changeDetector.markForCheck();
             this.countdown();
         });
 
-        this.subscription.add(getStringsService.getStrings().subscribe((res: any[]) => {
-            forEach(res, (item) => {
-                this.stringListItems.push(new StringListItem(item.text, new Date(item.date), item.status));
+        this.subscription.add(stringsHttpService.getStrings().subscribe((items: any[]) => {
+            forEach(items, (item) => {
+                this.items.push(item);
             });
             changeDetector.markForCheck();
             this.countdown();
@@ -74,7 +69,7 @@ export class StringList implements OnDestroy {
                 const currentTime: number = now();
                 let rottenCounter: number = 0;
                 let isStatusChanged: boolean = false;
-                forEach(this.stringListItems, (item) => {
+                forEach(this.items, (item) => {
                     if (item.status === Statuses.ROTTEN) {
                         rottenCounter++;
                         return;
@@ -92,7 +87,7 @@ export class StringList implements OnDestroy {
                 if (isStatusChanged) {
                     this.changeDetector.markForCheck();
                 }
-                if (this.stringListItems.length === rottenCounter) {
+                if (this.items.length === rottenCounter) {
                     this.intervalSub.unsubscribe();
                 }
             });
@@ -104,14 +99,15 @@ export class StringList implements OnDestroy {
      * @param params
      */
     public sort(params: SortParams): void {
-        this.stringListItems.sort((a, b) => {
+        this.items.sort((a, b) => {
             return a[params.column].localeCompare(b[params.column],
                 undefined,
                 {numeric: true, sensitivity: 'base'});
         });
         if (params.order === Order.DESC) {
-            this.stringListItems = this.stringListItems.reverse();
+            this.items = this.items.reverse();
         }
         this.changeDetector.markForCheck();
     }
+
 }

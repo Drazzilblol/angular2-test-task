@@ -6,31 +6,31 @@ import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
-import {StringsService} from 'app/services/strings/strings.service';
+import {GridAddService} from 'app/services/strings/grid-add.service';
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {StringListItem} from '../string-grid-container/models/StringListItem';
-import {StringAdd} from './stringAdd.component';
+import {StringAddComponent} from './stringAdd.component';
 
 describe('item add', function() {
-    let component: StringAdd;
-    let fixture: ComponentFixture<StringAdd>;
+    let component: StringAddComponent;
+    let fixture: ComponentFixture<StringAddComponent>;
     let translate: TranslateService;
-    let stringsService: StringsService;
+    let stringsService: GridAddService;
     let fixtureDebug: DebugElement;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [StringAdd],
+            declarations: [StringAddComponent],
             imports: [NgbTooltipModule, ReactiveFormsModule, translateTestImport],
-            providers: [StringsService],
+            providers: [GridAddService],
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
         translate.use('en');
-        fixture = TestBed.createComponent(StringAdd);
+        fixture = TestBed.createComponent(StringAddComponent);
         fixtureDebug = fixture.debugElement;
-        stringsService = TestBed.get(StringsService);
+        stringsService = TestBed.get(GridAddService);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

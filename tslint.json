@@ -4,6 +4,7 @@
     "quotemark": {
       "options": ["single", "avoid-escape"]
     },
-    "only-arrow-functions": false
+    "only-arrow-functions": false,
+    "max-classes-per-file": false
   }
 }

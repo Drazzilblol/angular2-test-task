@@ -7,38 +7,53 @@ import {TranslateService} from '@ngx-translate/core';
 import {Statuses} from 'app/enums/statuses.enum';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
-import {ColorsPipe} from 'app/pipes/colors/colors.pipe';
-import {StringFilterPipe} from 'app/pipes/stringFilter/stringFilter.pipe';
 import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
-import {StringsFilterService} from 'app/services/strings-filter/stringsFilter.service';
-import {StringsService} from 'app/services/strings/strings.service';
+import {FilterService} from 'app/services/strings-filter/filter.service';
+import {GridAddService} from 'app/services/strings/grid-add.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {StatusComponent} from '../status/status.component';
-import {StringsGridHeader} from '../string-grid-header/stringGridHeader.component';
+import {Columns} from '../../enums/columns.enum';
+import {Order} from '../../enums/order.enum';
+import {Sort} from '../../enums/sort.enum';
+import {PipesModule} from '../../pipes/pipes.module';
+import {Column} from '../../services/column-manger-service/column';
+import {ColumnManagerService} from '../../services/column-manger-service/columnManager.service';
+import {GridHeaderCellComponent} from '../header-grid-cell/gridHeaderCell.component';
+import {GridCellComponent} from '../string-grid-cell/gridCell.component';
+import {GridHeaderComponent} from '../string-grid-header/gridHeader.component';
+import {SortParams} from '../string-grid-header/models/SortParams';
+import {GridRowComponent} from '../string-grid-row/gridRow.component';
+import {GridComponent} from './grid.component';
 import {StringListItem} from './models/StringListItem';
-import {StringList} from './stringGridContainer.component';
 
 describe('item list', function() {
-    let component: StringList;
-    let fixture: ComponentFixture<StringList>;
+    let component: GridComponent;
+    let fixture: ComponentFixture<GridComponent>;
     let translate: TranslateService;
     let fixtureDebug: DebugElement;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [StringList, StatusComponent, ColorsPipe, StringFilterPipe, StringsGridHeader],
-            imports: [translateTestImport, NgbTooltipModule, HttpClientModule],
-            providers: [StringsService, StringsFilterService, StringsHttpService],
-        }).overrideComponent(StringList, {
+            declarations: [GridComponent, GridHeaderComponent, GridRowComponent,
+                GridCellComponent, GridHeaderCellComponent],
+            imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule],
+            providers: [GridAddService, FilterService, StringsHttpService, ColumnManagerService],
+        }).overrideComponent(GridComponent, {
             set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
         translate.use('en');
-        fixture = TestBed.createComponent(StringList);
+        fixture = TestBed.createComponent(GridComponent);
         fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
+        component.columns =
+            [
+                new Column(Columns.STATUS, '', 'status', 24, false, false),
+                new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280, true, true),
+                new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280, true, true),
+                new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216, false, true),
+            ];
         fixture.detectChanges();
     });
 
@@ -54,16 +69,16 @@ describe('item list', function() {
         it('check item with numbers', function() {
             const resultString: string = '1234';
 
-            component.stringListItems = [new StringListItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
+            component.items = [new StringListItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('.content')).nativeElement.innerText).toBe(resultString);
+            expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe(resultString);
         });
 
         it('check item without numbers', function() {
-            component.stringListItems = [new StringListItem('test', new Date(now()), Statuses.FRESH)];
+            component.items = [new StringListItem('test', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
-            const firstElement = fixtureDebug.query(By.css('.content')).nativeElement;
+            const firstElement = fixtureDebug.query(By.css('grid-cell .content')).nativeElement;
 
             expect(firstElement.innerText).toBe(english.MESSAGE);
 
@@ -75,10 +90,10 @@ describe('item list', function() {
 
         it('check is status change over time', fakeAsync(function() {
             const listItem: StringListItem = new StringListItem('test', new Date(now()), Statuses.FRESH);
-            component.stringListItems = [listItem];
+            component.items = [listItem];
             component.countdown();
             fixture.detectChanges();
-            const status = fixtureDebug.query(By.css('status>div'));
+            const status = fixtureDebug.query(By.css('.status'));
 
             expect(status.classes['status-green']).toBe(true);
 
@@ -97,20 +112,20 @@ describe('item list', function() {
             const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.FRESH);
             const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
 
-            component.stringListItems = [testListItem1];
+            component.items = [testListItem1];
             component.countdown();
             fixture.detectChanges();
             tick(31000);
-            component.stringListItems.push(testListItem2);
+            component.items.push(testListItem2);
             component.filterParams = {text: '1', status: Statuses.YESTERDAY};
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('.content')).nativeElement.innerText).toBe('1');
+            expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('1');
 
             component.filterParams = {text: '2', status: Statuses.FRESH};
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('.content')).nativeElement.innerText).toBe('2');
+            expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('2');
             component.intervalSub.unsubscribe();
         }));
 
@@ -118,8 +133,8 @@ describe('item list', function() {
             const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.FRESH);
             const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
 
-            component.stringListItems = [testListItem2, testListItem1];
-            //    component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));
+            component.items = [testListItem2, testListItem1];
+            component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));
             fixture.detectChanges();
             let row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 
@@ -128,7 +143,7 @@ describe('item list', function() {
             expect(row[1].query(By.css('.content')).nativeElement.innerText)
                 .toBe('2');
 
-            //   component.sort(new SortParams(Sort.TRANSFORMED, Order.DESC));
+            component.sort(new SortParams(Sort.TRANSFORMED, Order.DESC));
             fixture.detectChanges();
             row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 

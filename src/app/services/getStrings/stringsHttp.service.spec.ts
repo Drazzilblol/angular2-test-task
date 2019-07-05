@@ -1,5 +1,6 @@
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
+import {forEach} from 'lodash';
 import {StringsHttpService} from './stringsHttp.service';
 
 describe('strings http service', function() {
@@ -30,7 +31,9 @@ describe('strings http service', function() {
 
         httpService.getStrings().subscribe((result) => {
             expect(result.length).toBe(3);
-            expect(result).toEqual(data);
+            forEach(result, (item, i) => {
+                expect(item.originText).toBe(data[i].text);
+            });
         });
 
         const req = httpMock.expectOne('http://localhost:3000/strings');

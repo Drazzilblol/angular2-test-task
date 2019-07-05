@@ -20,18 +20,17 @@ import {TranslateModule} from '@ngx-translate/core';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
-import {StringListItem} from '../string-grid-container/models/StringListItem';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.Default,
-    selector: 'strings-grid-cell',
-    templateUrl: './stringGridCell.template.html',
+    selector: 'grid-cell',
+    templateUrl: './gridCell.template.html',
 })
-export class StringsGridCell implements OnInit {
+export class GridCellComponent implements OnInit {
 
     @Input() public column: Column;
     @Input() public index: number;
-    @Input() public item: StringListItem;
+    @Input() public item: any;
 
     @ViewChild('container', {read: ViewContainerRef})
     public container: ViewContainerRef;
@@ -53,6 +52,9 @@ export class StringsGridCell implements OnInit {
         this.compileTemplate();
     }
 
+    /**
+     * Задает ширину и номер ячейки в таблице.
+     */
     public changeCell(): void {
         this.renderer.setStyle(this.elementRef.nativeElement,
             'width',
@@ -71,22 +73,31 @@ export class StringsGridCell implements OnInit {
             1);
     }
 
+    /**
+     * Динамически создает компонент содержащий шаблон возвращенный из Column.functionValue() и привязывает
+     * его к контейнеру.
+     */
     public compileTemplate() {
-        const metadata = {
-            selector: `cell-item`,
-            template: this.column.functionValue(this.item),
-        };
-        const factory = this.createComponentFactorySync(this.compiler, metadata);
+        const factory = this.createComponentFactorySync(this.compiler);
         this.componentRef = this.container.createComponent(factory);
         Object.assign(this.componentRef.instance, {item: this.item});
     }
 
-    private createComponentFactorySync(compiler: Compiler, metadata: Component): ComponentFactory<any> {
-        const decoratedCmp = Component(metadata)(class RuntimeComponent {
-        });
+    /**
+     * Создает фабрику для динамического создания компонента.
+     */
+    private createComponentFactorySync(compiler: Compiler): ComponentFactory<any> {
+        const template: string = this.column.functionValue(this.item);
+
+        @Component({
+            selector: `cell-item`,
+            template,
+        })
+        class RuntimeComponent {
+        }
 
         @NgModule({
-            declarations: [decoratedCmp],
+            declarations: [RuntimeComponent],
             imports: [CommonModule, PipesModule, NgbTooltipModule, TranslateModule.forChild()],
         })
         class RuntimeComponentModule {
@@ -94,6 +105,6 @@ export class StringsGridCell implements OnInit {
 
         const module: ModuleWithComponentFactories<any> =
             compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
-        return module.componentFactories.find((f) => f.componentType === decoratedCmp);
+        return module.componentFactories.find((factory) => factory.componentType === RuntimeComponent);
     }
 }

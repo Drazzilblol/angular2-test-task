@@ -27,7 +27,7 @@
     "BUTTON_FIND": "Найти",
     "BUTTON_RESET": "Сбросить"
   },
-  "STRING_GRID_HEADER": {
+  "GRID_HEADER": {
     "origin-text-column": "Изначальный текст",
     "transformed-text-column": "Преобразованый текст",
     "date-column": "Дата",

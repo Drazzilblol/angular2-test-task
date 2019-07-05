@@ -1,37 +1,40 @@
 import {Injectable} from '@angular/core';
-import {Columns} from 'app/enums/columns.enum';
 import {Observable, Subject} from 'rxjs';
 import {Column} from './column';
 
 @Injectable()
 export class ColumnManagerService {
-    public columns: Column[] = [
-        new Column(Columns.STATUS, '', 'status', 24, false, false),
-        new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280, true, true),
-        new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280, true, true),
-        new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216, false, true),
-    ];
+    private columns: Column[] = [];
 
-    private stringsSource = new Subject<any>();
-    private stringsObservable = this.stringsSource.asObservable();
+    private source = new Subject<any>();
+    private observable = this.source.asObservable();
 
+    /**
+     * Возвращает массив колонок.
+     */
     public getColumns(): Column[] {
         return this.columns;
+    }
+
+    /**
+     * Добавляет новую колонку.
+     */
+    public addColumn(column: Column) {
+        this.columns.push(column);
     }
 
     /**
      * Возвращает Observable, который будет возвращать элемены списка.
      */
     public getObservable(): Observable<any> {
-        return this.stringsObservable;
+        return this.observable;
     }
 
     /**
      * Сообщает что необходимо перерисовать тело таблицы.
-     * @param title
      */
-    public changeBodyWidth(title: string): void {
-        this.stringsSource.next({type: 'body'});
+    public changeBodyWidth(): void {
+        this.source.next({type: 'body'});
     }
 
     /**
@@ -40,9 +43,9 @@ export class ColumnManagerService {
      * @param width
      */
     public changeHeaderWidth(index: number, width: number): void {
-        if (width < 600 && width > 60) {
+        if (width < 600 && width > 65) {
             this.recalculateColumns(this.columns[index], {index, width});
-            this.stringsSource.next({type: 'header'});
+            this.source.next({type: 'header'});
         }
     }
 
@@ -56,7 +59,7 @@ export class ColumnManagerService {
 
         const next = this.columns[++newParams.index];
 
-        if ((next.width > 60 && newParams.width > 60) || diff > 0) {
+        if ((next.width > 65 && newParams.width > 65) || diff > 0) {
             oldParams.width = newParams.width;
             next.width += diff;
         }
