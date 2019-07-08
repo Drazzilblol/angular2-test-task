@@ -36,5 +36,6 @@ export class GridHeaderComponent implements OnInit {
             return column.defaultSort;
         });
         this.currentSort = new SortParams(defaultSortColumn.dataFieldName, Order.ASC);
+        this.onSort.emit(this.currentSort);
     }
 }

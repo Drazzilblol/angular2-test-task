@@ -1,4 +1,4 @@
-import {StringListItem} from '../../components/string-grid-container/models/StringListItem';
+import {StringListItem} from 'app/components/string-grid-container/models/StringListItem';
 
 export class Column {
     public width: number;
@@ -9,6 +9,17 @@ export class Column {
     public sortable: boolean;
     public defaultSort: boolean;
 
+    /**
+     * Конструктор колонки.
+     * @param title Название колонки.
+     * @param text Отображаемый текст.
+     * @param dataFieldName Название свойства в модели данных.
+     * @param width Ширина колонки.
+     * @param options Необязательный набор опций:
+     * resizable позволяет изменять ширину колонки,
+     * sortable включает сортировку по колонке,
+     * defaultSort при включеном sortable указывает что колонка будет отсортирована по умолчанию.
+     */
     constructor(title, text, dataFieldName, width, options?) {
         this.width = width;
         this.title = title;
@@ -21,6 +32,10 @@ export class Column {
         }
     }
 
+    /**
+     * В зависимости от колонки возвращает шаблон для отображения соответствующего свойства из модели.
+     * @param item: StringListItem
+     */
     public functionValue(item: StringListItem): any {
         if (this.dataFieldName === 'status') {
             return `<div class="status" [ngClass]="item.status | colorsPipe" placement="left"

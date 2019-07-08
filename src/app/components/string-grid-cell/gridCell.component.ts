@@ -4,7 +4,6 @@ import {
     Compiler,
     Component,
     ComponentFactory,
-    ComponentFactoryResolver,
     ComponentRef,
     ElementRef,
     Input,
@@ -38,7 +37,6 @@ export class GridCellComponent implements OnInit {
     private componentRef: ComponentRef<{}>;
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService,
-                private componentFactoryResolver: ComponentFactoryResolver,
                 private compiler: Compiler) {
         columnManager.getObservable().subscribe((options) => {
             if (options.type === 'body') {
@@ -78,7 +76,7 @@ export class GridCellComponent implements OnInit {
      * его к контейнеру.
      */
     public compileTemplate() {
-        const factory = this.createComponentFactorySync(this.compiler);
+        const factory = this.createComponentFactorySync();
         this.componentRef = this.container.createComponent(factory);
         Object.assign(this.componentRef.instance, {item: this.item});
     }
@@ -86,7 +84,7 @@ export class GridCellComponent implements OnInit {
     /**
      * Создает фабрику для динамического создания компонента.
      */
-    private createComponentFactorySync(compiler: Compiler): ComponentFactory<any> {
+    private createComponentFactorySync(): ComponentFactory<any> {
         const template: string = this.column.functionValue(this.item);
 
         @Component({
@@ -104,7 +102,7 @@ export class GridCellComponent implements OnInit {
         }
 
         const module: ModuleWithComponentFactories<any> =
-            compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
+            this.compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
         return module.componentFactories.find((factory) => factory.componentType === RuntimeComponent);
     }
 }
