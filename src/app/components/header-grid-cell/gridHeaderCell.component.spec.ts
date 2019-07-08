@@ -1,10 +1,13 @@
 import {DebugElement} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {Columns} from 'app/enums/columns.enum';
+import {Order} from 'app/enums/order.enum';
+import {Column} from 'app/services/column-manger-service/column';
+import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {Columns} from '../../enums/columns.enum';
-import {Column} from '../../services/column-manger-service/column';
-import {ColumnManagerService} from '../../services/column-manger-service/columnManager.service';
+import {SortParams} from '../string-grid-header/models/SortParams';
 import {GridHeaderCellComponent} from './gridHeaderCell.component';
 
 describe('grid header cell', function() {
@@ -16,7 +19,7 @@ describe('grid header cell', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [GridHeaderCellComponent],
-            imports: [translateTestImport],
+            imports: [translateTestImport, NgbTooltipModule],
             providers: [ColumnManagerService],
         }).compileComponents();
 
@@ -35,8 +38,9 @@ describe('grid header cell', function() {
             }));
 
         component = fixture.componentInstance;
-        component.column = columnManager.getColumns()[0];
         component.index = 0;
+        component.column = columnManager.getColumns()[0];
+        component.currentSort = new SortParams(component.column.dataFieldName, Order.ASC);
         fixture.detectChanges();
     });
 
@@ -58,5 +62,14 @@ describe('grid header cell', function() {
         resizer.dispatchEvent(new MouseEvent('mouseup'));
 
         expect(fixture.nativeElement.style.width).toBe('500px');
+    });
+
+    it('check is onSort output emmit value', function() {
+        component.onSort.subscribe((params) => {
+            expect(params.column).toBe('test1');
+            expect(params.order).toBe(Order.ASC);
+        });
+        fixtureDebug.query(By.css('.content')).nativeElement
+            .dispatchEvent(new Event('click'));
     });
 });

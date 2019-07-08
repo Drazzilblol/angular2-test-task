@@ -12,24 +12,7 @@ import {SortParams} from './models/SortParams';
 export class GridHeaderComponent implements OnInit {
     @Output() public onSort = new EventEmitter<SortParams>();
     @Input() public columns: Column[] = [];
-    public icon: string = 'expand_more';
     public currentSort: SortParams;
-
-    /**
-     * Отсылает параметры сортировки.
-     * @param params Параметры сортировкию
-     */
-    public sort(params: Column) {
-        if (this.currentSort.order === Order.ASC) {
-            this.currentSort.order = Order.DESC;
-            this.icon = 'expand_less';
-        } else {
-            this.currentSort.order = Order.ASC;
-            this.icon = 'expand_more';
-        }
-        this.currentSort.column = params.dataFieldName;
-        this.onSort.emit(this.currentSort);
-    }
 
     public ngOnInit(): void {
         const defaultSortColumn = find(this.columns, (column) => {
@@ -37,5 +20,10 @@ export class GridHeaderComponent implements OnInit {
         });
         this.currentSort = new SortParams(defaultSortColumn.dataFieldName, Order.ASC);
         this.onSort.emit(this.currentSort);
+    }
+
+    public sort(params: SortParams) {
+        this.onSort.emit(params);
+        this.currentSort = params;
     }
 }

@@ -4,8 +4,6 @@ import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {Columns} from 'app/enums/columns.enum';
-import {Order} from 'app/enums/order.enum';
-import {Sort} from 'app/enums/sort.enum';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {Column} from 'app/services/column-manger-service/column';
@@ -65,17 +63,6 @@ describe('string grid header', function() {
     });
 
     describe('component', function() {
-
-        it('check is onSort output emmit value', function() {
-
-            component.onSort.subscribe((params) => {
-                expect(params.column).toBe(Sort.TRANSFORMED);
-                expect(params.order).toBe(Order.ASC);
-            });
-            fixtureDebug.queryAll(By.css('.content'))[1].nativeElement
-                .dispatchEvent(new Event('click'));
-        });
-
         it('check localization', function() {
             const row = fixtureDebug.queryAll(By.css('.content'));
             expect(row[0].nativeElement.innerText).toBe(english.GRID_HEADER['transformed-text-column']);
@@ -88,6 +75,5 @@ describe('string grid header', function() {
             expect(row[1].nativeElement.innerText).toBe(russian.GRID_HEADER['origin-text-column']);
             expect(row[2].nativeElement.innerText).toBe(russian.GRID_HEADER['date-column']);
         });
-
     });
 });

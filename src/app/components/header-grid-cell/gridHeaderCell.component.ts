@@ -1,6 +1,17 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    Renderer2,
+} from '@angular/core';
+import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {SortParams} from '../string-grid-header/models/SortParams';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -9,8 +20,12 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 })
 export class GridHeaderCellComponent implements OnInit {
 
+    @Output() public onSort = new EventEmitter<SortParams>();
     @Input() public column: Column;
     @Input() public index: number;
+    @Input() public currentSort: SortParams;
+    public icon: string = 'expand_more';
+
     private start: HTMLElement;
     private pressed: boolean;
     private startX: any;
@@ -28,6 +43,21 @@ export class GridHeaderCellComponent implements OnInit {
 
     public ngOnInit(): void {
         this.changeCell();
+    }
+
+    /**
+     * Отсылает параметры сортировки.
+     * @param params Параметры сортировкию
+     */
+    public sort(params: Column) {
+        if (this.currentSort.order === Order.ASC && this.currentSort.column === this.column.dataFieldName) {
+            this.currentSort.order = Order.DESC;
+            this.icon = 'expand_less';
+        } else {
+            this.currentSort.order = Order.ASC;
+            this.icon = 'expand_more';
+        }
+        this.onSort.emit(new SortParams(this.column.dataFieldName, this.currentSort.order));
     }
 
     /**
