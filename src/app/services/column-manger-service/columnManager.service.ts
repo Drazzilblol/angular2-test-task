@@ -43,7 +43,7 @@ export class ColumnManagerService {
      * @param width
      */
     public changeHeaderWidth(index: number, width: number): void {
-        if (width < 600 && width > 65) {
+        if (width >= 65) {
             this.recalculateColumns(this.columns[index], {index, width});
             this.source.next({type: 'header'});
         }
@@ -56,8 +56,8 @@ export class ColumnManagerService {
      */
     private recalculateColumns(oldParams, newParams): void {
         const diff: number = oldParams.width - newParams.width;
-        const next = this.columns[++newParams.index];
-        if ((next.width > 65 && newParams.width > 65) || diff > 0) {
+        const next = this.columns[newParams.index + 1];
+        if (next.width + diff >= 65 || diff > 0) {
             oldParams.width = newParams.width;
             next.width += diff;
         }
