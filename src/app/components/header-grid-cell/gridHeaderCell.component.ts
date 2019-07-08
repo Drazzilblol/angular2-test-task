@@ -52,7 +52,7 @@ export class GridHeaderCellComponent implements OnInit {
     }
 
     /**
-     * Отслеживает перемещения мыши после нажатия и изменяет ширину колонок в шапке.
+     * Отслеживает перемещения мыши после нажатия на границе колонки и изменяет ширину колонок в шапке.
      */
     private initResizableColumns() {
         let width: number;
@@ -75,7 +75,7 @@ export class GridHeaderCellComponent implements OnInit {
     }
 
     /**
-     * При нажатии на ЛКМ начинает отслеживание перемещений мыши.
+     * При нажатии на границе колонки начинает отслеживание перемещений мыши.
      */
     private onMouseDown(event) {
         event.stopPropagation();

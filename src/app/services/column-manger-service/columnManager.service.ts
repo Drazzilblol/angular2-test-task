@@ -56,9 +56,7 @@ export class ColumnManagerService {
      */
     private recalculateColumns(oldParams, newParams): void {
         const diff: number = oldParams.width - newParams.width;
-
         const next = this.columns[++newParams.index];
-
         if ((next.width > 65 && newParams.width > 65) || diff > 0) {
             oldParams.width = newParams.width;
             next.width += diff;

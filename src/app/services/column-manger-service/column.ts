@@ -7,14 +7,18 @@ export class Column {
     public dataFieldName: string;
     public resizable: boolean;
     public sortable: boolean;
+    public defaultSort: boolean;
 
-    constructor(title, text, dataFieldName, width, resizable, sortable) {
+    constructor(title, text, dataFieldName, width, options?) {
         this.width = width;
         this.title = title;
         this.text = text;
         this.dataFieldName = dataFieldName;
-        this.resizable = resizable;
-        this.sortable = sortable;
+        if (options) {
+            this.resizable = options.resizable || false;
+            this.sortable = options.sortable || false;
+            this.defaultSort = options.defaultSort || false;
+        }
     }
 
     public functionValue(item: StringListItem): any {

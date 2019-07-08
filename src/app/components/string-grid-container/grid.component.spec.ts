@@ -4,20 +4,20 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
+import {Columns} from 'app/enums/columns.enum';
+import {Order} from 'app/enums/order.enum';
+import {Sort} from 'app/enums/sort.enum';
 import {Statuses} from 'app/enums/statuses.enum';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
+import {PipesModule} from 'app/pipes/pipes.module';
+import {Column} from 'app/services/column-manger-service/column';
+import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
 import {FilterService} from 'app/services/strings-filter/filter.service';
 import {GridAddService} from 'app/services/strings/grid-add.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {Columns} from '../../enums/columns.enum';
-import {Order} from '../../enums/order.enum';
-import {Sort} from '../../enums/sort.enum';
-import {PipesModule} from '../../pipes/pipes.module';
-import {Column} from '../../services/column-manger-service/column';
-import {ColumnManagerService} from '../../services/column-manger-service/columnManager.service';
 import {GridHeaderCellComponent} from '../header-grid-cell/gridHeaderCell.component';
 import {GridCellComponent} from '../string-grid-cell/gridCell.component';
 import {GridHeaderComponent} from '../string-grid-header/gridHeader.component';
@@ -31,6 +31,7 @@ describe('item list', function() {
     let fixture: ComponentFixture<GridComponent>;
     let translate: TranslateService;
     let fixtureDebug: DebugElement;
+    let columnsManager: ColumnManagerService;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
@@ -43,17 +44,33 @@ describe('item list', function() {
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
+        columnsManager = TestBed.get(ColumnManagerService);
         translate.use('en');
         fixture = TestBed.createComponent(GridComponent);
         fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
-        component.columns =
-            [
-                new Column(Columns.STATUS, '', 'status', 24, false, false),
-                new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280, true, true),
-                new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280, true, true),
-                new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216, false, true),
-            ];
+
+        columnsManager.addColumn(new Column(Columns.STATUS, '', 'status', 24, {
+            sortable: false,
+            resizable: false,
+        }));
+        columnsManager.addColumn(new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText',
+            280, {
+                sortable: true,
+                resizable: true,
+            }));
+        columnsManager.addColumn(new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280,
+            {
+                sortable: true,
+                resizable: true,
+            }));
+        columnsManager.addColumn(new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
+            {
+                sortable: true,
+                resizable: false,
+                defaultSort: true,
+            }));
+        component.columns = columnsManager.getColumns();
         fixture.detectChanges();
     });
 

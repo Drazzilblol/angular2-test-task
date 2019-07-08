@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
+import {find} from 'lodash';
 import {SortParams} from './models/SortParams';
 
 @Component({
@@ -10,7 +11,6 @@ import {SortParams} from './models/SortParams';
 })
 export class GridHeaderComponent implements OnInit {
     @Output() public onSort = new EventEmitter<SortParams>();
-    @Output() public onResize = new EventEmitter<any>();
     @Input() public columns: Column[] = [];
     public icon: string = 'expand_more';
     public currentSort: SortParams;
@@ -32,6 +32,9 @@ export class GridHeaderComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.currentSort = new SortParams(this.columns[1].dataFieldName, Order.ASC);
+        const defaultSortColumn = find(this.columns, (column) => {
+            return column.defaultSort;
+        });
+        this.currentSort = new SortParams(defaultSortColumn.dataFieldName, Order.ASC);
     }
 }

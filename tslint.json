@@ -2,9 +2,13 @@
   "extends": "tslint:recommended",
   "rules": {
     "quotemark": {
-      "options": ["single", "avoid-escape"]
+      "options": [
+        "single",
+        "avoid-escape"
+      ]
     },
     "only-arrow-functions": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "object-literal-sort-keys": false
   }
 }

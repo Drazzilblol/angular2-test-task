@@ -36,10 +36,23 @@ describe('string grid header', function() {
         component = fixture.componentInstance;
         component.columns =
             [
-                new Column(Columns.STATUS, '', 'status', 24, false, false),
-                new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280, true, true),
-                new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280, true, true),
-                new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216, false, true),
+                new Column(Columns.STATUS, '', 'status', 24, {
+                    sortable: false,
+                    resizable: false,
+                }),
+                new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280, {
+                    sortable: true,
+                    resizable: true,
+                }),
+                new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280, {
+                    sortable: true,
+                    resizable: true,
+                }),
+                new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216, {
+                    sortable: true,
+                    resizable: false,
+                    defaultSort: true,
+                }),
             ];
         fixture.detectChanges();
     });
