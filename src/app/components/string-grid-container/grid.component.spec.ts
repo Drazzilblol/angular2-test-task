@@ -1,6 +1,6 @@
 import {HttpClientModule} from '@angular/common/http';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
@@ -13,17 +13,14 @@ import russian from 'app/locales/locale-ru.json';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
-import {StringsHttpService} from 'app/services/getStrings/stringsHttp.service';
 import {FilterService} from 'app/services/strings-filter/filter.service';
-import {GridAddService} from 'app/services/strings/grid-add.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridHeaderCellComponent} from '../header-grid-cell/gridHeaderCell.component';
 import {GridCellComponent} from '../string-grid-cell/gridCell.component';
-import {GridHeaderComponent} from '../string-grid-header/gridHeader.component';
-import {SortParams} from '../string-grid-header/models/SortParams';
-import {GridRowComponent} from '../string-grid-row/gridRow.component';
+
 import {GridComponent} from './grid.component';
+import {SortParams} from './models/SortParams';
 import {StringListItem} from './models/StringListItem';
 
 describe('item list', function() {
@@ -35,10 +32,10 @@ describe('item list', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridComponent, GridHeaderComponent, GridRowComponent,
+            declarations: [GridComponent,
                 GridCellComponent, GridHeaderCellComponent],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule],
-            providers: [GridAddService, FilterService, StringsHttpService, ColumnManagerService],
+            providers: [FilterService, ColumnManagerService],
         }).overrideComponent(GridComponent, {
             set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
@@ -105,34 +102,12 @@ describe('item list', function() {
             expect(firstElement.innerText).toBe(russian.MESSAGE);
         });
 
-        it('check is status change over time', fakeAsync(function() {
-            const listItem: StringListItem = new StringListItem('test', new Date(now()), Statuses.FRESH);
-            component.items = [listItem];
-            component.countdown();
-            fixture.detectChanges();
-            const status = fixtureDebug.query(By.css('.status'));
-
-            expect(status.classes['status-green']).toBe(true);
-
-            tick(31000);
-            fixture.detectChanges();
-
-            expect(status.classes['status-yellow']).toBe(true);
-
-            tick(31000);
-            fixture.detectChanges();
-
-            expect(status.classes['status-red']).toBe(true);
-        }));
-
         it('check filter', fakeAsync(function() {
-            const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.FRESH);
+            const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.YESTERDAY);
             const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
 
             component.items = [testListItem1];
-            component.countdown();
             fixture.detectChanges();
-            tick(31000);
             component.items.push(testListItem2);
             component.filterParams = {text: '1', status: Statuses.YESTERDAY};
             fixture.detectChanges();
@@ -143,7 +118,6 @@ describe('item list', function() {
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('2');
-            component.intervalSub.unsubscribe();
         }));
 
         it('check sorting', function() {

@@ -1,8 +1,15 @@
 <div class="grid-container">
-    <grid-header [columns]="columns" class="grid-row header" (onSort)="sort($event)"></grid-header>
+    <div class="grid-row header">
+        <grid-header-cell class="unselectable" [ngClass]="column.title" [column]="column" (onSort)="sort($event)"
+                          *ngFor="let column of columns; let i = index" [index]="i" [currentSort]="currentSort">
+        </grid-header-cell>
+    </div>
     <div class="cont">
-        <grid-row [columns]="columns" class="grid-row hoverable-row"
-                  *ngFor="let item of items | stringFilter: filterParams" [item]="item">
-        </grid-row>
+        <div class="grid-row hoverable-row"
+             *ngFor="let item of items | stringFilter: filterParams">
+            <grid-cell [item]="item" [ngClass]="column.title" [column]="column"
+                       *ngFor="let column of columns; let i = index" [index]="i">
+            </grid-cell>
+        </div>
     </div>
 </div>

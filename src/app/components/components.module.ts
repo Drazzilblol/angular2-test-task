@@ -16,12 +16,10 @@ import {LanguageComponent} from './language/language.component';
 import {StringAddComponent} from './string-add/stringAdd.component';
 import {GridCellComponent} from './string-grid-cell/gridCell.component';
 import {GridComponent} from './string-grid-container/grid.component';
-import {GridHeaderComponent} from './string-grid-header/gridHeader.component';
-import {GridRowComponent} from './string-grid-row/gridRow.component';
 
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
-        FilterComponent, GridHeaderComponent, GridRowComponent, GridCellComponent, GridHeaderCellComponent],
+        FilterComponent, GridCellComponent, GridHeaderCellComponent],
     entryComponents: [LanguageDialogComponent],
     exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,

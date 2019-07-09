@@ -171,8 +171,6 @@ input.ng-dirty.ng-valid {
 
 .status-column {
     border-right: 1px solid #ddd;
-    min-height: 50px;
-    max-height: 50px;
     min-width: 23px;
     max-width: 23px;
     position: relative;
@@ -204,7 +202,6 @@ input.ng-dirty.ng-valid {
     padding-right: 12px;
     padding-left: 8px;
     padding-top: 12px;
-    position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
