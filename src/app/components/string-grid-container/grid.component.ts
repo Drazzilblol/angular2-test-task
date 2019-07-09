@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {find} from 'lodash';
@@ -16,9 +16,6 @@ export class GridComponent implements OnInit {
     @Input() public columns: Column[] = [];
     public currentSort: SortParams;
 
-    constructor(private changeDetector: ChangeDetectorRef) {
-    }
-
     /**
      * Сортирует элементы в порядке указаном в params.
      * @param params
@@ -33,7 +30,6 @@ export class GridComponent implements OnInit {
             this.items = this.items.reverse();
         }
         this.currentSort = params;
-        this.changeDetector.markForCheck();
     }
 
     public ngOnInit(): void {
