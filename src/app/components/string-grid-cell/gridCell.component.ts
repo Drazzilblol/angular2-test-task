@@ -19,6 +19,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {findIndex} from 'lodash';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.Default,
@@ -42,12 +43,10 @@ export class GridCellComponent implements OnInit {
             if (options.type === 'body') {
                 this.changeCell();
             }
-            if (options.type === 'swap') {
-                if (options.fIndex === this.index) {
-                    this.changeIndex(options.sIndex);
-                } else if (options.sIndex === this.index) {
-                    this.changeIndex(options.fIndex);
-                }
+            if (options.type === 'move') {
+                this.changeIndex(findIndex(options.cols, (col) => {
+                    return this.column === col;
+                }));
             }
         });
     }

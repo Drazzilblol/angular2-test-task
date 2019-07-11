@@ -11,6 +11,7 @@ import {
 import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {findIndex} from 'lodash';
 import {SortParams} from '../string-grid-container/models/SortParams';
 
 @Component({
@@ -40,12 +41,10 @@ export class GridHeaderCellComponent implements OnInit {
             if (options.type === 'header') {
                 this.changeCell();
             }
-            if (options.type === 'swap') {
-                if (options.fIndex === this.index) {
-                    this.changeIndex(options.sIndex);
-                } else if (options.sIndex === this.index) {
-                    this.changeIndex(options.fIndex);
-                }
+            if (options.type === 'move') {
+                this.changeIndex(findIndex(options.cols, (col) => {
+                    return this.column === col;
+                }));
             }
         });
     }

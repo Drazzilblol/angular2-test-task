@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {size} from 'lodash';
 import {Observable, Subject} from 'rxjs';
 import {Column} from './column';
 
@@ -64,25 +65,42 @@ export class ColumnManagerService {
         }
     }
 
-    public columnDragStart(index) {
+    /**
+     * Получает индекс перетаскиваемой колонку.
+     * @param index
+     */
+    public columnDragStart(index: number) {
         this.dragStartColumnIndex = index;
     }
 
-    public columnDragEnd(index) {
+    /**
+     * Получает индекс колонки на место которой необходимо поставить перетаскиваемую колонку.
+     * @param index
+     */
+    public columnDragEnd(index: number) {
         if (this.dragStartColumnIndex && index !== this.dragStartColumnIndex) {
-            this.swapColumns(this.dragStartColumnIndex, index);
+            this.moveColumn(this.dragStartColumnIndex, index);
             this.dragStartColumnIndex = null;
         }
     }
 
-    private swapColumns(firstColumnIndex: number, secondColumnIndex: number): void {
-        const firstColumn = this.columns[firstColumnIndex];
-        const fcRes = firstColumn.resizable;
-        const secondColumn = this.columns[secondColumnIndex];
-        firstColumn.resizable = secondColumn.resizable;
-        secondColumn.resizable = fcRes;
-        this.columns.splice(firstColumnIndex, 1, secondColumn);
-        this.columns.splice(secondColumnIndex, 1, firstColumn);
-        this.source.next({type: 'swap', fIndex: firstColumnIndex, sIndex: secondColumnIndex});
+    /**
+     * Изменяет индекс перетаскиваемой колонки в массиве, сообщает ячейкам что им необходимо изменить индексы колонок к
+     * которым они привязаны.
+     * @param firstColumnIndex
+     * @param secondColumnIndex
+     */
+    private moveColumn(firstColumnIndex: number, secondColumnIndex: number): void {
+        const columnsSize = size(this.columns);
+        if (columnsSize - 1 === firstColumnIndex) {
+            this.columns[columnsSize - 1].resizable = true;
+            this.columns[columnsSize - 2].resizable = false;
+        } else if (columnsSize - 1 === secondColumnIndex) {
+            this.columns[columnsSize - 1].resizable = true;
+            this.columns[firstColumnIndex].resizable = false;
+        }
+        const element = this.columns.splice(firstColumnIndex, 1)[0];
+        this.columns.splice(secondColumnIndex, 0, element);
+        this.source.next({type: 'move', cols: this.columns});
     }
 }

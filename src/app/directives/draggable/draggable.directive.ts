@@ -20,6 +20,11 @@ export class DraggableDirective {
         this.element = this.elementRef.nativeElement;
     }
 
+    /**
+     * Отслеживает событие mousedown на элементе, если произошло событие mousedown то через 500 милисекунд позволяет
+     * перетаскивать элемент.
+     * @param event
+     */
     @HostListener('mousedown', ['$event'])
     public clickStart(event): void {
         if (this.isDraggable) {
@@ -34,7 +39,10 @@ export class DraggableDirective {
         }
     }
 
-    @HostListener('mouseup', ['$event'])
+    /**
+     * Отслеживает событие mouseup на элементе, если произошло событие mouseup то отключает таймер.
+     */
+    @HostListener('mouseup')
     public clickEnd(): void {
         if (this.isDraggable) {
             this.longClickEnd.emit();
@@ -55,12 +63,18 @@ export class DraggableDirective {
         );
     }
 
+    /**
+     * При перетаскивании элемента располагает его под курсором.
+     */
     public move(event: MouseEvent) {
         this.renderer.setStyle(this.element, 'left',
             `${event.pageX - this.x + this.offsetX}px`);
 
     }
 
+    /**
+     * Убирает возможность перетаскивания элемента.
+     */
     public endMove() {
         this.renderer.removeStyle(this.element, 'left');
         this.renderer.removeClass(this.element, 'draggable');
