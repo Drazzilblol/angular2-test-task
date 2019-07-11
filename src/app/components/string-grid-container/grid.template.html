@@ -1,6 +1,7 @@
 <div class="grid-container">
     <div class="grid-row header">
-        <grid-header-cell class="unselectable" [ngClass]="column.title" [column]="column" (onSort)="sort($event)"
+        <grid-header-cell class="unselectable" [ngClass]="column.title"
+                          [column]="column" (onSort)="sort($event)"
                           *ngFor="let column of columns; let i = index" [index]="i" [currentSort]="currentSort">
         </grid-header-cell>
     </div>

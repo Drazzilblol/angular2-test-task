@@ -42,7 +42,19 @@ export class GridCellComponent implements OnInit {
             if (options.type === 'body') {
                 this.changeCell();
             }
+            if (options.type === 'swap') {
+                if (options.fIndex === this.index) {
+                    this.changeIndex(options.sIndex);
+                } else if (options.sIndex === this.index) {
+                    this.changeIndex(options.fIndex);
+                }
+            }
         });
+    }
+
+    public changeIndex(index: number): void {
+        this.index = index;
+        this.changeCell();
     }
 
     public ngOnInit(): void {

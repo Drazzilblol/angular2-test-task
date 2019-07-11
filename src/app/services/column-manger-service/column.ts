@@ -8,6 +8,7 @@ export class Column {
     public resizable: boolean;
     public sortable: boolean;
     public defaultSort: boolean;
+    public draggable: boolean;
 
     /**
      * Конструктор колонки.
@@ -29,6 +30,7 @@ export class Column {
             this.resizable = options.resizable || false;
             this.sortable = options.sortable || false;
             this.defaultSort = options.defaultSort || false;
+            this.draggable = options.draggable || false;
         }
     }
 

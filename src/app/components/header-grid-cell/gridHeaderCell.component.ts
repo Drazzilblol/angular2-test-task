@@ -21,6 +21,8 @@ import {SortParams} from '../string-grid-container/models/SortParams';
 export class GridHeaderCellComponent implements OnInit {
 
     @Output() public onSort = new EventEmitter<SortParams>();
+    @Output() public longClickEnd = new EventEmitter();
+    @Output() public longClickStart = new EventEmitter();
     @Input() public column: Column;
     @Input() public index: number;
     @Input() public currentSort: SortParams;
@@ -38,7 +40,19 @@ export class GridHeaderCellComponent implements OnInit {
             if (options.type === 'header') {
                 this.changeCell();
             }
+            if (options.type === 'swap') {
+                if (options.fIndex === this.index) {
+                    this.changeIndex(options.sIndex);
+                } else if (options.sIndex === this.index) {
+                    this.changeIndex(options.fIndex);
+                }
+            }
         });
+    }
+
+    public changeIndex(index: number): void {
+        this.index = index;
+        this.changeCell();
     }
 
     public ngOnInit(): void {
@@ -114,5 +128,13 @@ export class GridHeaderCellComponent implements OnInit {
         this.startX = event.pageX;
         this.startWidth = this.start.parentElement.offsetWidth;
         this.initResizableColumns();
+    }
+
+    public onLongClickStart() {
+        this.columnManager.columnDragStart(this.index);
+    }
+
+    public onLongClickEnd() {
+        this.columnManager.columnDragEnd(this.index);
     }
 }

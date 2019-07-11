@@ -1,7 +1,8 @@
 import {DebugElement} from '@angular/core';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {Columns} from 'app/enums/columns.enum';
 import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
@@ -18,7 +19,7 @@ describe('grid header cell', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridHeaderCellComponent],
+            declarations: [GridHeaderCellComponent, DraggableDirective],
             imports: [translateTestImport, NgbTooltipModule],
             providers: [ColumnManagerService],
         }).compileComponents();
@@ -64,12 +65,13 @@ describe('grid header cell', function() {
         expect(fixture.nativeElement.style.width).toBe('500px');
     });
 
-    it('check is onSort output emmit value', function() {
+    it('check is onSort output emmit value', fakeAsync(function() {
         component.onSort.subscribe((params) => {
             expect(params.column).toBe('test1');
-            expect(params.order).toBe(Order.ASC);
+            expect(params.order).toBe(Order.DESC);
         });
         fixtureDebug.query(By.css('.content')).nativeElement
             .dispatchEvent(new Event('click'));
-    });
+        tick(50);
+    }));
 });

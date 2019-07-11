@@ -5,6 +5,7 @@ import {Column} from './column';
 @Injectable()
 export class ColumnManagerService {
     private columns: Column[] = [];
+    private dragStartColumnIndex: number = null;
 
     private source = new Subject<any>();
     private observable = this.source.asObservable();
@@ -61,5 +62,27 @@ export class ColumnManagerService {
             oldParams.width = newParams.width;
             next.width += diff;
         }
+    }
+
+    public columnDragStart(index) {
+        this.dragStartColumnIndex = index;
+    }
+
+    public columnDragEnd(index) {
+        if (this.dragStartColumnIndex && index !== this.dragStartColumnIndex) {
+            this.swapColumns(this.dragStartColumnIndex, index);
+            this.dragStartColumnIndex = null;
+        }
+    }
+
+    private swapColumns(firstColumnIndex: number, secondColumnIndex: number): void {
+        const firstColumn = this.columns[firstColumnIndex];
+        const fcRes = firstColumn.resizable;
+        const secondColumn = this.columns[secondColumnIndex];
+        firstColumn.resizable = secondColumn.resizable;
+        secondColumn.resizable = fcRes;
+        this.columns.splice(firstColumnIndex, 1, secondColumn);
+        this.columns.splice(secondColumnIndex, 1, firstColumn);
+        this.source.next({type: 'swap', fIndex: firstColumnIndex, sIndex: secondColumnIndex});
     }
 }

@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {DraggableDirective} from '../directives/draggable/draggable.directive';
 import {PipesModule} from '../pipes/pipes.module';
 import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
 import {FilterService} from '../services/strings-filter/filter.service';
@@ -19,7 +20,7 @@ import {GridComponent} from './string-grid-container/grid.component';
 
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
-        FilterComponent, GridCellComponent, GridHeaderCellComponent],
+        FilterComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective],
     entryComponents: [LanguageDialogComponent],
     exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
