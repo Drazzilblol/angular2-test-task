@@ -5,6 +5,7 @@ import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
+import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
 import {Order} from 'app/enums/order.enum';
 import {Sort} from 'app/enums/sort.enum';
@@ -33,7 +34,7 @@ describe('item list', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective],
+            declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule],
             providers: [FilterService, ColumnManagerService],
         }).overrideComponent(GridComponent, {

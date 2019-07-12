@@ -50,6 +50,7 @@ export class DraggableDirective {
                 this.timerSub.unsubscribe();
             }
         }
+
     }
 
     private initListeners() {

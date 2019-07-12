@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {size} from 'lodash';
+import {ResizeEdges} from 'app/enums/resizeEdges.enum';
 import {Observable, Subject} from 'rxjs';
 import {Column} from './column';
 
@@ -43,10 +43,11 @@ export class ColumnManagerService {
      * Сообщает что необходимо перерисовать шапку таблицы.
      * @param index
      * @param width
+     * @param resizeEdge
      */
-    public changeHeaderWidth(index: number, width: number): void {
+    public changeHeaderWidth(index: number, width: number, resizeEdge: ResizeEdges): void {
         if (width >= 65) {
-            this.recalculateColumns(this.columns[index], {index, width});
+            this.recalculateColumns(this.columns[index], {index, width}, resizeEdge);
             this.source.next({type: 'header'});
         }
     }
@@ -55,13 +56,20 @@ export class ColumnManagerService {
      * Перерасчитывает ширину колонок таблицы.
      * @param oldParams
      * @param newParams
+     * @param resizeEdge
      */
-    private recalculateColumns(oldParams, newParams): void {
+    private recalculateColumns(oldParams, newParams, resizeEdge: ResizeEdges): void {
         const diff: number = oldParams.width - newParams.width;
-        const next = this.columns[newParams.index + 1];
-        if (next.width + diff >= 65 || diff > 0) {
+        let siblingToResize: Column;
+        if (resizeEdge === ResizeEdges.RIGHT) {
+            siblingToResize = this.columns[newParams.index + 1];
+        } else if (resizeEdge === ResizeEdges.LEFT) {
+            siblingToResize = this.columns[newParams.index - 1];
+        }
+
+        if (siblingToResize && (siblingToResize.width + diff >= 65 || diff > 0)) {
             oldParams.width = newParams.width;
-            next.width += diff;
+            siblingToResize.width += diff;
         }
     }
 
@@ -91,14 +99,6 @@ export class ColumnManagerService {
      * @param secondColumnIndex
      */
     private moveColumn(firstColumnIndex: number, secondColumnIndex: number): void {
-        const columnsSize = size(this.columns);
-        if (columnsSize - 1 === firstColumnIndex) {
-            this.columns[columnsSize - 1].resizable = true;
-            this.columns[columnsSize - 2].resizable = false;
-        } else if (columnsSize - 1 === secondColumnIndex) {
-            this.columns[columnsSize - 1].resizable = true;
-            this.columns[firstColumnIndex].resizable = false;
-        }
         const element = this.columns.splice(firstColumnIndex, 1)[0];
         this.columns.splice(secondColumnIndex, 0, element);
         this.source.next({type: 'move', cols: this.columns});

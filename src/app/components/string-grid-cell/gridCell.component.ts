@@ -41,7 +41,7 @@ export class GridCellComponent implements OnInit {
                 private compiler: Compiler) {
         columnManager.getObservable().subscribe((options) => {
             if (options.type === 'body') {
-                this.changeCell();
+                this.changeWidth();
             }
             if (options.type === 'move') {
                 this.changeIndex(findIndex(options.cols, (col) => {
@@ -53,21 +53,28 @@ export class GridCellComponent implements OnInit {
 
     public changeIndex(index: number): void {
         this.index = index;
-        this.changeCell();
+        this.changePosition();
     }
 
     public ngOnInit(): void {
-        this.changeCell();
+        this.changeWidth();
+        this.changePosition();
         this.compileTemplate();
     }
 
     /**
-     * Задает ширину и номер ячейки в таблице.
+     * Задает ширину ячейки в таблице.
      */
-    public changeCell(): void {
+    public changeWidth(): void {
         this.renderer.setStyle(this.elementRef.nativeElement,
             'width',
             this.column.width + 'px');
+    }
+
+    /**
+     * Задает номер колонки для ячейки в таблице.
+     */
+    public changePosition(): void {
         this.renderer.setStyle(this.elementRef.nativeElement,
             '-ms-grid-column',
             this.index + 1);

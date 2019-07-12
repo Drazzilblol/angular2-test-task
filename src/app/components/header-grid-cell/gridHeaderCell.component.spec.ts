@@ -3,6 +3,7 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
+import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
 import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
@@ -19,7 +20,7 @@ describe('grid header cell', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridHeaderCellComponent, DraggableDirective],
+            declarations: [GridHeaderCellComponent, DraggableDirective, ResizableDirective],
             imports: [translateTestImport, NgbTooltipModule],
             providers: [ColumnManagerService],
         }).compileComponents();
@@ -35,7 +36,7 @@ describe('grid header cell', function() {
         columnManager.addColumn(new Column(Columns.ORIGIN, Columns.ORIGIN, 'test2', 400,
             {
                 sortable: true,
-                resizable: false,
+                resizable: true,
             }));
 
         component = fixture.componentInstance;
@@ -53,14 +54,18 @@ describe('grid header cell', function() {
     });
 
     it('check resizing', function() {
-        const resizer = fixtureDebug.queryAll(By.css('.ui-column-resizer'))[0].nativeElement;
-        resizer.dispatchEvent(new MouseEvent('mousedown'));
+        const element = fixtureDebug.queryAll(By.css('div>div'))[0].nativeElement;
+        element.dispatchEvent(new MouseEvent('mousedown', {
+            bubbles: true,
+            clientX: 400,
+            clientY: 20,
+        }));
         const event = new MouseEvent('mousemove', {
             bubbles: true,
-            clientX: 100,
+            clientX: 500,
         });
-        resizer.dispatchEvent(event);
-        resizer.dispatchEvent(new MouseEvent('mouseup'));
+        element.dispatchEvent(event);
+        element.dispatchEvent(new MouseEvent('mouseup'));
 
         expect(fixture.nativeElement.style.width).toBe('500px');
     });

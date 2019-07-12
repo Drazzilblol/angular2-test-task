@@ -28,34 +28,46 @@ export class GridHeaderCellComponent implements OnInit {
     @Input() public index: number;
     @Input() public currentSort: SortParams;
     public icon: string = 'expand_more';
-
-    private start: HTMLElement;
-    private pressed: boolean;
-    private startX: any;
-    private startWidth: any;
-    private mouseMove: () => void;
-    private mouseUp: () => void;
+    public edges = {left: false, right: false};
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService) {
         columnManager.getObservable().subscribe((options) => {
             if (options.type === 'header') {
-                this.changeCell();
+                this.changeWidth();
             }
             if (options.type === 'move') {
                 this.changeIndex(findIndex(options.cols, (col) => {
                     return this.column === col;
                 }));
+                this.constructResizeEdges(options.cols);
             }
         });
     }
 
     public changeIndex(index: number): void {
         this.index = index;
-        this.changeCell();
+        this.changePosition();
     }
 
     public ngOnInit(): void {
-        this.changeCell();
+        this.constructResizeEdges(this.columnManager.getColumns());
+        this.changeWidth();
+        this.changePosition();
+    }
+
+    public constructResizeEdges(columns: Column[]) {
+        if (columns[this.index - 1] && this.index !== 0) {
+            this.edges.left = columns[this.index - 1].resizable;
+        }
+        if (columns[this.index + 1] && this.index + 1 < columns.length) {
+            this.edges.right = columns[this.index + 1].resizable;
+        }
+        if (this.index + 1 === columns.length) {
+            this.edges.right = false;
+        }
+        if (this.index === 0) {
+            this.edges.left = false;
+        }
     }
 
     /**
@@ -74,12 +86,18 @@ export class GridHeaderCellComponent implements OnInit {
     }
 
     /**
-     * Задает ширину и номер ячейки в таблице.
+     * Задает ширину ячейки в таблице.
      */
-    public changeCell(): void {
+    public changeWidth(): void {
         this.renderer.setStyle(this.elementRef.nativeElement,
             'width',
             this.column.width + 'px');
+    }
+
+    /**
+     * Задает номер колонки для ячейки в таблице.
+     */
+    public changePosition(): void {
         this.renderer.setStyle(this.elementRef.nativeElement,
             '-ms-grid-column',
             this.index + 1);
@@ -94,46 +112,19 @@ export class GridHeaderCellComponent implements OnInit {
             1);
     }
 
-    /**
-     * Отслеживает перемещения мыши после нажатия на границе колонки и изменяет ширину колонок в шапке.
-     */
-    private initResizableColumns() {
-        let width: number;
-        this.mouseMove = this.renderer.listen('body', 'mousemove', (event) => {
-                if (this.pressed) {
-                    const diff = (event.pageX - this.startX);
-                    width = this.startWidth + diff;
-                    this.columnManager.changeHeaderWidth(this.index, width);
-                }
-            },
-        );
-        this.mouseUp = this.renderer.listen('body', 'mouseup', () => {
-            if (this.pressed) {
-                this.columnManager.changeBodyWidth();
-                this.pressed = false;
-                this.mouseMove();
-                this.mouseUp();
-            }
-        });
-    }
-
-    /**
-     * При нажатии на границе колонки начинает отслеживание перемещений мыши.
-     */
-    private onMouseDown(event) {
-        event.stopPropagation();
-        this.start = event.target;
-        this.pressed = true;
-        this.startX = event.pageX;
-        this.startWidth = this.start.parentElement.offsetWidth;
-        this.initResizableColumns();
-    }
-
     public onLongClickStart() {
         this.columnManager.columnDragStart(this.index);
     }
 
     public onLongClickEnd() {
         this.columnManager.columnDragEnd(this.index);
+    }
+
+    public onResize(event) {
+        this.columnManager.changeHeaderWidth(this.index, event.width, event.resizeEdge);
+    }
+
+    public onResizeEnd() {
+        this.columnManager.changeBodyWidth();
     }
 }
