@@ -14,9 +14,25 @@ export class ResizableDirective {
     private element;
     private resizeEdge: ResizeEdges;
 
+    /**
+     * Событие изменения размера элемента.
+     */
     @Output() public onResize = new EventEmitter();
+
+    /**
+     * Событие окончание изменения размера элемента.
+     */
     @Output() public onResizeEnd = new EventEmitter();
+
+    /**
+     * Разрешение на изменение размера элемента.
+     */
     @Input() public isResizable: boolean;
+
+    /**
+     * Объект который содержит список границ элемента с помощью которых разрешено изменять его размер.
+     * Может содержать свойства left и right типа boolean.
+     */
     @Input() public resizeEdges: any;
 
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {
@@ -24,8 +40,8 @@ export class ResizableDirective {
     }
 
     /**
-     * Отслеживает событие mousedown на элементе, если произошло событие mousedown то через 500 милисекунд позволяет
-     * перетаскивать элемент.
+     * Отслеживает событие mousedown на элементе, если событие произошло на границе элемента, то запускате отслеживание
+     * движения курсора.
      * @param event
      */
     @HostListener('mousedown', ['$event'])
@@ -49,6 +65,11 @@ export class ResizableDirective {
         }
     }
 
+    /**
+     * Отслеживает событие mousemove на элементе, если событие произошло на краю элемента, то изменяет курсор
+     * на col-resize.
+     * @param event
+     */
     @HostListener('mousemove', ['$event'])
     public onMouseMove(event): void {
         if (this.isResizable) {
@@ -65,7 +86,7 @@ export class ResizableDirective {
     }
 
     /**
-     * Отслеживает перемещения мыши после нажатия на границе колонки и изменяет ширину колонок в шапке.
+     * Отслеживает перемещения мыши после нажатия на границе колонки и изменяет ширину колонок.
      */
     private initListeners() {
         let width: number;

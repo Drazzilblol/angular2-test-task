@@ -55,6 +55,11 @@ export class GridHeaderCellComponent implements OnInit {
         this.changePosition();
     }
 
+    /**
+     * На основании соседних колонок создает объект содержащий в себе границы колонки с помощью которых можно
+     * будет изменять ширину колонки.
+     * @param columns
+     */
     public constructResizeEdges(columns: Column[]) {
         if (columns[this.index - 1] && this.index !== 0) {
             this.edges.left = columns[this.index - 1].resizable;
@@ -72,7 +77,7 @@ export class GridHeaderCellComponent implements OnInit {
 
     /**
      * Отсылает параметры сортировки.
-     * @param params Параметры сортировкию
+     * @param params параметры сортировкию
      */
     public sort(params: Column) {
         if (this.currentSort.order === Order.ASC && this.currentSort.column === this.column.dataFieldName) {
