@@ -67,7 +67,7 @@ export class ColumnManagerService {
             siblingToResize = this.columns[newParams.index - 1];
         }
 
-        if (siblingToResize && (siblingToResize.width + diff >= 65 || diff > 0)) {
+        if (siblingToResize && siblingToResize.width + diff >= 65) {
             oldParams.width = newParams.width;
             siblingToResize.width += diff;
         }

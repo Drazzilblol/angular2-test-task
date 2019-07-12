@@ -53,7 +53,7 @@ export class AppComponent implements OnDestroy, OnInit {
         this.columnsManager.addColumn(new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
             {
                 sortable: true,
-                resizable: false,
+                resizable: true,
                 draggable: true,
                 defaultSort: true,
             }));

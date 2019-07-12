@@ -61,17 +61,15 @@ export class GridHeaderCellComponent implements OnInit {
      * @param columns
      */
     public constructResizeEdges(columns: Column[]) {
-        if (columns[this.index - 1] && this.index !== 0) {
+        if (columns[this.index - 1]) {
             this.edges.left = columns[this.index - 1].resizable;
-        }
-        if (columns[this.index + 1] && this.index + 1 < columns.length) {
-            this.edges.right = columns[this.index + 1].resizable;
-        }
-        if (this.index + 1 === columns.length) {
-            this.edges.right = false;
-        }
-        if (this.index === 0) {
+        } else {
             this.edges.left = false;
+        }
+        if (columns[this.index + 1]) {
+            this.edges.right = columns[this.index + 1].resizable;
+        } else {
+            this.edges.right = false;
         }
     }
 

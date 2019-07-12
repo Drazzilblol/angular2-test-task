@@ -11,7 +11,7 @@ export class ResizableDirective {
     private startWidth: any;
     private mouseMove: () => void;
     private mouseUp: () => void;
-    private element;
+    private element: any;
     private resizeEdge: ResizeEdges;
 
     /**
@@ -50,16 +50,15 @@ export class ResizableDirective {
             const rect: DOMRect = this.element.getBoundingClientRect();
             event.stopPropagation();
             this.start = event.target;
-            this.pressed = true;
             this.startX = event.pageX;
             this.startWidth = this.start.parentElement.offsetWidth;
-            if (this.resizeEdges.right && (event.pageX <= rect.right && event.pageX >= rect.right - 10
-                && event.pageY >= rect.top && event.pageY <= rect.bottom)) {
+            if (this.resizeEdges.right && (event.pageX >= rect.right - 10 && event.pageY >= rect.top)) {
                 this.resizeEdge = ResizeEdges.RIGHT;
+                this.pressed = true;
                 this.initListeners();
-            } else if (this.resizeEdges.left && (event.pageX >= rect.left && event.pageX <= rect.left + 10
-                && event.pageY >= rect.top && event.pageY <= rect.bottom)) {
+            } else if (this.resizeEdges.left && (event.pageX <= rect.left + 10 && event.pageY >= rect.top)) {
                 this.resizeEdge = ResizeEdges.LEFT;
+                this.pressed = true;
                 this.initListeners();
             }
         }
@@ -74,10 +73,8 @@ export class ResizableDirective {
     public onMouseMove(event): void {
         if (this.isResizable) {
             const rect: DOMRect = this.element.getBoundingClientRect();
-            if ((this.resizeEdges.right && (event.pageX <= rect.right && event.pageX >= rect.right - 10
-                && event.pageY >= rect.top && event.pageY <= rect.bottom))
-                || (this.resizeEdges.left && (event.pageX >= rect.left && event.pageX <= rect.left + 10
-                    && event.pageY >= rect.top && event.pageY <= rect.bottom))) {
+            if ((this.resizeEdges.right && (event.pageX >= rect.right - 10 && event.pageY >= rect.top))
+                || (this.resizeEdges.left && (event.pageX <= rect.left + 10 && event.pageY >= rect.top))) {
                 this.renderer.addClass(this.element, 'resizable');
             } else {
                 this.renderer.removeClass(this.element, 'resizable');
@@ -86,13 +83,13 @@ export class ResizableDirective {
     }
 
     /**
-     * Отслеживает перемещения мыши после нажатия на границе колонки и изменяет ширину колонок.
+     * Отслеживает перемещения мыши после нажатия на границе элемента и изменяет его ширину.
      */
     private initListeners() {
         let width: number;
         this.mouseMove = this.renderer.listen('body', 'mousemove', (event) => {
                 if (this.pressed) {
-                    const diff = (event.pageX - this.startX);
+                    const diff = event.pageX - this.startX;
                     if (this.resizeEdge === ResizeEdges.RIGHT) {
                         width = this.startWidth + diff;
                     } else {
