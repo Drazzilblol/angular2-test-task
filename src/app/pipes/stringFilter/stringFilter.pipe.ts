@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {FilterParams} from 'app/components/filter/models/filterParams';
-import {StringListItem} from 'app/components/string-grid-container/models/StringListItem';
+import {StringListItem} from 'app/components/grid/models/StringListItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {filter, startsWith} from 'lodash';
 

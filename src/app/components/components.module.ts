@@ -16,8 +16,8 @@ import {GridHeaderCellComponent} from './header-grid-cell/gridHeaderCell.compone
 import {LanguageDialogComponent} from './language/dialog/languageDialog.component';
 import {LanguageComponent} from './language/language.component';
 import {StringAddComponent} from './string-add/stringAdd.component';
-import {GridCellComponent} from './string-grid-cell/gridCell.component';
-import {GridComponent} from './string-grid-container/grid.component';
+import {GridCellComponent} from './grid-cell/gridCell.component';
+import {GridComponent} from './grid/grid.component';
 
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,

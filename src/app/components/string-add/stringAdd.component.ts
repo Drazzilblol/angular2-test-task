@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
 import {GridAddService} from 'app/services/strings/grid-add.service';
 import {now} from 'lodash';
-import {StringListItem} from '../string-grid-container/models/StringListItem';
+import {StringListItem} from '../grid/models/StringListItem';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

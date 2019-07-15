@@ -12,7 +12,7 @@ import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {findIndex} from 'lodash';
-import {SortParams} from '../string-grid-container/models/SortParams';
+import {SortParams} from '../grid/models/SortParams';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
