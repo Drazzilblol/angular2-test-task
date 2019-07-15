@@ -41,6 +41,6 @@ describe('grid cell', function() {
     it('check resizing', function() {
         columnManager.getColumns()[0].width = 500;
         columnManager.changeBodyWidth();
-        expect(fixture.nativeElement.style.width).toBe('500px');
+        expect(fixture.nativeElement.parentNode.style.width).toBe('500px');
     });
 });

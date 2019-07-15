@@ -32,6 +32,7 @@ export class DraggableDirective {
                 this.x = event.pageX;
                 this.offsetX = event.offsetX;
                 this.target = event.target;
+                this.move(event)
                 this.renderer.addClass(this.element, 'draggable');
                 this.longClickStart.emit();
                 this.initListeners();

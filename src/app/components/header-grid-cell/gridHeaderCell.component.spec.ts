@@ -67,7 +67,7 @@ describe('grid header cell', function() {
         element.dispatchEvent(event);
         element.dispatchEvent(new MouseEvent('mouseup'));
 
-        expect(fixture.nativeElement.style.width).toBe('500px');
+        expect(fixture.nativeElement.parentNode.style.width).toBe('500px');
     });
 
     it('check is onSort output emmit value', fakeAsync(function() {

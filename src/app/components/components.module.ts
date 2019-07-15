@@ -12,12 +12,12 @@ import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
 import {FilterService} from '../services/strings-filter/filter.service';
 import {GridAddService} from '../services/strings/grid-add.service';
 import {FilterComponent} from './filter/filter.component';
+import {GridCellComponent} from './grid-cell/gridCell.component';
+import {GridComponent} from './grid/grid.component';
 import {GridHeaderCellComponent} from './header-grid-cell/gridHeaderCell.component';
 import {LanguageDialogComponent} from './language/dialog/languageDialog.component';
 import {LanguageComponent} from './language/language.component';
 import {StringAddComponent} from './string-add/stringAdd.component';
-import {GridCellComponent} from './grid-cell/gridCell.component';
-import {GridComponent} from './grid/grid.component';
 
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,

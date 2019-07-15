@@ -51,7 +51,7 @@ export class ResizableDirective {
             event.stopPropagation();
             this.start = event.target;
             this.startX = event.pageX;
-            this.startWidth = this.start.parentElement.offsetWidth;
+            this.startWidth = rect.width;
             if (this.resizeEdges.right && (event.pageX >= rect.right - 10 && event.pageY >= rect.top)) {
                 this.resizeEdge = ResizeEdges.RIGHT;
                 this.pressed = true;

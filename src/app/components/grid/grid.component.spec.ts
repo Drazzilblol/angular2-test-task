@@ -18,8 +18,8 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 import {FilterService} from 'app/services/strings-filter/filter.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {GridHeaderCellComponent} from '../header-grid-cell/gridHeaderCell.component';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
+import {GridHeaderCellComponent} from '../header-grid-cell/gridHeaderCell.component';
 
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';

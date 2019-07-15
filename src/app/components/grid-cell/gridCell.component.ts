@@ -66,7 +66,7 @@ export class GridCellComponent implements OnInit {
      * Задает ширину ячейки в таблице.
      */
     public changeWidth(): void {
-        this.renderer.setStyle(this.elementRef.nativeElement,
+        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
             'width',
             this.column.width + 'px');
     }
@@ -75,16 +75,16 @@ export class GridCellComponent implements OnInit {
      * Задает номер колонки для ячейки в таблице.
      */
     public changePosition(): void {
-        this.renderer.setStyle(this.elementRef.nativeElement,
+        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
             '-ms-grid-column',
             this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement,
+        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
             '-ms-grid-row',
             1);
-        this.renderer.setStyle(this.elementRef.nativeElement,
+        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
             'grid-column',
             this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement,
+        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
             'grid-row',
             1);
     }
