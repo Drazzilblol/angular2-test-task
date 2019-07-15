@@ -33,31 +33,30 @@ export class AppComponent implements OnDestroy, OnInit {
     }
 
     private initColumns() {
-        this.columnsManager.addColumn(new Column(Columns.STATUS, '', 'status', 24, {
-            sortable: false,
-            resizable: false,
-            draggable: false,
-        }));
-        this.columnsManager.addColumn(new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText',
-            280, {
-                sortable: true,
-                resizable: true,
-                draggable: true,
-            }));
-        this.columnsManager.addColumn(new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280,
-            {
-                sortable: true,
-                resizable: true,
-                draggable: true,
-            }));
-        this.columnsManager.addColumn(new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
-            {
-                sortable: true,
-                resizable: true,
-                draggable: true,
-                defaultSort: true,
-            }));
-        this.columns = this.columnsManager.getColumns();
+        const columnsArray: Column[] = [
+            new Column(Columns.STATUS, '', 'status', 24),
+            new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280,
+                {
+                    sortable: true,
+                    resizable: true,
+                    draggable: true,
+                }),
+            new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280,
+                {
+                    sortable: true,
+                    resizable: true,
+                    draggable: true,
+                }),
+            new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
+                {
+                    sortable: true,
+                    resizable: true,
+                    draggable: true,
+                    defaultSort: true,
+                }),
+        ];
+
+        this.columns = this.columnsManager.addColumns(columnsArray);
     }
 
     private initSubscriptions() {

@@ -1,4 +1,4 @@
-import {StringListItem} from 'app/components/grid/models/StringListItem';
+import {StringListItem} from 'app/components/string-add/models/StringListItem';
 
 export class Column {
     public width: number;

@@ -20,10 +20,9 @@ import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
 import {GridHeaderCellComponent} from '../header-grid-cell/gridHeaderCell.component';
-
+import {StringListItem} from '../string-add/models/StringListItem';
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';
-import {StringListItem} from './models/StringListItem';
 
 describe('item list', function() {
     let component: GridComponent;
@@ -34,7 +33,8 @@ describe('item list', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective],
+            declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective,
+                ResizableDirective],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule],
             providers: [FilterService, ColumnManagerService],
         }).overrideComponent(GridComponent, {
@@ -48,27 +48,24 @@ describe('item list', function() {
         fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
 
-        columnsManager.addColumn(new Column(Columns.STATUS, '', 'status', 24, {
-            sortable: false,
-            resizable: false,
-        }));
-        columnsManager.addColumn(new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText',
-            280, {
-                sortable: true,
-                resizable: true,
-            }));
-        columnsManager.addColumn(new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280,
-            {
-                sortable: true,
-                resizable: true,
-            }));
-        columnsManager.addColumn(new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
-            {
-                sortable: true,
-                resizable: false,
-                defaultSort: true,
-            }));
-        component.columns = columnsManager.getColumns();
+        component.columns = columnsManager.addColumns([
+            new Column(Columns.STATUS, '', 'status', 24),
+            new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText',
+                280, {
+                    sortable: true,
+                    resizable: true,
+                }),
+            new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280,
+                {
+                    sortable: true,
+                    resizable: true,
+                }),
+            new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
+                {
+                    sortable: true,
+                    defaultSort: true,
+                }),
+        ]);
         fixture.detectChanges();
     });
 
@@ -77,6 +74,7 @@ describe('item list', function() {
         component = null;
         translate = null;
         fixtureDebug = null;
+        columnsManager = null;
     });
 
     describe('component', function() {

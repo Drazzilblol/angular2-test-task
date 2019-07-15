@@ -1,5 +1,5 @@
 import {fakeAsync, tick} from '@angular/core/testing';
-import {StringListItem} from 'app/components/grid/models/StringListItem';
+import {StringListItem} from 'app/components/string-add/models/StringListItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {now} from 'lodash';
 import {Subscription} from 'rxjs';

@@ -28,16 +28,18 @@ describe('grid header cell', function() {
         fixture = TestBed.createComponent(GridHeaderCellComponent);
         fixtureDebug = fixture.debugElement;
         columnManager = TestBed.get(ColumnManagerService);
-        columnManager.addColumn(new Column(Columns.ORIGIN, Columns.ORIGIN, 'test1', 400,
-            {
-                sortable: true,
-                resizable: true,
-            }));
-        columnManager.addColumn(new Column(Columns.ORIGIN, Columns.ORIGIN, 'test2', 400,
-            {
-                sortable: true,
-                resizable: true,
-            }));
+        columnManager.addColumns([
+            new Column(Columns.ORIGIN, Columns.ORIGIN, 'test1', 400,
+                {
+                    sortable: true,
+                    resizable: true,
+                }),
+            new Column(Columns.ORIGIN, Columns.ORIGIN, 'test2', 400,
+                {
+                    sortable: true,
+                    resizable: true,
+                }),
+        ]);
 
         component = fixture.componentInstance;
         component.index = 0;

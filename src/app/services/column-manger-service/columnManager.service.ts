@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ResizeEdges} from 'app/enums/resizeEdges.enum';
+import {concat} from 'lodash'
 import {Observable, Subject} from 'rxjs';
-import {Column} from './column';
 
 @Injectable()
 export class ColumnManagerService {
-    private columns: Column[] = [];
+    private columns: any[] = [];
     private dragStartColumnIndex: number = null;
 
     private source = new Subject<any>();
@@ -14,15 +14,22 @@ export class ColumnManagerService {
     /**
      * Возвращает массив колонок.
      */
-    public getColumns(): Column[] {
+    public getColumns(): any[] {
         return this.columns;
     }
 
     /**
      * Добавляет новую колонку.
      */
-    public addColumn(column: Column) {
+    public addColumn(column: any) {
         this.columns.push(column);
+    }
+
+    /**
+     * Добавляет новую колонку.
+     */
+    public addColumns(columns: any[]) {
+        return this.columns = concat(this.columns, columns);
     }
 
     /**
@@ -60,7 +67,7 @@ export class ColumnManagerService {
      */
     private recalculateColumns(oldParams, newParams, resizeEdge: ResizeEdges): void {
         const diff: number = oldParams.width - newParams.width;
-        let siblingToResize: Column;
+        let siblingToResize: any;
         if (resizeEdge === ResizeEdges.RIGHT) {
             siblingToResize = this.columns[newParams.index + 1];
         } else if (resizeEdge === ResizeEdges.LEFT) {

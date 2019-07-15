@@ -3,8 +3,8 @@
     <ng-container *ngIf="column.sortable">
         <i *ngIf="column.dataFieldName  === currentSort.column" class="material-icons md-14 icon-left">{{icon}}</i>
     </ng-container>
-    <div draggable [isDraggable]="column.draggable" (longClickStart)="onLongClickStart()"
-         (longClickEnd)="onLongClickEnd()"
+    <div draggable [isDraggable]="column.draggable" (onDragStart)="dragStart()"
+         (onDragEnd)="dragEnd()"
          class="content" container="body" [ngbTooltip]="'GRID_HEADER.' + column.text | translate"
          *ngIf="column.text" placement="left" (click)="sort(column)">
         {{'GRID_HEADER.' + column.text | translate}}

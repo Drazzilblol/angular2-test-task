@@ -22,9 +22,9 @@ import {SortParams} from '../grid/models/SortParams';
 export class GridHeaderCellComponent implements OnInit {
 
     @Output() public onSort = new EventEmitter<SortParams>();
-    @Output() public longClickEnd = new EventEmitter();
-    @Output() public longClickStart = new EventEmitter();
-    @Input() public column: Column;
+    @Output() public onDragEnd = new EventEmitter();
+    @Output() public onDragStart = new EventEmitter();
+    @Input() public column: any;
     @Input() public index: number;
     @Input() public currentSort: SortParams;
     public icon: string = 'expand_more';
@@ -115,11 +115,11 @@ export class GridHeaderCellComponent implements OnInit {
             1);
     }
 
-    public onLongClickStart() {
+    public dragStart() {
         this.columnManager.columnDragStart(this.index);
     }
 
-    public onLongClickEnd() {
+    public dragEnd() {
         this.columnManager.columnDragEnd(this.index);
     }
 

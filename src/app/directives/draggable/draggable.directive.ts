@@ -5,8 +5,8 @@ import {Subscription, timer} from 'rxjs';
     selector: '[draggable]',
 })
 export class DraggableDirective {
-    @Output() public longClickEnd = new EventEmitter();
-    @Output() public longClickStart = new EventEmitter();
+    @Output() public onDragEnd = new EventEmitter();
+    @Output() public onDragStart = new EventEmitter();
     @Input() public isDraggable: boolean;
     private mouseMove: () => void;
     private mouseUp: () => void;
@@ -32,9 +32,9 @@ export class DraggableDirective {
                 this.x = event.pageX;
                 this.offsetX = event.offsetX;
                 this.target = event.target;
-                this.move(event)
+                this.move(event);
                 this.renderer.addClass(this.element, 'draggable');
-                this.longClickStart.emit();
+                this.onDragStart.emit();
                 this.initListeners();
             });
         }
@@ -46,7 +46,7 @@ export class DraggableDirective {
     @HostListener('mouseup')
     public clickEnd(): void {
         if (this.isDraggable) {
-            this.longClickEnd.emit();
+            this.onDragEnd.emit();
             if (this.timerSub) {
                 this.timerSub.unsubscribe();
             }

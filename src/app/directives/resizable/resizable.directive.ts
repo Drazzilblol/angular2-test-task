@@ -27,13 +27,13 @@ export class ResizableDirective {
     /**
      * Разрешение на изменение размера элемента.
      */
-    @Input() public isResizable: boolean;
+    @Input() public isResizable: boolean = false;
 
     /**
      * Объект который содержит список границ элемента с помощью которых разрешено изменять его размер.
      * Может содержать свойства left и right типа boolean.
      */
-    @Input() public resizeEdges: any;
+    @Input() public resizeEdges: any = {};
 
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {
         this.element = this.elementRef.nativeElement;
@@ -48,20 +48,23 @@ export class ResizableDirective {
     public onMouseDown(event): void {
         if (this.isResizable) {
             const rect: DOMRect = this.element.getBoundingClientRect();
-            event.stopPropagation();
-            this.start = event.target;
-            this.startX = event.pageX;
-            this.startWidth = rect.width;
-            if (this.resizeEdges.right && (event.pageX >= rect.right - 10 && event.pageY >= rect.top)) {
+            if (event.pageX >= rect.right - 10 && this.resizeEdges.right) {
                 this.resizeEdge = ResizeEdges.RIGHT;
-                this.pressed = true;
-                this.initListeners();
-            } else if (this.resizeEdges.left && (event.pageX <= rect.left + 10 && event.pageY >= rect.top)) {
+                this.initResizing(event, rect);
+            } else if (event.pageX <= rect.left + 10 && this.resizeEdges.left) {
                 this.resizeEdge = ResizeEdges.LEFT;
-                this.pressed = true;
-                this.initListeners();
+                this.initResizing(event, rect);
             }
         }
+    }
+
+    public initResizing(event, rect): void {
+        event.stopPropagation();
+        this.start = event.target;
+        this.startX = event.pageX;
+        this.startWidth = rect.width;
+        this.pressed = true;
+        this.initListeners();
     }
 
     /**
@@ -73,8 +76,8 @@ export class ResizableDirective {
     public onMouseMove(event): void {
         if (this.isResizable) {
             const rect: DOMRect = this.element.getBoundingClientRect();
-            if ((this.resizeEdges.right && (event.pageX >= rect.right - 10 && event.pageY >= rect.top))
-                || (this.resizeEdges.left && (event.pageX <= rect.left + 10 && event.pageY >= rect.top))) {
+            if ((event.pageX >= rect.right - 10 && this.resizeEdges.right)
+                || (event.pageX <= rect.left + 10 && this.resizeEdges.left)) {
                 this.renderer.addClass(this.element, 'resizable');
             } else {
                 this.renderer.removeClass(this.element, 'resizable');

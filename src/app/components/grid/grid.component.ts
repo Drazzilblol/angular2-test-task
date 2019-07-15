@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Order} from 'app/enums/order.enum';
-import {Column} from 'app/services/column-manger-service/column';
 import {find} from 'lodash';
 import {FilterParams} from '../filter/models/filterParams';
 import {SortParams} from './models/SortParams';
@@ -13,7 +12,7 @@ import {SortParams} from './models/SortParams';
 export class GridComponent implements OnInit {
     @Input() public filterParams: FilterParams = new FilterParams('', null);
     @Input() public items: any[] = [];
-    @Input() public columns: Column[] = [];
+    @Input() public columns: any[] = [];
     public currentSort: SortParams;
 
     /**

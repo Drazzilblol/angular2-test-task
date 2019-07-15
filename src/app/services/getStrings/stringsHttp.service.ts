@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map as lodashMap} from 'lodash';
 import {map} from 'rxjs/operators';
-import {StringListItem} from '../../components/grid/models/StringListItem';
+import {StringListItem} from '../../components/string-add/models/StringListItem';
 
 @Injectable()
 export class StringsHttpService {

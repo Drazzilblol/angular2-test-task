@@ -17,7 +17,6 @@ import {
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
 import {PipesModule} from 'app/pipes/pipes.module';
-import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {findIndex} from 'lodash';
 
@@ -28,7 +27,7 @@ import {findIndex} from 'lodash';
 })
 export class GridCellComponent implements OnInit {
 
-    @Input() public column: Column;
+    @Input() public column: any;
     @Input() public index: number;
     @Input() public item: any;
 
