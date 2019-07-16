@@ -109,7 +109,7 @@ export class AppComponent implements OnDestroy, OnInit {
                 });
                 if (isStatusChanged) {
                     this.items = clone(this.items);
-                    this.changeDetector.detectChanges();
+                    this.changeDetector.markForCheck();
                 }
                 if (this.items.length === rottenCounter) {
                     this.intervalSub.unsubscribe();

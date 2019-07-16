@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ResizeEdges} from 'app/enums/resizeEdges.enum';
-import {concat} from 'lodash'
+import {concat} from 'lodash';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable()
@@ -93,7 +93,7 @@ export class ColumnManagerService {
      * @param index
      */
     public columnDragEnd(index: number) {
-        if (this.dragStartColumnIndex && index !== this.dragStartColumnIndex) {
+        if (this.dragStartColumnIndex >= 0 && index !== this.dragStartColumnIndex) {
             this.moveColumn(this.dragStartColumnIndex, index);
             this.dragStartColumnIndex = null;
         }

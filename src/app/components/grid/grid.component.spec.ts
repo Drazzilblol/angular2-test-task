@@ -1,6 +1,6 @@
 import {HttpClientModule} from '@angular/common/http';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
-import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
@@ -54,11 +54,13 @@ describe('item list', function() {
                 280, {
                     sortable: true,
                     resizable: true,
+                    draggable: true,
                 }),
             new Column(Columns.ORIGIN, 'originText', 280,
                 {
                     sortable: true,
                     resizable: true,
+                    draggable: true,
                 }),
             new Column(Columns.DATE, 'parsedDate', 216,
                 {
@@ -142,5 +144,26 @@ describe('item list', function() {
             expect(row[1].query(By.css('.content')).nativeElement.innerText)
                 .toBe('1');
         });
+
+        it('check dragging', fakeAsync(function() {
+            const testElem1 = fixture.debugElement.queryAll(By.css('grid-header-cell .content'))[0].nativeElement;
+            const testElem2 = fixture.debugElement.queryAll(By.css('grid-header-cell .content'))[1].nativeElement;
+            testElem1.dispatchEvent(new MouseEvent('mousedown', {
+                bubbles: true,
+                clientX: testElem1.getBoundingClientRect().x,
+            }));
+            tick(1000);
+
+            expect(testElem1.classList.contains('draggable')).toBe(true);
+
+            testElem2.dispatchEvent(new MouseEvent('mouseup', {
+                bubbles: true,
+            }));
+            fixture.detectChanges();
+
+            expect(testElem1.classList.contains('draggable')).toBe(false);
+            expect(fixture.debugElement.queryAll(By.css('grid-header-cell'))[1].nativeElement.innerText)
+                .toBe('Origin Text');
+        }));
     });
 });
