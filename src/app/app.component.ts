@@ -34,7 +34,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
     private initColumns() {
         const columnsArray: Column[] = [
-            new Column(Columns.STATUS, '', 'status', 24),
+            new Column(Columns.STATUS, '', 'status', 23),
             new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280,
                 {
                     sortable: true,
