@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {forEach, now} from 'lodash';
+import {clone, concat, forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
 import {FilterParams} from './components/filter/models/filterParams';
 import {Columns} from './enums/columns.enum';
@@ -61,14 +61,12 @@ export class AppComponent implements OnDestroy, OnInit {
 
     private initSubscriptions() {
         this.subscription = this.gridAddService.getObservable().subscribe((item: any) => {
-            this.items.push(item);
+            this.items = concat(this.items, item);
             this.countdown();
         });
 
         this.subscription.add(this.stringsHttpService.getStrings().subscribe((items: any[]) => {
-            forEach(items, (item) => {
-                this.items.push(item);
-            });
+            this.items = concat(this.items, items);
             this.countdown();
         }));
 
@@ -100,17 +98,18 @@ export class AppComponent implements OnDestroy, OnInit {
                         return;
                     }
                     const timeDifference = currentTime - item.date.getTime();
-                    if (timeDifference > 60000) {
+                    if (timeDifference > 6000) {
                         item.status = Statuses.ROTTEN;
                         isStatusChanged = true;
                         rottenCounter++;
-                    } else if (timeDifference > 30000 && timeDifference < 60000 && item.status !== Statuses.YESTERDAY) {
+                    } else if (timeDifference > 3000 && timeDifference < 6000 && item.status !== Statuses.YESTERDAY) {
                         item.status = Statuses.YESTERDAY;
                         isStatusChanged = true;
                     }
                 });
                 if (isStatusChanged) {
-                    this.changeDetector.markForCheck();
+                    this.items = clone(this.items);
+                    this.changeDetector.detectChanges();
                 }
                 if (this.items.length === rottenCounter) {
                     this.intervalSub.unsubscribe();

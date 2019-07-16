@@ -5,7 +5,7 @@ import {FilterParams} from '../filter/models/filterParams';
 import {SortParams} from './models/SortParams';
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'grid',
     templateUrl: './grid.template.html',
 })
@@ -36,5 +36,9 @@ export class GridComponent implements OnInit {
             return column.defaultSort;
         });
         this.currentSort = new SortParams(defaultSortColumn.dataFieldName, Order.ASC);
+    }
+
+    public static trackByFn(index, item) {
+        return item.status;
     }
 }
