@@ -19,7 +19,7 @@ describe('grid cell', function() {
 
         fixture = TestBed.createComponent(GridCellComponent);
         columnManager = TestBed.get(ColumnManagerService);
-        columnManager.addColumn(new Column(Columns.ORIGIN, Columns.ORIGIN, 'test', 400,
+        columnManager.addColumn(new Column(Columns.ORIGIN, 'test', 400,
             {
                 sortable: true,
                 resizable: true,

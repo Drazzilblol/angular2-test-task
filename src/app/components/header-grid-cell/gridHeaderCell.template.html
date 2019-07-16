@@ -5,9 +5,9 @@
     </ng-container>
     <div draggable [isDraggable]="column.draggable" (onDragStart)="dragStart()"
          (onDragEnd)="dragEnd()"
-         class="content" container="body" [ngbTooltip]="'GRID_HEADER.' + column.text | translate"
-         *ngIf="column.text" placement="left" (click)="sort(column)">
-        {{'GRID_HEADER.' + column.text | translate}}
+         class="content" container="body" [ngbTooltip]="'GRID_HEADER.' + column.title | translate"
+         *ngIf="column.title" placement="left" (click)="sort(column)">
+        {{'GRID_HEADER.' + column.title | translate}}
     </div>
     <div class="grid-border"></div>
 </div>

@@ -34,20 +34,20 @@ export class AppComponent implements OnDestroy, OnInit {
 
     private initColumns() {
         const columnsArray: Column[] = [
-            new Column(Columns.STATUS, '', 'status', 23),
-            new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText', 280,
+            new Column('', 'status', 23),
+            new Column(Columns.TRANSFORMED, 'transformedText', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                 }),
-            new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280,
+            new Column(Columns.ORIGIN, 'originText', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                 }),
-            new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
+            new Column(Columns.DATE, 'parsedDate', 216,
                 {
                     sortable: true,
                     resizable: true,
@@ -98,11 +98,11 @@ export class AppComponent implements OnDestroy, OnInit {
                         return;
                     }
                     const timeDifference = currentTime - item.date.getTime();
-                    if (timeDifference > 6000) {
+                    if (timeDifference > 60000) {
                         item.status = Statuses.ROTTEN;
                         isStatusChanged = true;
                         rottenCounter++;
-                    } else if (timeDifference > 3000 && timeDifference < 6000 && item.status !== Statuses.YESTERDAY) {
+                    } else if (timeDifference > 30000 && timeDifference < 60000 && item.status !== Statuses.YESTERDAY) {
                         item.status = Statuses.YESTERDAY;
                         isStatusChanged = true;
                     }

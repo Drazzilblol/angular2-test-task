@@ -29,12 +29,12 @@ describe('grid header cell', function() {
         fixtureDebug = fixture.debugElement;
         columnManager = TestBed.get(ColumnManagerService);
         columnManager.addColumns([
-            new Column(Columns.ORIGIN, Columns.ORIGIN, 'test1', 400,
+            new Column(Columns.ORIGIN, 'test1', 400,
                 {
                     sortable: true,
                     resizable: true,
                 }),
-            new Column(Columns.ORIGIN, Columns.ORIGIN, 'test2', 400,
+            new Column(Columns.ORIGIN, 'test2', 400,
                 {
                     sortable: true,
                     resizable: true,

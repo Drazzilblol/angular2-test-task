@@ -49,18 +49,18 @@ describe('item list', function() {
         component = fixture.componentInstance;
 
         component.columns = columnsManager.addColumns([
-            new Column(Columns.STATUS, '', 'status', 24),
-            new Column(Columns.TRANSFORMED, Columns.TRANSFORMED, 'transformedText',
+            new Column('', 'status', 24),
+            new Column(Columns.TRANSFORMED, 'transformedText',
                 280, {
                     sortable: true,
                     resizable: true,
                 }),
-            new Column(Columns.ORIGIN, Columns.ORIGIN, 'originText', 280,
+            new Column(Columns.ORIGIN, 'originText', 280,
                 {
                     sortable: true,
                     resizable: true,
                 }),
-            new Column(Columns.DATE, Columns.DATE, 'parsedDate', 216,
+            new Column(Columns.DATE, 'parsedDate', 216,
                 {
                     sortable: true,
                     defaultSort: true,

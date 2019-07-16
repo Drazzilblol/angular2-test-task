@@ -3,7 +3,6 @@ import {StringListItem} from 'app/components/string-add/models/StringListItem';
 export class Column {
     public width: number;
     public title: string;
-    public text: string;
     public dataFieldName: string;
     public resizable: boolean;
     public sortable: boolean;
@@ -13,7 +12,6 @@ export class Column {
     /**
      * Конструктор колонки.
      * @param title Название колонки.
-     * @param text Отображаемый текст.
      * @param dataFieldName Название свойства в модели данных.
      * @param width Ширина колонки.
      * @param options Необязательный набор опций:
@@ -21,10 +19,9 @@ export class Column {
      * sortable включает сортировку по колонке,
      * defaultSort при включеном sortable указывает что колонка будет отсортирована по умолчанию.
      */
-    constructor(title, text, dataFieldName, width, options?) {
+    constructor(title, dataFieldName, width, options?) {
         this.width = width;
         this.title = title;
-        this.text = text;
         this.dataFieldName = dataFieldName;
         if (options) {
             this.resizable = options.resizable || false;
