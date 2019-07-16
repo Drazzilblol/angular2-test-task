@@ -56,7 +56,7 @@ describe('grid header cell', function() {
     });
 
     it('check resizing', function() {
-        const element = fixtureDebug.queryAll(By.css('div>div'))[0].nativeElement;
+        const element = fixtureDebug.queryAll(By.css('div > div'))[0].nativeElement;
         element.dispatchEvent(new MouseEvent('mousedown', {
             bubbles: true,
             clientX: 400,

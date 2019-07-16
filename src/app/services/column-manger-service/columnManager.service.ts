@@ -6,8 +6,8 @@ import {Observable, Subject} from 'rxjs';
 @Injectable()
 export class ColumnManagerService {
     private columns: any[] = [];
-    private dragStartColumnIndex: number = null;
-
+    private dragStartColumnIndex: number;
+    private isDragging: boolean = false;
     private source = new Subject<any>();
     private observable = this.source.asObservable();
 
@@ -85,6 +85,7 @@ export class ColumnManagerService {
      * @param index
      */
     public columnDragStart(index: number) {
+        this.isDragging = true;
         this.dragStartColumnIndex = index;
     }
 
@@ -93,9 +94,9 @@ export class ColumnManagerService {
      * @param index
      */
     public columnDragEnd(index: number) {
-        if (this.dragStartColumnIndex >= 0 && index !== this.dragStartColumnIndex) {
+        if (this.isDragging && index !== this.dragStartColumnIndex) {
             this.moveColumn(this.dragStartColumnIndex, index);
-            this.dragStartColumnIndex = null;
+            this.isDragging = false;
         }
     }
 

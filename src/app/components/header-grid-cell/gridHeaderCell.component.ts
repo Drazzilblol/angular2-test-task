@@ -9,7 +9,6 @@ import {
     Renderer2,
 } from '@angular/core';
 import {Order} from 'app/enums/order.enum';
-import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {findIndex} from 'lodash';
 import {SortParams} from '../grid/models/SortParams';
@@ -60,7 +59,7 @@ export class GridHeaderCellComponent implements OnInit {
      * будет изменять ширину колонки.
      * @param columns
      */
-    public constructResizeEdges(columns: Column[]) {
+    public constructResizeEdges(columns: any[]) {
         if (columns[this.index - 1]) {
             this.edges.left = columns[this.index - 1].resizable;
         } else {
@@ -77,7 +76,7 @@ export class GridHeaderCellComponent implements OnInit {
      * Отсылает параметры сортировки.
      * @param params параметры сортировкию
      */
-    public sort(params: Column) {
+    public sort(params: any) {
         if (this.currentSort.order === Order.ASC && this.currentSort.column === this.column.dataFieldName) {
             this.currentSort.order = Order.DESC;
             this.icon = 'expand_less';
