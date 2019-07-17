@@ -6,6 +6,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {GridFilterCellComponent} from 'app/components/grid-filter-cell/gridFilterCell.component';
+import {InputEllipsisDirective} from 'app/directives/input-ellipsis/inputEllipsis.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {DraggableDirective} from '../directives/draggable/draggable.directive';
 import {PipesModule} from '../pipes/pipes.module';
@@ -23,7 +24,7 @@ import {StringAddComponent} from './string-add/stringAdd.component';
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
         FilterComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective,
-        GridFilterCellComponent],
+        GridFilterCellComponent, InputEllipsisDirective],
     entryComponents: [LanguageDialogComponent],
     exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,

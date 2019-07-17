@@ -1,5 +1,4 @@
-<form *ngIf="column.filterable" [formGroup]="filterForm" novalidate autocomplete="off" class="input-group form-content">
-<!--    <i class="material-icons md-14 icon-right">{{'filter_list'}}</i>-->
-    <input style="width: 10px" [placeholder]="'FILTER.PLACEHOLDER' | translate" formControlName="text" type="text"
-           class="form-control filter-input">
+<form *ngIf="column.filterable" [formGroup]="filterForm" novalidate autocomplete="off" class="form-content">
+    <input input-ellipsis [placeholder]="'FILTER.PLACEHOLDER' | translate" formControlName="text" type="text"
+           class="filter-input">
 </form>
