@@ -1,10 +1,8 @@
-import {ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {GridComponent} from 'app/components/grid/grid.component';
 import {Columns} from 'app/enums/columns.enum';
 import {Column} from 'app/services/column-manger-service/column';
-import {translateTestImport} from 'tests/testTranslationConfig';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridCellComponent} from './gridCell.component';
 
 describe('grid cell', function() {

@@ -1,9 +1,11 @@
 import {HttpClientModule} from '@angular/common/http';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
+import {GridFilterCellComponent} from 'app/components/grid-filter-cell/gridFilterCell.component';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
@@ -19,7 +21,7 @@ import {FilterService} from 'app/services/strings-filter/filter.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
-import {GridHeaderCellComponent} from '../header-grid-cell/gridHeaderCell.component';
+import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
 import {StringListItem} from '../string-add/models/StringListItem';
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';
@@ -34,8 +36,8 @@ describe('item list', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective,
-                ResizableDirective],
-            imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule],
+                ResizableDirective, GridFilterCellComponent],
+            imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule, ReactiveFormsModule],
             providers: [FilterService, ColumnManagerService],
         }).overrideComponent(GridComponent, {
             set: {changeDetection: ChangeDetectionStrategy.Default},
@@ -110,12 +112,12 @@ describe('item list', function() {
             component.items = [testListItem1];
             fixture.detectChanges();
             component.items.push(testListItem2);
-            component.filterParams = {text: '1', status: Statuses.YESTERDAY};
+            component.filterParams = {transformedText: '1'};
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('1');
 
-            component.filterParams = {text: '2', status: Statuses.FRESH};
+            component.filterParams = {transformedText: '2'};
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('2');

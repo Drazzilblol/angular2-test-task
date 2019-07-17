@@ -25,7 +25,8 @@
     "TITLE": "Название",
     "STATUS": "Статус",
     "BUTTON_FIND": "Найти",
-    "BUTTON_RESET": "Сбросить"
+    "BUTTON_RESET": "Сбросить",
+    "PLACEHOLDER": "Фильтр"
   },
   "GRID_HEADER": {
     "origin-text-column": "Изначальный текст",

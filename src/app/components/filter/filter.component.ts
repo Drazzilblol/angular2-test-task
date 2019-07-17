@@ -2,11 +2,10 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
 import {FilterService} from 'app/services/strings-filter/filter.service';
-import {FilterParams} from './models/filterParams';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';
 const statusesMap = {
-    [NOT_SELECTED]: null,
+    [NOT_SELECTED]: '',
     [Statuses.FRESH]: Statuses.FRESH,
     [Statuses.YESTERDAY]: Statuses.YESTERDAY,
     [Statuses.ROTTEN]: Statuses.ROTTEN,
@@ -38,11 +37,7 @@ export class FilterComponent implements OnInit {
      * Передает сервису параметры для фильтрации.
      */
     public filter(): void {
-        const filterFormValue = this.filterForm.value;
-        this.filterService.filter(new FilterParams(
-            filterFormValue.filterString ? filterFormValue.filterString : null,
-            statusesMap[filterFormValue.statusSelect]),
-        );
+        this.filterService.filter({status: this.filterForm.value.statusSelect});
     }
 
     /**
@@ -52,7 +47,7 @@ export class FilterComponent implements OnInit {
         const filterFormValue = this.filterForm;
         filterFormValue.controls.statusSelect.setValue(NOT_SELECTED);
         filterFormValue.controls.filterString.setValue('');
-        this.filterService.filter(new FilterParams(null, null));
+        this.filterService.filter({});
     }
 
     /**

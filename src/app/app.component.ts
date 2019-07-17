@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {clone, concat, forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
-import {FilterParams} from './components/filter/models/filterParams';
 import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
 import {Column} from './services/column-manger-service/column';
@@ -20,7 +19,7 @@ export class AppComponent implements OnDestroy, OnInit {
     public columns: Column[];
     public subscription: Subscription;
     public intervalSub: Subscription;
-    public filterParams: FilterParams = new FilterParams('', null);
+    public filterParams: any = {};
 
     constructor(public columnsManager: ColumnManagerService, private gridAddService: GridAddService,
                 private changeDetector: ChangeDetectorRef, private filterService: FilterService,
@@ -40,12 +39,14 @@ export class AppComponent implements OnDestroy, OnInit {
                     sortable: true,
                     resizable: true,
                     draggable: true,
+                    filterable: true,
                 }),
             new Column(Columns.ORIGIN, 'originText', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
+                    filterable: true,
                 }),
             new Column(Columns.DATE, 'parsedDate', 216,
                 {
@@ -53,6 +54,7 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     defaultSort: true,
+                    filterable: true,
                 }),
         ];
 
@@ -70,13 +72,8 @@ export class AppComponent implements OnDestroy, OnInit {
             this.countdown();
         }));
 
-        this.subscription.add(this.filterService.getObservable().subscribe((filterParams: FilterParams) => {
+        this.subscription.add(this.filterService.getObservable().subscribe((filterParams: any) => {
             this.filterParams = filterParams;
-            if (filterParams.text || filterParams.status) {
-                this.intervalSub.unsubscribe();
-            } else {
-                this.countdown();
-            }
         }));
     }
 

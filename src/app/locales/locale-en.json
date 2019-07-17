@@ -25,7 +25,8 @@
     "TITLE": "Title",
     "STATUS": "Status",
     "BUTTON_FIND": "Find",
-    "BUTTON_RESET": "Reset"
+    "BUTTON_RESET": "Reset",
+    "PLACEHOLDER": "Filter"
   },
   "GRID_HEADER": {
     "origin-text-column": "Origin Text",

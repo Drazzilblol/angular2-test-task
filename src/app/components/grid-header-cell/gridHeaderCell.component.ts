@@ -1,13 +1,5 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    Renderer2,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, Renderer2} from '@angular/core';
+import {AbstractGridCellComponent} from 'app/components/abstract-grid-cell/abstractGridCell.component';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {findIndex} from 'lodash';
@@ -18,19 +10,22 @@ import {SortParams} from '../grid/models/SortParams';
     selector: 'grid-header-cell',
     templateUrl: './gridHeaderCell.template.html',
 })
-export class GridHeaderCellComponent implements OnInit {
+export class GridHeaderCellComponent extends AbstractGridCellComponent {
 
     @Output() public onSort = new EventEmitter<SortParams>();
     @Output() public onDragEnd = new EventEmitter();
     @Output() public onDragStart = new EventEmitter();
-    @Input() public column: any;
-    @Input() public index: number;
     @Input() public currentSort: SortParams;
-    public icon: string = 'expand_more';
-    public edges = {left: false, right: false};
+    private icon: string = 'expand_more';
+    private edges = {left: false, right: false};
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService) {
-        columnManager.getObservable().subscribe((options) => {
+        super(elementRef, renderer, columnManager);
+        this.initSubscriptions();
+    }
+
+    protected initSubscriptions(): void {
+        this.subscription.add(this.columnManager.getObservable().subscribe((options) => {
             if (options.type === 'header') {
                 this.changeWidth();
             }
@@ -40,18 +35,12 @@ export class GridHeaderCellComponent implements OnInit {
                 }));
                 this.constructResizeEdges(options.cols);
             }
-        });
-    }
-
-    public changeIndex(index: number): void {
-        this.index = index;
-        this.changePosition();
+        }));
     }
 
     public ngOnInit(): void {
+        super.ngOnInit();
         this.constructResizeEdges(this.columnManager.getColumns());
-        this.changeWidth();
-        this.changePosition();
     }
 
     /**
@@ -59,7 +48,7 @@ export class GridHeaderCellComponent implements OnInit {
      * будет изменять ширину колонки.
      * @param columns
      */
-    public constructResizeEdges(columns: any[]) {
+    private constructResizeEdges(columns: any[]) {
         if (columns[this.index - 1]) {
             this.edges.left = columns[this.index - 1].resizable;
         } else {
@@ -76,7 +65,7 @@ export class GridHeaderCellComponent implements OnInit {
      * Отсылает параметры сортировки.
      * @param params параметры сортировкию
      */
-    public sort(params: any) {
+    private sort(params: any) {
         if (this.currentSort.order === Order.ASC && this.currentSort.column === this.column.dataFieldName) {
             this.currentSort.order = Order.DESC;
             this.icon = 'expand_less';
@@ -85,33 +74,6 @@ export class GridHeaderCellComponent implements OnInit {
             this.icon = 'expand_more';
         }
         this.onSort.emit(new SortParams(this.column.dataFieldName, this.currentSort.order));
-    }
-
-    /**
-     * Задает ширину ячейки в таблице.
-     */
-    public changeWidth(): void {
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            'width',
-            this.column.width + 'px');
-    }
-
-    /**
-     * Задает номер колонки для ячейки в таблице.
-     */
-    public changePosition(): void {
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            '-ms-grid-column',
-            this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            '-ms-grid-row',
-            1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            'grid-column',
-            this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            'grid-row',
-            1);
     }
 
     public dragStart() {

@@ -9,90 +9,45 @@ import {
     Input,
     ModuleWithComponentFactories,
     NgModule,
-    OnInit,
     Renderer2,
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
+import {AbstractGridCellComponent} from 'app/components/abstract-grid-cell/abstractGridCell.component';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
-import {findIndex} from 'lodash';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.Default,
     selector: 'grid-cell',
     templateUrl: './gridCell.template.html',
 })
-export class GridCellComponent implements OnInit {
+export class GridCellComponent extends AbstractGridCellComponent {
 
-    @Input() public column: any;
-    @Input() public index: number;
     @Input() public item: any;
 
     @ViewChild('container', {read: ViewContainerRef})
-    public container: ViewContainerRef;
+    private container: ViewContainerRef;
 
     private componentRef: ComponentRef<{}>;
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService,
                 private compiler: Compiler) {
-        columnManager.getObservable().subscribe((options) => {
-            if (options.type === 'body') {
-                this.changeWidth();
-            }
-            if (options.type === 'move') {
-                this.changeIndex(findIndex(options.cols, (col) => {
-                    return this.column === col;
-                }));
-            }
-        });
-    }
-
-    public changeIndex(index: number): void {
-        this.index = index;
-        this.changePosition();
+        super(elementRef, renderer, columnManager);
     }
 
     public ngOnInit(): void {
-        this.changeWidth();
-        this.changePosition();
+        super.ngOnInit();
         this.compileTemplate();
-    }
-
-    /**
-     * Задает ширину ячейки в таблице.
-     */
-    public changeWidth(): void {
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            'width',
-            this.column.width + 'px');
-    }
-
-    /**
-     * Задает номер колонки для ячейки в таблице.
-     */
-    public changePosition(): void {
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            '-ms-grid-column',
-            this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            '-ms-grid-row',
-            1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            'grid-column',
-            this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
-            'grid-row',
-            1);
     }
 
     /**
      * Динамически создает компонент содержащий шаблон возвращенный из Column.functionValue() и привязывает
      * его к контейнеру.
      */
-    public compileTemplate() {
+    private compileTemplate() {
         const factory = this.createComponentFactorySync();
         this.componentRef = this.container.createComponent(factory);
         Object.assign(this.componentRef.instance, {item: this.item});

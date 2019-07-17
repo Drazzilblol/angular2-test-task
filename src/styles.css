@@ -18,11 +18,11 @@ body {
     transform: translate(-50%, 0);
 }
 
-input.ng-dirty.ng-invalid {
+.validate.ng-dirty.ng-invalid {
     border: solid red 1px;
 }
 
-input.ng-dirty.ng-valid {
+.validate.ng-dirty.ng-valid {
     border: solid green 1px;
 }
 
@@ -144,7 +144,7 @@ input.ng-dirty.ng-valid {
 }
 
 .cont {
-    height: 88vh;
+    height: 84vh;
     width: 818px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -162,7 +162,6 @@ input.ng-dirty.ng-valid {
     display: grid;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
 }
 
 .header {
@@ -171,6 +170,10 @@ input.ng-dirty.ng-valid {
 
 .column {
     position: relative;
+}
+
+.right-border {
+    border-right: 1px solid #ddd;
 }
 
 .content {
@@ -182,6 +185,25 @@ input.ng-dirty.ng-valid {
     height: 50px;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.form-content {
+    padding: 5px 10px;
+    white-space: nowrap;
+}
+
+.filter-input {
+    display: inline-block;
+    text-align: center;
+    max-width: 150px;
+    min-width: 10px;
+    height: 25px;
+    text-overflow: ellipsis;
+    overflow: auto;
+    white-space: nowrap;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: inherit;
 }
 
 .draggable {
@@ -238,4 +260,10 @@ input.ng-dirty.ng-valid {
     float: left;
     padding-left: 8px;
     padding-top: 12px;
+}
+
+.icon-right {
+    display: inline-block;
+    float: left;
+    padding-right: 10px;
 }

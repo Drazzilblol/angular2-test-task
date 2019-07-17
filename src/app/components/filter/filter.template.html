@@ -2,9 +2,9 @@
     <form [formGroup]="filterForm" novalidate autocomplete="off"
           [ngClass]="{'side-nav-form-closed' : !isOpen, 'side-nav-form-open' : isOpen}">
         <input placement="bottom" [ngbTooltip]="'FILTER_TOOLTIP' | translate" [disableTooltip]="filterForm.valid"
-               container="body" formControlName="filterString" type="text" class="form-control filter-input">
+               container="body" formControlName="filterString" type="text" class="form-control validate">
         <p>{{"FILTER.TITLE" | translate}}</p>
-        <select formControlName="statusSelect" class="form-control filter-input">
+        <select formControlName="statusSelect" class="form-control">
             <option *ngFor="let status of statuses"
                     [value]=status>{{"STATUS." + status | translate}}
             </option>

@@ -5,12 +5,18 @@
                               [currentSort]="currentSort">
             </grid-header-cell>
         </div>
+    </div>
+    <div class="grid-row header">
+        <div *ngFor="let column of columns; let i = index;" class="column right-border">
+            <grid-filter-cell (onFilter)="filter($event)" [column]="column" [index]="i">
+            </grid-filter-cell>
+        </div>
 
     </div>
     <div class="cont">
         <div class="grid-row hoverable-row"
              *ngFor="let item of items | stringFilter: filterParams; trackBy:trackByFn">
-            <div *ngFor="let column of columns; let i = index" class="column">
+            <div *ngFor="let column of columns; let i = index" class="column right-border">
                 <grid-cell [item]="item" [column]="column" [index]="i"></grid-cell>
             </div>
         </div>
