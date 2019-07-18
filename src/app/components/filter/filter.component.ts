@@ -5,7 +5,7 @@ import {FilterService} from 'app/services/strings-filter/filter.service';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';
 const statusesMap = {
-    [NOT_SELECTED]: '',
+    [NOT_SELECTED]: null,
     [Statuses.FRESH]: Statuses.FRESH,
     [Statuses.YESTERDAY]: Statuses.YESTERDAY,
     [Statuses.ROTTEN]: Statuses.ROTTEN,
@@ -37,7 +37,10 @@ export class FilterComponent implements OnInit {
      * Передает сервису параметры для фильтрации.
      */
     public filter(): void {
-        this.filterService.filter({status: this.filterForm.value.statusSelect});
+        this.filterService.filter({
+            status: statusesMap[this.filterForm.value.statusSelect],
+            originText: this.filterForm.value.filterString,
+        });
     }
 
     /**

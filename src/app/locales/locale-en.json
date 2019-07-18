@@ -22,7 +22,7 @@
     "NOT_SELECTED": "Not selected"
   },
   "FILTER": {
-    "TITLE": "Title",
+    "TITLE": "Origin Text",
     "STATUS": "Status",
     "BUTTON_FIND": "Find",
     "BUTTON_RESET": "Reset",

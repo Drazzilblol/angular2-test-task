@@ -22,7 +22,7 @@
     "NOT_SELECTED": "Не выбран"
   },
   "FILTER": {
-    "TITLE": "Название",
+    "TITLE": "Изначальный текст",
     "STATUS": "Статус",
     "BUTTON_FIND": "Найти",
     "BUTTON_RESET": "Сбросить",

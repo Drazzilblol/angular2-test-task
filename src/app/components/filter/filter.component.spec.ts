@@ -11,9 +11,8 @@ import {FilterService} from 'app/services/strings-filter/filter.service';
 import {findIndex} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {FilterComponent} from './filter.component';
-import {FilterParams} from './models/filterParams';
 
-xdescribe('filter', function() {
+describe('filter', function() {
     let component: FilterComponent;
     let fixture: ComponentFixture<FilterComponent>;
     let translate: TranslateService;
@@ -49,10 +48,10 @@ xdescribe('filter', function() {
 
     describe('component', function() {
         it('check filter', function() {
-            const filterParams: FilterParams = new FilterParams('test', Statuses.FRESH);
+            const testParams = {status: Statuses.FRESH, originText: 'test1'};
             spyOn(filterService, 'filter');
             const input = fixture.debugElement.query(By.css('input')).nativeElement;
-            input.value = filterParams.text;
+            input.value = testParams.originText;
             input.dispatchEvent(new Event('input'));
             const statusSelect = fixture.debugElement.query(By.css('select')).nativeElement;
             statusSelect.selectedIndex = findIndex(statusSelect.options, (item: HTMLOptionElement) => {
@@ -61,11 +60,11 @@ xdescribe('filter', function() {
             statusSelect.dispatchEvent(new Event('change'));
             fixture.debugElement.query(By.css('.find-button')).nativeElement.dispatchEvent(new Event('click'));
 
-            expect(filterService.filter).toHaveBeenCalledWith(filterParams);
+            expect(filterService.filter).toHaveBeenCalledWith(testParams);
         });
 
         it('check filter reset', function() {
-            const filterParams: FilterParams = new FilterParams(null, null);
+            const testParams = {};
             spyOn(filterService, 'filter');
             const input = fixture.debugElement.query(By.css('input')).nativeElement;
             input.value = 'test';
@@ -80,7 +79,7 @@ xdescribe('filter', function() {
 
             expect(input.value).toBe('');
             expect(statusSelect.selectedIndex).toBe(0);
-            expect(filterService.filter).toHaveBeenCalledWith(filterParams);
+            expect(filterService.filter).toHaveBeenCalledWith(testParams);
         });
 
         it('check localization', function() {
