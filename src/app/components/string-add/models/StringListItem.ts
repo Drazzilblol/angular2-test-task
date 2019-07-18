@@ -52,4 +52,8 @@ export class StringListItem {
     get date() {
         return this.dateMils;
     }
+
+    public trackByFn(index, item) {
+        return item.id + item.status;
+    }
 }

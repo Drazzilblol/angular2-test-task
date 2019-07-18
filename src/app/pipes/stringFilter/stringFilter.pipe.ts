@@ -1,7 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {StringListItem} from 'app/components/string-add/models/StringListItem';
-import {Statuses} from 'app/enums/statuses.enum';
 import {filter, forEach, size, startsWith} from 'lodash';
 
 @Pipe({

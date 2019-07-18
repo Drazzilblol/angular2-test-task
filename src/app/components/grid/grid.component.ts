@@ -37,11 +37,18 @@ export class GridComponent implements OnInit {
         this.currentSort = new SortParams(defaultSortColumn.dataFieldName, Order.ASC);
     }
 
-    public static trackByFn(index, item) {
-        return item.status;
-    }
-
     public filter(params): void {
         this.filterParams[params.column] = params.text;
+    }
+
+    /**
+     * Функиця для отслеживания пересоздания элементов в цикле ngFor, если элементы массива реализуют функцию trackByFn
+     * то для отслеживания используется она, если нет то отслеживание происходит по ссылке на элемент.
+     */
+    public trackByFn(index, item) {
+        if (!item.trackByFn) {
+            return item;
+        }
+        return item.trackByFn(index, item);
     }
 }

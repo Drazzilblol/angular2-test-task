@@ -20,7 +20,7 @@ import {PipesModule} from 'app/pipes/pipes.module';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'grid-cell',
     templateUrl: './gridCell.template.html',
 })
@@ -60,10 +60,12 @@ export class GridCellComponent extends AbstractGridCellComponent {
         const template: string = this.column.functionValue(this.item);
 
         @Component({
+            changeDetection: ChangeDetectionStrategy.OnPush,
             selector: `cell-item`,
             template,
         })
         class RuntimeComponent {
+            @Input() public item: any;
         }
 
         @NgModule({
