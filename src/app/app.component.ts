@@ -5,8 +5,8 @@ import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
 import {Column} from './services/column-manger-service/column';
 import {ColumnManagerService} from './services/column-manger-service/columnManager.service';
+import {FilterService} from './services/filter/filter.service';
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
-import {FilterService} from './services/strings-filter/filter.service';
 import {GridAddService} from './services/strings/grid-add.service';
 
 @Component({

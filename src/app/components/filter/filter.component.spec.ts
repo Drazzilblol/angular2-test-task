@@ -7,7 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Statuses} from 'app/enums/statuses.enum';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
-import {FilterService} from 'app/services/strings-filter/filter.service';
+import {FilterService} from 'app/services/filter/filter.service';
 import {findIndex} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {FilterComponent} from './filter.component';

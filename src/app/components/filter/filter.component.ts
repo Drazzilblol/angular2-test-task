@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
-import {FilterService} from 'app/services/strings-filter/filter.service';
+import {FilterService} from 'app/services/filter/filter.service';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';
 const statusesMap = {

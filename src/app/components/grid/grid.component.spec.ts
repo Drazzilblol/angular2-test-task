@@ -17,7 +17,7 @@ import russian from 'app/locales/locale-ru.json';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
-import {FilterService} from 'app/services/strings-filter/filter.service';
+import {FilterService} from 'app/services/filter/filter.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridCellComponent} from '../grid-cell/gridCell.component';

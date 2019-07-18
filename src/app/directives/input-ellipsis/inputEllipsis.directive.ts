@@ -14,7 +14,7 @@ export class InputEllipsisDirective {
     }
 
     @HostListener('mousedown', ['$event'])
-    public onClick(): void {
+    public onMouseDown(): void {
         this.renderer.removeAttribute(this.elementRef.nativeElement,
             'readonly');
     }

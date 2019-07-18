@@ -1,6 +1,4 @@
 import {fakeAsync, tick} from '@angular/core/testing';
-import {FilterParams} from 'app/components/filter/models/filterParams';
-import {Statuses} from 'app/enums/statuses.enum';
 import {Subscription} from 'rxjs';
 import {FilterService} from './filter.service';
 
@@ -16,7 +14,7 @@ describe('strings filter service', function() {
     });
 
     it('check is getObservable() returns value', fakeAsync(function() {
-        const testObject: FilterParams = new FilterParams('test', Statuses.FRESH);
+        const testObject = {test: 'test'};
 
         const subscription: Subscription = filterService.getObservable().subscribe((result) => {
             expect(result).toEqual(testObject);

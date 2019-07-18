@@ -10,8 +10,8 @@ import {InputEllipsisDirective} from 'app/directives/input-ellipsis/inputEllipsi
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {DraggableDirective} from '../directives/draggable/draggable.directive';
 import {PipesModule} from '../pipes/pipes.module';
+import {FilterService} from '../services/filter/filter.service';
 import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
-import {FilterService} from '../services/strings-filter/filter.service';
 import {GridAddService} from '../services/strings/grid-add.service';
 import {FilterComponent} from './filter/filter.component';
 import {GridCellComponent} from './grid-cell/gridCell.component';

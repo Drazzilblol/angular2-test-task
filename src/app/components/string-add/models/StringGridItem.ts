@@ -3,7 +3,6 @@ import {Statuses} from 'app/enums/statuses.enum';
 import {IdGenerator} from 'app/utils/idGenerator';
 import {filter, isEmpty} from 'lodash';
 import moment = require('moment');
-
 const MESSAGE: string = 'MESSAGE';
 
 export class StringGridItem implements IGridItem {
