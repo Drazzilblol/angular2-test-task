@@ -189,11 +189,11 @@ body {
 .form-content {
     padding: 5px 10px;
     white-space: nowrap;
+    flex-wrap: nowrap !important;
 }
 
 .filter-input {
     text-align: center;
-    width: 100%;
     height: 25px;
     padding: 0 5px;
     text-overflow: ellipsis;
@@ -257,8 +257,7 @@ body {
     padding-top: 12px;
 }
 
-.icon-right {
-    display: inline-block;
+.icon-filter {
     float: left;
     padding-right: 10px;
 }
