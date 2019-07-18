@@ -16,6 +16,7 @@ import {
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
 import {AbstractGridCellComponent} from 'app/components/abstract-grid-cell/abstractGridCell.component';
+import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 
@@ -26,7 +27,7 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 })
 export class GridCellComponent extends AbstractGridCellComponent {
 
-    @Input() public item: any;
+    @Input() public item: IGridItem;
 
     @ViewChild('container', {read: ViewContainerRef})
     private container: ViewContainerRef;
@@ -65,7 +66,7 @@ export class GridCellComponent extends AbstractGridCellComponent {
             template,
         })
         class RuntimeComponent {
-            @Input() public item: any;
+            @Input() public item: IGridItem;
         }
 
         @NgModule({

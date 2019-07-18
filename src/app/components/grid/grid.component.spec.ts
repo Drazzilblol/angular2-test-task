@@ -22,7 +22,7 @@ import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
-import {StringListItem} from '../string-add/models/StringListItem';
+import {StringGridItem} from '../string-add/models/StringGridItem';
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';
 
@@ -86,14 +86,14 @@ describe('item list', function() {
         it('check item with numbers', function() {
             const resultString: string = '1234';
 
-            component.items = [new StringListItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
+            component.items = [new StringGridItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe(resultString);
         });
 
         it('check item without numbers', function() {
-            component.items = [new StringListItem('test', new Date(now()), Statuses.FRESH)];
+            component.items = [new StringGridItem('test', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
             const firstElement = fixtureDebug.query(By.css('grid-cell .content')).nativeElement;
 
@@ -106,8 +106,8 @@ describe('item list', function() {
         });
 
         it('check filter', fakeAsync(function() {
-            const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.YESTERDAY);
-            const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
+            const testListItem1: StringGridItem = new StringGridItem('test1', new Date(now()), Statuses.YESTERDAY);
+            const testListItem2: StringGridItem = new StringGridItem('test2', new Date(now()), Statuses.FRESH);
 
             component.items = [testListItem1];
             fixture.detectChanges();
@@ -124,8 +124,8 @@ describe('item list', function() {
         }));
 
         it('check sorting', function() {
-            const testListItem1: StringListItem = new StringListItem('test1', new Date(now()), Statuses.FRESH);
-            const testListItem2: StringListItem = new StringListItem('test2', new Date(now()), Statuses.FRESH);
+            const testListItem1: StringGridItem = new StringGridItem('test1', new Date(now()), Statuses.FRESH);
+            const testListItem2: StringGridItem = new StringGridItem('test2', new Date(now()), Statuses.FRESH);
 
             component.items = [testListItem2, testListItem1];
             component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));

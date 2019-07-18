@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {Order} from 'app/enums/order.enum';
+import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {find} from 'lodash';
 import {SortParams} from './models/SortParams';
 
@@ -10,8 +12,8 @@ import {SortParams} from './models/SortParams';
 })
 export class GridComponent implements OnInit {
     @Input() public filterParams: any = {};
-    @Input() public items: any[] = [];
-    @Input() public columns: any[] = [];
+    @Input() public items: IGridItem[] = [];
+    @Input() public columns: IColumn[] = [];
     public currentSort: SortParams;
 
     /**
@@ -45,7 +47,7 @@ export class GridComponent implements OnInit {
      * Функиця для отслеживания пересоздания элементов в цикле ngFor, если элементы массива реализуют функцию trackByFn
      * то для отслеживания используется она, если нет то отслеживание происходит по ссылке на элемент.
      */
-    public trackByFn(index, item) {
+    public trackByFn<T extends IGridItem>(index, item: T) {
         if (!item.trackByFn) {
             return item;
         }

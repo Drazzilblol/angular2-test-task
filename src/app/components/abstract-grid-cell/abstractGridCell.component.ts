@@ -1,12 +1,13 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {findIndex} from 'lodash';
 import {Subscription} from 'rxjs';
 
 @Component({})
 export abstract class AbstractGridCellComponent implements OnInit, OnDestroy {
 
-    @Input() public column: any;
+    @Input() public column: IColumn;
     @Input() public index: number;
 
     protected subscription: Subscription = new Subscription();

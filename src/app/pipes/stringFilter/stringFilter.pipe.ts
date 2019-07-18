@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {StringListItem} from 'app/components/string-add/models/StringListItem';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {filter, forEach, size, startsWith} from 'lodash';
 
 @Pipe({
@@ -11,7 +11,7 @@ export class StringFilterPipe implements PipeTransform {
     constructor(private translate: TranslateService) {
     }
 
-    public transform(items: StringListItem[], filterParams: any) {
+    public transform(items: StringGridItem[], filterParams: any) {
         if (size(filterParams) === 0) {
             return items;
         }
@@ -22,9 +22,9 @@ export class StringFilterPipe implements PipeTransform {
      * Фильрует массив элементов SortParams согласно данным для фильтрации.
      * @param items Массив элементов.
      * @param filterParams Прараметры фильрации.
-     * @return {StringListItem[]} Возвращает отфильтрованый список.
+     * @return {StringGridItem[]} Возвращает отфильтрованый список.
      */
-    private filterFn(items: any[], filterParams: any): StringListItem[] {
+    private filterFn(items: any[], filterParams: any): StringGridItem[] {
         return filter(items, (item) => {
             let counter: number = 0;
             forEach(filterParams, (value, key) => {

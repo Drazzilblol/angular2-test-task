@@ -9,7 +9,7 @@ import russian from 'app/locales/locale-ru.json';
 import {GridAddService} from 'app/services/strings/grid-add.service';
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {StringListItem} from './models/StringListItem';
+import {StringGridItem} from './models/StringGridItem';
 import {StringAddComponent} from './stringAdd.component';
 
 describe('item add', function() {
@@ -52,7 +52,7 @@ describe('item add', function() {
     it('check add item', fakeAsync(function() {
         const testString: string = 'test';
 
-        const subscription: Subscription = stringsService.getObservable().subscribe((result: StringListItem) => {
+        const subscription: Subscription = stringsService.getObservable().subscribe((result: StringGridItem) => {
             expect(result.originText).toBe(testString);
         });
 

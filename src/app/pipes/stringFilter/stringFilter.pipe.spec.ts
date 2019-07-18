@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {TranslateService} from '@ngx-translate/core';
-import {StringListItem} from 'app/components/string-add/models/StringListItem';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
@@ -21,8 +21,8 @@ describe('string filter pipe', function() {
     });
 
     it('should return array of filtered items', function() {
-        const testItem: StringListItem = new StringListItem('123', new Date(now()), Statuses.FRESH);
-        const stringItems: StringListItem[] = [testItem];
+        const testItem: StringGridItem = new StringGridItem('123', new Date(now()), Statuses.FRESH);
+        const stringItems: StringGridItem[] = [testItem];
 
         expect(stringFilter.transform(stringItems, {originText: '123'})).toEqual([testItem]);
     });

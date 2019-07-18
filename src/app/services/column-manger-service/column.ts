@@ -1,6 +1,7 @@
-import {StringListItem} from 'app/components/string-add/models/StringListItem';
+import {IGridItem} from 'app/components/string-add/models/IGridItem';
+import {IColumn} from 'app/services/column-manger-service/IColumn';
 
-export class Column {
+export class Column implements IColumn {
     public width: number;
     public title: string;
     public dataFieldName: string;
@@ -33,11 +34,7 @@ export class Column {
         }
     }
 
-    /**
-     * В зависимости от колонки возвращает шаблон для отображения соответствующего свойства из модели.
-     * @param item: StringListItem
-     */
-    public functionValue(item: StringListItem): any {
+    public functionValue<T extends IGridItem>(item: T): string {
         if (this.dataFieldName === 'status') {
             return `<div class="status" [ngClass]="item.status | colorsPipe" placement="left"
                         [ngbTooltip]="'STATUS.' + item.status | translate" container="body">

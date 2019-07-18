@@ -1,3 +1,4 @@
+import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {IdGenerator} from 'app/utils/idGenerator';
 import {filter, isEmpty} from 'lodash';
@@ -5,7 +6,7 @@ import moment = require('moment');
 
 const MESSAGE: string = 'MESSAGE';
 
-export class StringListItem {
+export class StringGridItem implements IGridItem {
     public parsedDate: string;
     public originText: string;
     public status: Statuses;
