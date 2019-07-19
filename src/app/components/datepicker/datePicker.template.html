@@ -1,0 +1,8 @@
+<div class="datepicker">
+    <span class="datepicker-element" *ngFor="let day of thisMonth"
+          [ngStyle]="{'grid-column': getDayInWeek(day), '-ms-grid-column': getDayInWeek(day),
+          '-ms-grid-row': getWeek(day),  'grid-row': getWeek(day)}"
+          (click)="selectDate(day, $event)">
+        {{day.getDate()}}
+    </span>
+</div>

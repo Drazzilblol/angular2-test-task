@@ -10,6 +10,7 @@ export class Column implements IColumn {
     public defaultSort: boolean;
     public draggable: boolean;
     public filterable: boolean;
+    public date: boolean;
 
     /**
      * Конструктор колонки.
@@ -31,6 +32,7 @@ export class Column implements IColumn {
             this.defaultSort = options.defaultSort || false;
             this.draggable = options.draggable || false;
             this.filterable = options.filterable || false;
+            this.date = options.date || false;
         }
     }
 

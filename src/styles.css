@@ -261,3 +261,25 @@ body {
     float: left;
     padding-right: 10px;
 }
+
+/*Datepicker*/
+.datepicker {
+    position: absolute;
+    background-color: white;
+    width: 175px;
+    height: 140px;
+    display: -ms-grid;
+    display: grid;
+    top: 25px;
+    z-index: 1;
+    grid-template-columns: repeat(7, 25px);
+    border:  1px solid #ddd;
+}
+
+.datepicker-element {
+    text-align: center;
+    width: 25px;
+}
+.datepicker-element:hover {
+  background-color: gray !important;
+}

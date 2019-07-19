@@ -8,6 +8,7 @@ import {ColumnManagerService} from './services/column-manger-service/columnManag
 import {FilterService} from './services/filter/filter.service';
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
+import moment = require('moment');
 
 @Component({
     selector: 'app',
@@ -20,6 +21,7 @@ export class AppComponent implements OnDestroy, OnInit {
     public subscription: Subscription;
     public intervalSub: Subscription;
     public filterParams: any = {};
+    public date: Date = new Date(2019, 0, 7)
 
     constructor(public columnsManager: ColumnManagerService, private gridAddService: GridAddService,
                 private changeDetector: ChangeDetectorRef, private filterService: FilterService,
@@ -55,6 +57,7 @@ export class AppComponent implements OnDestroy, OnInit {
                     draggable: true,
                     defaultSort: true,
                     filterable: true,
+                    date:true,
                 }),
         ];
 

@@ -9,6 +9,7 @@ export interface IColumn {
     defaultSort: boolean;
     draggable: boolean;
     filterable: boolean;
+    date: boolean;
 
     /**
      * В зависимости от колонки возвращает шаблон для отображения соответствующего свойства из модели.

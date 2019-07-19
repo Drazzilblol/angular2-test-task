@@ -2,6 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {filter, forEach, size, startsWith} from 'lodash';
+import moment = require('moment');
 
 @Pipe({
     name: 'stringFilter',
@@ -28,7 +29,15 @@ export class StringFilterPipe implements PipeTransform {
         return filter(items, (item) => {
             let counter: number = 0;
             forEach(filterParams, (value, key) => {
-                if (this.isStringStartsWith(item[key], value)) {
+                if (key === 'parsedDate') {
+                    const interval = value.split(' - ');
+                    const firstDate = moment(interval[0], 'DD-MM-YYYY HH:mm:ss');
+                    const secondDate = moment(interval[1], 'DD-MM-YYYY HH:mm:ss').endOf('day');
+                    const valueDate = moment(item[key], 'DD-MM-YYYY HH:mm:ss');
+                    if (valueDate.isBetween(firstDate, secondDate)) {
+                        counter++;
+                    }
+                } else if (this.isStringStartsWith(item[key], value)) {
                     counter++;
                 }
             });

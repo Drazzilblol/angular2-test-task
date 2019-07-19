@@ -40,6 +40,7 @@ export class GridComponent implements OnInit {
     }
 
     public filter(params): void {
+
         this.filterParams[params.column] = params.text;
     }
 
