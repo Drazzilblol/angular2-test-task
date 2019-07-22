@@ -17,6 +17,7 @@ import russian from 'app/locales/locale-ru.json';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterService} from 'app/services/filter/filter.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
@@ -38,7 +39,7 @@ describe('item list', function() {
             declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective,
                 ResizableDirective, GridFilterCellComponent],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule, ReactiveFormsModule],
-            providers: [FilterService, ColumnManagerService],
+            providers: [FilterService, ColumnManagerService, DatePickerManagerService],
         }).overrideComponent(GridComponent, {
             set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();

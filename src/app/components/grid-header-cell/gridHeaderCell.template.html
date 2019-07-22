@@ -1,7 +1,7 @@
 <div resizable [isResizable]="column.resizable" [resizeEdges]="edges" (onResize)="onResize($event)"
      (onResizeEnd)="onResizeEnd()">
     <ng-container *ngIf="column.sortable">
-        <i *ngIf="column.dataFieldName  === currentSort.column" class="material-icons md-14 icon-left">{{icon}}</i>
+        <i *ngIf="column.dataFieldName  === currentSort.column" class="material-icons icon-left">{{icon}}</i>
     </ng-container>
     <div draggable [isDraggable]="column.draggable" (onDragStart)="dragStart()"
          (onDragEnd)="dragEnd()"

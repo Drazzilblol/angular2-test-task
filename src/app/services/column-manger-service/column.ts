@@ -36,7 +36,7 @@ export class Column implements IColumn {
         }
     }
 
-    public functionValue<T extends IGridItem>(item: T): string {
+    public functionValue(item: IGridItem): string {
         if (this.dataFieldName === 'status') {
             return `<div class="status" [ngClass]="item.status | colorsPipe" placement="left"
                         [ngbTooltip]="'STATUS.' + item.status | translate" container="body">

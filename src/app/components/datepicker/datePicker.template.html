@@ -1,8 +1,16 @@
 <div class="datepicker">
-    <span class="datepicker-element" *ngFor="let day of thisMonth"
-          [ngStyle]="{'grid-column': getDayInWeek(day), '-ms-grid-column': getDayInWeek(day),
+    <div class="month-changer">
+        <span class="icon-left" (click)="previousMonth()"><i class="material-icons md-22">keyboard_arrow_left</i></span>
+        <span>{{monthName + ' ' + year}}</span>
+        <span class="icon-right" (click)="nextMonth()"><i class="material-icons md-22">keyboard_arrow_right</i></span>
+    </div>
+
+    <div class="calendar">
+    <div class="datepicker-element" *ngFor="let day of thisMonth"
+          [ngStyle]="{ '-ms-grid-column': getDayInWeek(day), 'grid-column': getDayInWeek(day),
           '-ms-grid-row': getWeek(day),  'grid-row': getWeek(day)}"
           (click)="selectDate(day, $event)">
         {{day.getDate()}}
-    </span>
+    </div>
+    </div>
 </div>

@@ -199,6 +199,7 @@ body {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    border-radius: .25rem !important;
 }
 
 .draggable {
@@ -243,6 +244,10 @@ body {
     font-size: 22px;
 }
 
+.material-icons.md-28 {
+    font-size: 28px;
+}
+
 .material-icons.md-36 {
     font-size: 36px;
 }
@@ -257,6 +262,12 @@ body {
     padding-top: 12px;
 }
 
+.icon-right {
+    float: right;
+    padding-left: 8px;
+    padding-top: 12px;
+}
+
 .icon-filter {
     float: left;
     padding-right: 10px;
@@ -265,21 +276,42 @@ body {
 /*Datepicker*/
 .datepicker {
     position: absolute;
+    text-align: center;
     background-color: white;
     width: 175px;
-    height: 140px;
+    height: fit-content;
+    left: 10px;
+    top: 35px;
+    z-index: 1;
+    border: 1px solid #ddd;
+}
+
+.calendar {
     display: -ms-grid;
     display: grid;
     top: 25px;
     z-index: 1;
-    grid-template-columns: repeat(7, 25px);
-    border:  1px solid #ddd;
+    -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.month-changer {
+    height: 22px;
+    background-color: #e9ecef;
+}
+
+.month-changer > span {
+    padding: 0;
+    height: 22px;
+    cursor: default;
+    display: inline-block;
 }
 
 .datepicker-element {
     text-align: center;
-    width: 25px;
+    cursor: default;
 }
+
 .datepicker-element:hover {
-  background-color: gray !important;
+    background-color: gray !important;
 }

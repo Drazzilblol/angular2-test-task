@@ -15,5 +15,5 @@ export interface IColumn {
      * В зависимости от колонки возвращает шаблон для отображения соответствующего свойства из модели.
      * @param item: StringGridItem
      */
-    functionValue<T extends IGridItem>(item: T);
+    functionValue(item: IGridItem);
 }

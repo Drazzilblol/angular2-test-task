@@ -6,6 +6,7 @@ import {GridFilterCellComponent} from 'app/components/grid-filter-cell/gridFilte
 import {Columns} from 'app/enums/columns.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
 
@@ -19,7 +20,7 @@ describe('filter cell component', function() {
         TestBed.configureTestingModule({
             declarations: [GridFilterCellComponent],
             imports: [ReactiveFormsModule, translateTestImport],
-            providers: [ColumnManagerService],
+            providers: [ColumnManagerService, DatePickerManagerService],
         }).compileComponents();
 
         fixture = TestBed.createComponent(GridFilterCellComponent);

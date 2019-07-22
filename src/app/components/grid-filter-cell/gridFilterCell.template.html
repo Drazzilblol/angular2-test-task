@@ -1,10 +1,7 @@
 <form *ngIf="column.filterable" [formGroup]="filterForm" novalidate autocomplete="off" class="form-content input-group">
-    <input input-ellipsis
-           date-picker
-           (onDateClick)="dateClick()"
-           [isDate]="column.date"
+    <input #container input-ellipsis
+           (click)="openDatePicker($event)"
            [placeholder]="('FILTER.PLACEHOLDER' | translate) + ': ' + ('GRID_HEADER.' + column.title | translate)"
            formControlName="text" type="text"
            class="filter-input form-control">
-    <datepicker style="visibility: hidden" (onSelectDate)="selectDate($event)"></datepicker>
 </form>

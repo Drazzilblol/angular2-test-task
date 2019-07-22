@@ -7,9 +7,9 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
 import {GridFilterCellComponent} from 'app/components/grid-filter-cell/gridFilterCell.component';
-import {DatePickerDirective} from 'app/directives/date-picker/datePicker.directive';
 import {InputEllipsisDirective} from 'app/directives/input-ellipsis/inputEllipsis.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
+import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {DraggableDirective} from '../directives/draggable/draggable.directive';
 import {PipesModule} from '../pipes/pipes.module';
 import {FilterService} from '../services/filter/filter.service';
@@ -26,8 +26,8 @@ import {StringAddComponent} from './string-add/stringAdd.component';
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
         FilterComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective,
-        GridFilterCellComponent, InputEllipsisDirective, DatePickerComponent, DatePickerDirective],
-    entryComponents: [LanguageDialogComponent],
+        GridFilterCellComponent, InputEllipsisDirective, DatePickerComponent],
+    entryComponents: [LanguageDialogComponent, DatePickerComponent],
     exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
         TranslateModule.forRoot({
@@ -37,7 +37,7 @@ import {StringAddComponent} from './string-add/stringAdd.component';
                 useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/locales/locale-', '.json'),
             },
         })],
-    providers: [GridAddService, FilterService, StringsHttpService],
+    providers: [GridAddService, FilterService, StringsHttpService, DatePickerManagerService],
 })
 export class ComponentsModule {
 }
