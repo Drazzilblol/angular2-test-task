@@ -1,15 +1,16 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {startCase} from 'lodash';
 import moment from 'moment';
 import {Subscription} from 'rxjs';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'datepicker',
     templateUrl: './datePicker.template.html',
 })
 export class DatePickerComponent implements OnInit, OnDestroy {
-    public currentDate: Date = new Date(moment.now());
+    public currentDate: Date = new Date();
     public thisMonth: Date[] = [];
     @Output() public onSelectDate = new EventEmitter();
     public firstDate: Date;
@@ -32,7 +33,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         });
     }
 
-    private recalculateMonth(): void {
+    public recalculateMonth(): void {
         this.monthName = startCase(this.formatter.format(this.currentDate));
         this.year = this.currentDate.getFullYear();
         const daysInMonth = this.getDaysInMonth(this.currentDate.getMonth(), this.currentDate.getFullYear());

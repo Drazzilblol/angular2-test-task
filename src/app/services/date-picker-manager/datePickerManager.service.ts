@@ -1,4 +1,4 @@
-import {ComponentFactoryResolver, Injectable, ViewContainerRef} from '@angular/core';
+import {ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
 
 @Injectable()
@@ -9,8 +9,8 @@ export class DatePickerManagerService {
 
     public open(container: ViewContainerRef): DatePickerComponent {
         const factory = this.componentFactoryResolver.resolveComponentFactory(DatePickerComponent);
-        const componentRef = container.createComponent(factory);
-        return (componentRef.instance as DatePickerComponent);
+        const componentRef: ComponentRef<DatePickerComponent> = container.createComponent(factory);
+        return componentRef.instance;
     }
 
     public close(container: ViewContainerRef) {
