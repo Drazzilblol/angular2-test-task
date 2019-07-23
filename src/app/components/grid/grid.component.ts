@@ -14,9 +14,9 @@ import {SortParams} from './models/SortParams';
 export class GridComponent implements OnInit, OnChanges {
     @Input() public filterParams: any = {};
     @Input() public items: IGridItem[] = [];
-    @Input() public filteredItems: IGridItem[] = this.items;
     @Input() public columns: IColumn[] = [];
     public currentSort: SortParams;
+    public filteredItems: IGridItem[] = this.items;
 
     constructor(private filterService: FilterService) {
     }
@@ -50,13 +50,9 @@ export class GridComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Функиця для отслеживания пересоздания элементов в цикле ngFor, если элементы массива реализуют функцию trackByFn
-     * то для отслеживания используется она, если нет то отслеживание происходит по ссылке на элемент.
+     * Функиця для отслеживания пересоздания элементов в цикле ngFor.
      */
-    public trackByFn<T extends IGridItem>(index, item: T) {
-        if (!item.trackByFn) {
-            return item;
-        }
+    public trackByFn(index: number, item: IGridItem) {
         return item.trackByFn(index, item);
     }
 

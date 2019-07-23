@@ -1,3 +1,3 @@
 export interface IGridItem {
-    trackByFn(index, item);
+    trackByFn(index: number, item: IGridItem);
 }

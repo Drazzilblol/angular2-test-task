@@ -14,7 +14,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     public thisMonth: Date[] = [];
     @Output() public onSelectDate = new EventEmitter();
     public firstDate: Date;
-    public selectedElement;
+    public selectedElement: HTMLElement;
     public monthName: string;
     public year: number;
     private subscription: Subscription;
@@ -39,7 +39,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     public recalculateMonth(): void {
         this.monthName = startCase(this.formatter.format(this.currentDate));
         this.year = this.currentDate.getFullYear();
-        const daysInMonth = this.getDaysInMonth(this.currentDate.getMonth(), this.currentDate.getFullYear());
+        const daysInMonth = moment(this.currentDate).daysInMonth();
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
             this.thisMonth.push(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i));
@@ -47,16 +47,9 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Рассчитывает количество дней в месяце.
-     */
-    public getDaysInMonth(month, year) {
-        return new Date(year, month + 1, 0).getDate();
-    }
-
-    /**
      * Рассчитывает день недели.
      */
-    public getDayInWeek(date: Date) {
+    public getDayOfWeek(date: Date) {
         if (date.getDay() > 0) {
             return date.getDay();
         } else {
@@ -68,10 +61,10 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      * Рассчитывает номер недели в месяце.
      */
     public getWeekNumber(date) {
-        const first = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+        const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
 
-        if (first.getDay() > 0) {
-            return DatePickerComponent.calculateWeekNumber(date.getDate(), first.getDay());
+        if (firstDay.getDay() > 0) {
+            return DatePickerComponent.calculateWeekNumber(date.getDate(), firstDay.getDay());
         } else {
             return DatePickerComponent.calculateWeekNumber(date.getDate(), 7);
         }
