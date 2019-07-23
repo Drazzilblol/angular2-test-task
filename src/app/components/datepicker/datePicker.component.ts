@@ -33,6 +33,9 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         });
     }
 
+    /**
+     * Перерасчитывает название месяца, год, количество дней в месяце и список дат, согласно выбранному дню.
+     */
     public recalculateMonth(): void {
         this.monthName = startCase(this.formatter.format(this.currentDate));
         this.year = this.currentDate.getFullYear();
@@ -43,10 +46,16 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Рассчитывает количество дней в месяце.
+     */
     public getDaysInMonth(month, year) {
         return new Date(year, month + 1, 0).getDate();
     }
 
+    /**
+     * Рассчитывает день недели.
+     */
     public getDayInWeek(date: Date) {
         if (date.getDay() > 0) {
             return date.getDay();
@@ -55,6 +64,9 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Рассчитывает номер недели в месяце.
+     */
     public getWeek(date) {
         const first = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
 
@@ -65,6 +77,9 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Выделяет выбраную дату, при выборе второй даты отправляет интервал.
+     */
     public selectDate(date: Date, event) {
         if (!this.firstDate) {
             this.firstDate = date;
@@ -77,7 +92,10 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
-    private static createTimeInterval(firstDate: Date, secondDate: Date) {
+    /**
+     * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
+     */
+    public static createTimeInterval(firstDate: Date, secondDate: Date) {
         if (moment(firstDate).isSameOrBefore(secondDate)) {
             return {firstDate, secondDate};
         } else {
@@ -85,17 +103,23 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         }
     }
 
-    public ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
-
+    /**
+     * Переходит на следующий месяц.
+     */
     public nextMonth(): void {
         this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 1);
         this.recalculateMonth();
     }
 
+    /**
+     * Переходит на предыдущий месяц.
+     */
     public previousMonth(): void {
         this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 1, 1);
         this.recalculateMonth();
+    }
+
+    public ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }
