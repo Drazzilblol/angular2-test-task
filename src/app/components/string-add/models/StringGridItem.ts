@@ -2,7 +2,8 @@ import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {IdGenerator} from 'app/utils/idGenerator';
 import {filter, isEmpty} from 'lodash';
-import moment = require('moment');
+import moment from 'moment';
+
 const MESSAGE: string = 'MESSAGE';
 
 export class StringGridItem implements IGridItem {
@@ -32,7 +33,8 @@ export class StringGridItem implements IGridItem {
         if (isEmpty(input.trim())) {
             return MESSAGE;
         }
-        const filteredArray = filter(input.trim().split(''), (element) => !isNaN(+element));
+        const filteredArray = filter(input.replace(/\s+/g, '')
+            .split(''), (element) => !isNaN(+element));
         return filteredArray.length ? filteredArray.join('') : MESSAGE;
     }
 
