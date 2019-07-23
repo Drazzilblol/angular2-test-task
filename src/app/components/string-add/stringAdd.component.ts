@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
 import {GridAddService} from 'app/services/strings/grid-add.service';
-import {now} from 'lodash';
 import {StringGridItem} from './models/StringGridItem';
 
 @Component({
@@ -29,6 +28,6 @@ export class StringAddComponent implements OnInit {
      * Передает строку сервису GridAddService для добавления в список.
      */
     public addItem(): void {
-        this.stringService.addItem(new StringGridItem(this.addForm.value.text, new Date(now()), Statuses.FRESH));
+        this.stringService.addItem(new StringGridItem(this.addForm.value.text, new Date(), Statuses.FRESH));
     }
 }

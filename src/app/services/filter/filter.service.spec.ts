@@ -2,7 +2,6 @@ import {TestBed} from '@angular/core/testing';
 import {TranslateService} from '@ngx-translate/core';
 import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
-import {now} from 'moment';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {FilterService} from './filter.service';
 
@@ -24,8 +23,8 @@ describe('strings filter service', function() {
     });
 
     it('should return array of filtered items', function() {
-        const testItem1: StringGridItem = new StringGridItem('test1', new Date(now()), Statuses.FRESH);
-        const testItem2: StringGridItem = new StringGridItem('test2', new Date(now()), Statuses.FRESH);
+        const testItem1: StringGridItem = new StringGridItem('test1', new Date(), Statuses.FRESH);
+        const testItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
         const stringItems: StringGridItem[] = [testItem1, testItem2];
 
         expect(filterService.filterItems(stringItems, {transformedText: '2'}))

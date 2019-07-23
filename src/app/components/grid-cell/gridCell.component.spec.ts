@@ -4,7 +4,6 @@ import {Columns} from 'app/enums/columns.enum';
 import {Statuses} from 'app/enums/statuses.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
-import {now} from 'moment';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridCellComponent} from './gridCell.component';
 
@@ -35,7 +34,7 @@ describe('grid cell', function() {
 
         component = fixture.componentInstance;
         component.column = columnManager.getColumns()[0];
-        component.item = new StringGridItem('test1', new Date(now()), Statuses.FRESH);
+        component.item = new StringGridItem('test1', new Date(), Statuses.FRESH);
         component.index = 0;
         fixture.detectChanges();
     });

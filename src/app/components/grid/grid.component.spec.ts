@@ -20,7 +20,6 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import {FilterService} from 'app/services/filter/filter.service';
-import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
@@ -88,14 +87,14 @@ describe('grid', function() {
         it('check item with numbers', function() {
             const resultString: string = '1234';
 
-            component.filteredItems = [new StringGridItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
+            component.filteredItems = [new StringGridItem('t1e2s3t4', new Date(), Statuses.FRESH)];
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe(resultString);
         });
 
         it('check item without numbers', function() {
-            component.filteredItems = [new StringGridItem('test', new Date(now()), Statuses.FRESH)];
+            component.filteredItems = [new StringGridItem('test', new Date(), Statuses.FRESH)];
             fixture.detectChanges();
             const firstElement = fixtureDebug.query(By.css('grid-cell .content')).nativeElement;
 
@@ -108,8 +107,8 @@ describe('grid', function() {
         });
 
         it('check filter-params', fakeAsync(function() {
-            const testListItem1: StringGridItem = new StringGridItem('test1', new Date(now()), Statuses.YESTERDAY);
-            const testListItem2: StringGridItem = new StringGridItem('test2', new Date(now()), Statuses.FRESH);
+            const testListItem1: StringGridItem = new StringGridItem('test1', new Date(), Statuses.YESTERDAY);
+            const testListItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
 
             component.items = [testListItem1, testListItem2];
             fixture.detectChanges();
@@ -125,8 +124,8 @@ describe('grid', function() {
         }));
 
         it('check sorting', function() {
-            const testListItem1: StringGridItem = new StringGridItem('test1', new Date(now()), Statuses.FRESH);
-            const testListItem2: StringGridItem = new StringGridItem('test2', new Date(now()), Statuses.FRESH);
+            const testListItem1: StringGridItem = new StringGridItem('test1', new Date(), Statuses.FRESH);
+            const testListItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
 
             component.filteredItems = [testListItem2, testListItem1];
             component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));

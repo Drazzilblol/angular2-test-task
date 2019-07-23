@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {map as lodashMap} from 'lodash';
 import {map} from 'rxjs/operators';
-import {StringGridItem} from '../../components/string-add/models/StringGridItem';
 
 @Injectable()
 export class StringsHttpService {

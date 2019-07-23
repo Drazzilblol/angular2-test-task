@@ -1,7 +1,6 @@
 import {fakeAsync, tick} from '@angular/core/testing';
 import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
-import {now} from 'lodash';
 import {Subscription} from 'rxjs';
 import {GridAddService} from './grid-add.service';
 
@@ -17,7 +16,7 @@ describe('items service', function() {
     });
 
     it('check is getObservable() returns value', fakeAsync(function() {
-        const testString: StringGridItem = new StringGridItem('test', new Date(now()), Statuses.FRESH);
+        const testString: StringGridItem = new StringGridItem('test', new Date(), Statuses.FRESH);
 
         const subscription: Subscription = stringsService.getObservable().subscribe((result: StringGridItem) => {
             expect(result).toEqual(testString);
