@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Statuses} from 'app/enums/statuses.enum';
-import {FilterService} from 'app/services/filter/filter.service';
+import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 
 const NOT_SELECTED: string = 'NOT_SELECTED';
 const statusesMap = {
@@ -21,7 +21,7 @@ export class FilterComponent implements OnInit {
     public statuses = Object.keys(statusesMap);
     public filterForm: FormGroup;
 
-    constructor(private filterService: FilterService) {
+    constructor(private filterService: FilterParamsService) {
     }
 
     public ngOnInit(): void {

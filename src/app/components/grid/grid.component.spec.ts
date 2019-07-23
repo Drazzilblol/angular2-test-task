@@ -18,6 +18,7 @@ import {PipesModule} from 'app/pipes/pipes.module';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
+import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import {FilterService} from 'app/services/filter/filter.service';
 import {now} from 'lodash';
 import {translateTestImport} from 'tests/testTranslationConfig';
@@ -27,7 +28,7 @@ import {StringGridItem} from '../string-add/models/StringGridItem';
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';
 
-describe('item list', function() {
+describe('grid', function() {
     let component: GridComponent;
     let fixture: ComponentFixture<GridComponent>;
     let translate: TranslateService;
@@ -39,7 +40,7 @@ describe('item list', function() {
             declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective,
                 ResizableDirective, GridFilterCellComponent],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule, ReactiveFormsModule],
-            providers: [FilterService, ColumnManagerService, DatePickerManagerService],
+            providers: [FilterParamsService, FilterService, ColumnManagerService, DatePickerManagerService],
         }).overrideComponent(GridComponent, {
             set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
@@ -87,14 +88,14 @@ describe('item list', function() {
         it('check item with numbers', function() {
             const resultString: string = '1234';
 
-            component.items = [new StringGridItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
+            component.filteredItems = [new StringGridItem('t1e2s3t4', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe(resultString);
         });
 
         it('check item without numbers', function() {
-            component.items = [new StringGridItem('test', new Date(now()), Statuses.FRESH)];
+            component.filteredItems = [new StringGridItem('test', new Date(now()), Statuses.FRESH)];
             fixture.detectChanges();
             const firstElement = fixtureDebug.query(By.css('grid-cell .content')).nativeElement;
 
@@ -106,19 +107,18 @@ describe('item list', function() {
             expect(firstElement.innerText).toBe(russian.MESSAGE);
         });
 
-        it('check filter', fakeAsync(function() {
+        it('check filter-params', fakeAsync(function() {
             const testListItem1: StringGridItem = new StringGridItem('test1', new Date(now()), Statuses.YESTERDAY);
             const testListItem2: StringGridItem = new StringGridItem('test2', new Date(now()), Statuses.FRESH);
 
-            component.items = [testListItem1];
+            component.items = [testListItem1, testListItem2];
             fixture.detectChanges();
-            component.items.push(testListItem2);
-            component.filterParams = {transformedText: '1'};
+            component.filter({column: 'transformedText', text: '1'});
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('1');
 
-            component.filterParams = {transformedText: '2'};
+            component.filter({column: 'transformedText', text: '2'});
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('2');
@@ -128,7 +128,7 @@ describe('item list', function() {
             const testListItem1: StringGridItem = new StringGridItem('test1', new Date(now()), Statuses.FRESH);
             const testListItem2: StringGridItem = new StringGridItem('test2', new Date(now()), Statuses.FRESH);
 
-            component.items = [testListItem2, testListItem1];
+            component.filteredItems = [testListItem2, testListItem1];
             component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));
             fixture.detectChanges();
             let row = fixtureDebug.queryAll(By.css('.hoverable-row'));

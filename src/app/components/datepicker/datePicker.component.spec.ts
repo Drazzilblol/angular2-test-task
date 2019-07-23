@@ -5,14 +5,14 @@ import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
-import {FilterService} from 'app/services/filter/filter.service';
+import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import {translateTestImport} from 'tests/testTranslationConfig';
 
 describe('date picker component', function() {
     let component: DatePickerComponent;
     let fixture: ComponentFixture<DatePickerComponent>;
     let translate: TranslateService;
-    let filterService: FilterService;
+    let filterService: FilterParamsService;
     let fixtureDebug: DebugElement;
 
     beforeEach(function() {
@@ -20,7 +20,7 @@ describe('date picker component', function() {
             declarations: [DatePickerComponent],
             imports: [NgbTooltipModule, ReactiveFormsModule, translateTestImport],
             providers: [
-                FilterService,
+                FilterParamsService,
             ],
         }).overrideComponent(DatePickerComponent, {
             set: {changeDetection: ChangeDetectionStrategy.Default},
@@ -31,7 +31,7 @@ describe('date picker component', function() {
 
         fixture = TestBed.createComponent(DatePickerComponent);
         fixtureDebug = fixture.debugElement;
-        filterService = TestBed.get(FilterService);
+        filterService = TestBed.get(FilterParamsService);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

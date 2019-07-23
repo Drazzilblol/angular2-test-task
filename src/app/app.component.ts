@@ -5,10 +5,9 @@ import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
 import {Column} from './services/column-manger-service/column';
 import {ColumnManagerService} from './services/column-manger-service/columnManager.service';
-import {FilterService} from './services/filter/filter.service';
+import {FilterParamsService} from './services/filter-params/filterParams.service';
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
-import moment = require('moment');
 
 @Component({
     selector: 'app',
@@ -21,10 +20,9 @@ export class AppComponent implements OnDestroy, OnInit {
     public subscription: Subscription;
     public intervalSub: Subscription;
     public filterParams: any = {};
-    public date: Date = new Date(2019, 0, 7)
 
     constructor(public columnsManager: ColumnManagerService, private gridAddService: GridAddService,
-                private changeDetector: ChangeDetectorRef, private filterService: FilterService,
+                private changeDetector: ChangeDetectorRef, private filterService: FilterParamsService,
                 private stringsHttpService: StringsHttpService) {
     }
 
@@ -57,7 +55,7 @@ export class AppComponent implements OnDestroy, OnInit {
                     draggable: true,
                     defaultSort: true,
                     filterable: true,
-                    date:true,
+                    date: true,
                 }),
         ];
 

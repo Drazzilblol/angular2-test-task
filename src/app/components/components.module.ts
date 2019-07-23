@@ -10,9 +10,10 @@ import {GridFilterCellComponent} from 'app/components/grid-filter-cell/gridFilte
 import {InputEllipsisDirective} from 'app/directives/input-ellipsis/inputEllipsis.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
+import {FilterService} from 'app/services/filter/filter.service';
 import {DraggableDirective} from '../directives/draggable/draggable.directive';
 import {PipesModule} from '../pipes/pipes.module';
-import {FilterService} from '../services/filter/filter.service';
+import {FilterParamsService} from '../services/filter-params/filterParams.service';
 import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
 import {GridAddService} from '../services/strings/grid-add.service';
 import {FilterComponent} from './filter/filter.component';
@@ -37,7 +38,7 @@ import {StringAddComponent} from './string-add/stringAdd.component';
                 useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/locales/locale-', '.json'),
             },
         })],
-    providers: [GridAddService, FilterService, StringsHttpService, DatePickerManagerService],
+    providers: [GridAddService, FilterParamsService, StringsHttpService, DatePickerManagerService, FilterService],
 })
 export class ComponentsModule {
 }

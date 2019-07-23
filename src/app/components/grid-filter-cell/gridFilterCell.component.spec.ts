@@ -10,7 +10,7 @@ import {DatePickerManagerService} from 'app/services/date-picker-manager/datePic
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
 
-describe('filter cell component', function() {
+describe('filter-params cell component', function() {
     let component: GridFilterCellComponent;
     let fixture: ComponentFixture<GridFilterCellComponent>;
     let fixtureDebug: DebugElement;

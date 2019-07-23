@@ -87,7 +87,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     }
 
     /**
-     * Инициализирует слушателя события click по body, если событие произошло не на потомке grid-filter-cell то
+     * Инициализирует слушателя события click по body, если событие произошло не на потомке grid-filter-params-cell то
      * date picker закрывается.
      */
     public initClickListener(): void {
