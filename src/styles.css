@@ -199,7 +199,6 @@ body {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    border-radius: .25rem !important;
 }
 
 .draggable {
