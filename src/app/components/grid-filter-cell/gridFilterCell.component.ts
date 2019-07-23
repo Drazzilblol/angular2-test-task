@@ -76,7 +76,9 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         event.stopPropagation();
         if (this.column.date) {
             if (!this.isDatePickerOpened) {
-                this.datePickerSubscription = this.datePickerManager.open(this.container).onSelectDate
+                this.datePickerSubscription = this.datePickerManager
+                    .open(this.container)
+                    .onSelectDate
                     .subscribe((date) => {
                         this.selectDate(date);
                     });

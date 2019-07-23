@@ -64,13 +64,13 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
 
         if (firstDay.getDay() > 0) {
-            return DatePickerComponent.calculateWeekNumber(date.getDate(), firstDay.getDay());
+            return this.calculateWeekNumber(date.getDate(), firstDay.getDay());
         } else {
-            return DatePickerComponent.calculateWeekNumber(date.getDate(), 7);
+            return this.calculateWeekNumber(date.getDate(), 7);
         }
     }
 
-    public static calculateWeekNumber(date, firstDay) {
+    public calculateWeekNumber(date, firstDay) {
         return Math.floor((date + firstDay - 2) / 7) + 1;
     }
 
@@ -83,7 +83,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
             this.selectedElement = event.target;
             this.selectedElement.classList.add('selected-date');
         } else {
-            this.onSelectDate.emit(DatePickerComponent.createTimeInterval(this.firstDate, date));
+            this.onSelectDate.emit(this.createTimeInterval(this.firstDate, date));
             this.firstDate = null;
             this.selectedElement.classList.remove('selected-date');
         }
@@ -92,7 +92,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     /**
      * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
      */
-    public static createTimeInterval(firstDate: Date, secondDate: Date) {
+    public createTimeInterval(firstDate: Date, secondDate: Date) {
         if (moment(firstDate).isSameOrBefore(secondDate)) {
             return {firstDate, secondDate};
         } else {

@@ -274,14 +274,12 @@ body {
 }
 
 /*Datepicker*/
-.datepicker {
+datepicker {
     position: absolute;
     text-align: center;
     background-color: white;
     width: 175px;
     height: fit-content;
-    left: 10px;
-    top: 35px;
     z-index: 1;
     border: 1px solid #ddd;
 }
