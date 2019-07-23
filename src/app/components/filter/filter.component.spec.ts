@@ -64,7 +64,7 @@ describe('filter', function() {
         });
 
         it('check filter reset', function() {
-            const testParams = {};
+            const testParams = {status: '', originText: ''};
             spyOn(filterService, 'filter');
             const input = fixture.debugElement.query(By.css('input')).nativeElement;
             input.value = 'test';

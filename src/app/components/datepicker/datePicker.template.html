@@ -8,7 +8,7 @@
     <div class="calendar">
         <div class="datepicker-element" *ngFor="let day of thisMonth"
              [ngStyle]="{ '-ms-grid-column': getDayInWeek(day), 'grid-column': getDayInWeek(day),
-          '-ms-grid-row': getWeek(day),  'grid-row': getWeek(day)}"
+          '-ms-grid-row': getWeekNumber(day),  'grid-row': getWeekNumber(day)}"
              (click)="selectDate(day, $event)">
             {{day.getDate()}}
         </div>

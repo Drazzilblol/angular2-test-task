@@ -67,14 +67,18 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     /**
      * Рассчитывает номер недели в месяце.
      */
-    public getWeek(date) {
+    public getWeekNumber(date) {
         const first = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
 
         if (first.getDay() > 0) {
-            return Math.floor((date.getDate() + first.getDay() - 2) / 7) + 1;
+            return DatePickerComponent.calculateWeekNumber(date.getDate(), first.getDay());
         } else {
-            return Math.floor((date.getDate() + 5) / 7) + 1;
+            return DatePickerComponent.calculateWeekNumber(date.getDate(), 7);
         }
+    }
+
+    public static calculateWeekNumber(date, firstDay) {
+        return Math.floor((date + firstDay - 2) / 7) + 1;
     }
 
     /**

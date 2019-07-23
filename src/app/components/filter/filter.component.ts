@@ -50,7 +50,10 @@ export class FilterComponent implements OnInit {
         const filterFormValue = this.filterForm;
         filterFormValue.controls.statusSelect.setValue(NOT_SELECTED);
         filterFormValue.controls.filterString.setValue('');
-        this.filterService.filter({});
+        this.filterService.filter({
+            status: '',
+            originText: '',
+        });
     }
 
     /**
