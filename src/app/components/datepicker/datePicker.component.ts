@@ -88,11 +88,11 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         if (!this.firstDate) {
             this.firstDate = date;
             this.selectedElement = event.target;
-            this.selectedElement.style.backgroundColor = 'blue';
+            this.selectedElement.classList.add('selected-date');
         } else {
             this.onSelectDate.emit(DatePickerComponent.createTimeInterval(this.firstDate, date));
             this.firstDate = null;
-            this.selectedElement.style.backgroundColor = 'white';
+            this.selectedElement.classList.remove('selected-date');
         }
     }
 

@@ -289,14 +289,15 @@ body {
 .calendar {
     display: -ms-grid;
     display: grid;
-    top: 25px;
-    z-index: 1;
     -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-columns: repeat(7, 1fr);
 }
 
+.selected-date {
+    background-color: lightblue;
+}
+
 .month-changer {
-    height: 22px;
     background-color: #e9ecef;
 }
 
@@ -304,10 +305,11 @@ body {
     padding: 0;
     height: 22px;
     cursor: default;
-    display: inline-block;
 }
 
 .datepicker-element {
+    width: 24px;
+    height: 24px;
     text-align: center;
     cursor: default;
 }
