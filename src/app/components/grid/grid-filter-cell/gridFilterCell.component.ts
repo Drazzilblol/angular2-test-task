@@ -17,6 +17,12 @@ import moment from 'moment';
 import {fromEvent, Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 
+/**
+ * Время которое должно пройти после события прежде чем данные отправятся, если за время отсчета произойдет новое
+ * событие то отсчет начнется заново.
+ */
+const DEBOUNCE_TIME: number = 500;
+
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'grid-filter-cell',
@@ -47,13 +53,13 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     }
 
     /**
-     * Создает подписку на событие input, при срабатывании собтия если оно не происходит опять в течении 500 милисекунд
+     * Создает подписку на событие input, при срабатывании события если оно не происходит опять в течении 0.5 секунды
      * то отправляет данные для фильтрации.
      */
     protected initSubscriptions(): void {
         super.initSubscriptions();
         this.subscription.add(fromEvent(this.elementRef.nativeElement, 'input')
-            .pipe(debounceTime(500))
+            .pipe(debounceTime(DEBOUNCE_TIME))
             .subscribe(() => {
                 this.onFilter.emit({column: this.column.dataFieldName, filter: this.filterForm.value.filter});
             }));
@@ -63,8 +69,8 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      * Создает данные для фильтрации из интервала дат, и отправляет их.
      */
     public selectDate(date: any) {
-        const parsedDate = moment(date.firstDate.getTime()).format('DD-MM-YYYY')
-            + ' - ' + moment(date.secondDate.getTime()).format('DD-MM-YYYY');
+        const parsedDate = `${moment(date.firstDate.getTime()).format('DD-MM-YYYY')} - ${moment(date.secondDate
+            .getTime()).format('DD-MM-YYYY')}`;
 
         this.filterForm.controls.filter.setValue(parsedDate);
         this.onFilter.emit({column: this.column.dataFieldName, filter: parsedDate});

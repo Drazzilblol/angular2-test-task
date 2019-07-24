@@ -1,6 +1,8 @@
 import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
 import {ResizeEdges} from 'app/enums/resizeEdges.enum';
 
+const RESIZE_EDGES_WIDTH: number = 10;
+
 @Directive({
     selector: '[resizable]',
 })
@@ -48,10 +50,10 @@ export class ResizableDirective {
     public onMouseDown(event): void {
         if (this.isResizable) {
             const rect: DOMRect = this.element.getBoundingClientRect();
-            if (event.pageX >= rect.right - 10 && this.resizeEdges.right) {
+            if (event.pageX >= rect.right - RESIZE_EDGES_WIDTH && this.resizeEdges.right) {
                 this.resizeEdge = ResizeEdges.RIGHT;
                 this.initResizing(event, rect);
-            } else if (event.pageX <= rect.left + 10 && this.resizeEdges.left) {
+            } else if (event.pageX <= rect.left + RESIZE_EDGES_WIDTH && this.resizeEdges.left) {
                 this.resizeEdge = ResizeEdges.LEFT;
                 this.initResizing(event, rect);
             }
@@ -76,8 +78,8 @@ export class ResizableDirective {
     public onMouseMove(event): void {
         if (this.isResizable) {
             const rect: DOMRect = this.element.getBoundingClientRect();
-            if ((event.pageX >= rect.right - 10 && this.resizeEdges.right)
-                || (event.pageX <= rect.left + 10 && this.resizeEdges.left)) {
+            if ((event.pageX >= rect.right - RESIZE_EDGES_WIDTH && this.resizeEdges.right)
+                || (event.pageX <= rect.left + RESIZE_EDGES_WIDTH && this.resizeEdges.left)) {
                 this.renderer.addClass(this.element, 'resizable');
             } else {
                 this.renderer.removeClass(this.element, 'resizable');

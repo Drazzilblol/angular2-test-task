@@ -1,6 +1,8 @@
 import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
 import {Subscription, timer} from 'rxjs';
 
+const TIME: number = 500;
+
 @Directive({
     selector: '[draggable]',
 })
@@ -21,14 +23,14 @@ export class DraggableDirective {
     }
 
     /**
-     * Отслеживает событие mousedown на элементе, если произошло событие mousedown то через 500 милисекунд позволяет
+     * Отслеживает событие mousedown на элементе, если произошло событие mousedown то через 0.5 секунды позволяет
      * перетаскивать элемент.
      * @param event
      */
     @HostListener('mousedown', ['$event'])
     public clickStart(event): void {
         if (this.isDraggable) {
-            this.timerSub = timer(500).subscribe(() => {
+            this.timerSub = timer(TIME).subscribe(() => {
                 this.x = event.pageX;
                 this.offsetX = event.offsetX;
                 this.target = event.target;
