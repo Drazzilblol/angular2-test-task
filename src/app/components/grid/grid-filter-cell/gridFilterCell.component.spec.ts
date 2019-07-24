@@ -2,7 +2,7 @@ import {DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import {GridFilterCellComponent} from 'app/components/grid-filter-cell/gridFilterCell.component';
+import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
 import {Columns} from 'app/enums/columns.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';

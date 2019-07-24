@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {Order} from 'app/enums/order.enum';
+import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {FilterService} from 'app/services/filter/filter.service';
 import {find} from 'lodash';
@@ -10,6 +11,7 @@ import {SortParams} from './models/SortParams';
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'grid',
     templateUrl: './grid.template.html',
+    providers: [ColumnManagerService],
 })
 export class GridComponent implements OnInit, OnChanges {
     @Input() public filterParams: any = {};
@@ -18,7 +20,7 @@ export class GridComponent implements OnInit, OnChanges {
     public currentSort: SortParams;
     public filteredItems: IGridItem[] = this.items;
 
-    constructor(private filterService: FilterService) {
+    constructor(private filterService: FilterService, private columnManager: ColumnManagerService) {
     }
 
     /**
@@ -38,6 +40,7 @@ export class GridComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
+        this.columnManager.addColumns(this.columns);
         const defaultSortColumn = find(this.columns, (column) => {
             return column.defaultSort;
         });

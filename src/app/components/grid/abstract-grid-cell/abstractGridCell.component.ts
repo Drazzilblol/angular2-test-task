@@ -53,16 +53,18 @@ export abstract class AbstractGridCellComponent implements OnInit, OnDestroy {
      * Задает номер колонки для ячейки в таблице.
      */
     protected changePosition(): void {
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
+        const parentNode = this.elementRef.nativeElement.parentNode;
+
+        this.renderer.setStyle(parentNode,
             '-ms-grid-column',
             this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
+        this.renderer.setStyle(parentNode,
             '-ms-grid-row',
             1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
+        this.renderer.setStyle(parentNode,
             'grid-column',
             this.index + 1);
-        this.renderer.setStyle(this.elementRef.nativeElement.parentNode,
+        this.renderer.setStyle(parentNode,
             'grid-row',
             1);
     }

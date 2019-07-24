@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, Renderer2} from '@angular/core';
-import {AbstractGridCellComponent} from 'app/components/abstract-grid-cell/abstractGridCell.component';
+import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {findIndex} from 'lodash';
-import {SortParams} from '../grid/models/SortParams';
+import {SortParams} from '../grid-container/models/SortParams';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

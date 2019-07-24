@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
-import {GridFilterCellComponent} from 'app/components/grid-filter-cell/gridFilterCell.component';
+import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
@@ -21,9 +21,9 @@ import {DatePickerManagerService} from 'app/services/date-picker-manager/datePic
 import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import {FilterService} from 'app/services/filter/filter.service';
 import {translateTestImport} from 'tests/testTranslationConfig';
+import {StringGridItem} from '../../string-add/models/StringGridItem';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
-import {StringGridItem} from '../string-add/models/StringGridItem';
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';
 
@@ -164,8 +164,9 @@ describe('grid', function() {
             fixture.detectChanges();
 
             expect(testElem1.classList.contains('draggable')).toBe(false);
-            expect(fixture.debugElement.queryAll(By.css('grid-header-cell'))[1].nativeElement.innerText)
-                .toBe('Origin Text');
+            expect(fixture.debugElement.queryAll(By.css('grid-header-cell'))[1]
+                .nativeElement.parentNode.style.gridColumn)
+                .toBe('3 / auto');
         }));
     });
 });

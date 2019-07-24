@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
-import {AbstractGridCellComponent} from 'app/components/abstract-grid-cell/abstractGridCell.component';
+import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';

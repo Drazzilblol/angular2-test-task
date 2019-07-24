@@ -9,7 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {AbstractGridCellComponent} from 'app/components/abstract-grid-cell/abstractGridCell.component';
+import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import moment from 'moment';

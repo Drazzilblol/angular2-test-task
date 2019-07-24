@@ -4,7 +4,7 @@
            [placeholder]="('FILTER.PLACEHOLDER' | translate) + ': ' + ('GRID_HEADER.' + column.title | translate)"
            formControlName="text" type="text"
            class="filter-input form-control">
-    <div *ngIf="column.date" class="input-group-append">
+    <div *ngIf="column.date" (click)="openDatePicker($event)" class="input-group-append">
          <span class="input-group-text" style="height: 25px; padding: 0">
             <i class="material-icons md-22">date_range</i>
          </span>

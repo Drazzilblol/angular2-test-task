@@ -4,7 +4,6 @@ import {interval, Subscription} from 'rxjs';
 import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
 import {Column} from './services/column-manger-service/column';
-import {ColumnManagerService} from './services/column-manger-service/columnManager.service';
 import {FilterParamsService} from './services/filter-params/filterParams.service';
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
@@ -21,9 +20,8 @@ export class AppComponent implements OnDestroy, OnInit {
     public intervalSub: Subscription;
     public filterParams: any = {};
 
-    constructor(public columnsManager: ColumnManagerService, private gridAddService: GridAddService,
-                private changeDetector: ChangeDetectorRef, private filterService: FilterParamsService,
-                private stringsHttpService: StringsHttpService) {
+    constructor(private gridAddService: GridAddService, private changeDetector: ChangeDetectorRef,
+                private filterService: FilterParamsService, private stringsHttpService: StringsHttpService) {
     }
 
     public ngOnInit(): void {
@@ -32,7 +30,7 @@ export class AppComponent implements OnDestroy, OnInit {
     }
 
     private initColumns() {
-        const columnsArray: Column[] = [
+        this.columns = [
             new Column('', 'status', 23),
             new Column(Columns.TRANSFORMED, 'transformedText', 280,
                 {
@@ -58,8 +56,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     date: true,
                 }),
         ];
-
-        this.columns = this.columnsManager.addColumns(columnsArray);
     }
 
     private initSubscriptions() {
