@@ -112,12 +112,12 @@ describe('grid', function() {
 
             component.items = [testListItem1, testListItem2];
             fixture.detectChanges();
-            component.filter({column: 'transformedText', text: '1'});
+            component.filter({column: 'transformedText', filter: '1'});
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('1');
 
-            component.filter({column: 'transformedText', text: '2'});
+            component.filter({column: 'transformedText', filter: '2'});
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('2');

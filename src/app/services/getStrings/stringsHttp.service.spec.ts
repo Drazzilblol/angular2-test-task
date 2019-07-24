@@ -24,15 +24,15 @@ describe('strings http service', function() {
 
     it('check is observable returns value', function() {
         const data = [
-            {text: 'test1', date: 1560435761965, status: 'FRESH'},
-            {text: 'test2', date: 1560435761966, status: 'FRESH'},
-            {text: 'test3', date: 1560435761967, status: 'FRESH'},
+            {filter: 'test1', date: 1560435761965, status: 'FRESH'},
+            {filter: 'test2', date: 1560435761966, status: 'FRESH'},
+            {filter: 'test3', date: 1560435761967, status: 'FRESH'},
         ];
 
         httpService.getStrings().subscribe((result) => {
             expect(result.length).toBe(3);
             forEach(result, (item, i) => {
-                expect(item.originText).toBe(data[i].text);
+                expect(item.originText).toBe(data[i].filter);
             });
         });
 

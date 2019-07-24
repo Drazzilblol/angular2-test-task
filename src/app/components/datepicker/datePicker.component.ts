@@ -47,25 +47,25 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     /**
      * Рассчитывает день недели.
      */
-    public getDayOfWeek(date: Date) {
+    public getDayOfWeek(date: Date): number {
         return moment(date).isoWeekday();
     }
 
     /**
      * Рассчитывает номер недели в месяце.
      */
-    public getWeekNumber(date: Date) {
+    public getWeekNumber(date: Date): number {
         return this.calculateWeekNumber(date.getDate(), moment(this.currentDate).startOf('month').isoWeekday());
     }
 
-    public calculateWeekNumber(date: number, firstDay: number) {
+    public calculateWeekNumber(date: number, firstDay: number): number {
         return Math.floor((date + firstDay - 2) / 7) + 1;
     }
 
     /**
      * Выделяет выбраную дату, при выборе второй даты отправляет интервал.
      */
-    public selectDate(date: Date, event) {
+    public selectDate(date: Date, event): void {
         if (!this.firstDate) {
             this.firstDate = date;
             this.selectedElement = event.target;
@@ -80,7 +80,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     /**
      * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
      */
-    public createTimeInterval(firstDate: Date, secondDate: Date) {
+    public createTimeInterval(firstDate: Date, secondDate: Date): any {
         if (moment(firstDate).isSameOrBefore(secondDate)) {
             return {firstDate, secondDate};
         } else {

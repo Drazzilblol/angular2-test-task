@@ -48,14 +48,14 @@ export class GridComponent implements OnInit, OnChanges {
     }
 
     public filter(params): void {
-        this.filterParams[params.column] = params.text;
+        this.filterParams[params.column] = params.filter;
         this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
     }
 
     /**
      * Функиця для отслеживания пересоздания элементов в цикле ngFor.
      */
-    public trackByFn(index: number, item: IGridItem) {
+    public trackByFn(index: number, item: IGridItem): any {
         return item.trackByFn(index, item);
     }
 

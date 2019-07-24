@@ -40,7 +40,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     public ngOnInit(): void {
         super.ngOnInit();
         this.filterForm = new FormGroup({
-            text: new FormControl(''),
+            filter: new FormControl(''),
         });
         this.initSubscriptions();
     }
@@ -54,7 +54,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         this.subscription.add(fromEvent(this.elementRef.nativeElement, 'input')
             .pipe(debounceTime(500))
             .subscribe(() => {
-                this.onFilter.emit({column: this.column.dataFieldName, text: this.filterForm.value.text});
+                this.onFilter.emit({column: this.column.dataFieldName, filter: this.filterForm.value.filter});
             }));
     }
 
@@ -65,8 +65,8 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         const parsedDate = moment(date.firstDate.getTime()).format('DD-MM-YYYY')
             + ' - ' + moment(date.secondDate.getTime()).format('DD-MM-YYYY');
 
-        this.filterForm.controls.text.setValue(parsedDate);
-        this.onFilter.emit({column: this.column.dataFieldName, text: parsedDate});
+        this.filterForm.controls.filter.setValue(parsedDate);
+        this.onFilter.emit({column: this.column.dataFieldName, filter: parsedDate});
     }
 
     /**

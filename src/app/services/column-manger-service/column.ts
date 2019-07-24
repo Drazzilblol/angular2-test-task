@@ -21,7 +21,7 @@ export class Column implements IColumn {
      * sortable включает сортировку по колонке,
      * defaultSort при включеном sortable указывает что колонка будет отсортирована по умолчанию.
      */
-    constructor(title, dataFieldName, width, options?) {
+    constructor(title: string, dataFieldName: string, width: number, options?: any) {
         this.width = width;
         this.title = title;
         this.dataFieldName = dataFieldName;

@@ -55,7 +55,7 @@ export class StringGridItem implements IGridItem {
         return this.dateMils;
     }
 
-    public trackByFn(index: number, item: StringGridItem) {
+    public trackByFn(index: number, item: StringGridItem): any {
         return item.id + item.status;
     }
 }

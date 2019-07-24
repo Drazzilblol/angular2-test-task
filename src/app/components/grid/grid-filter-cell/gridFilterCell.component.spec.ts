@@ -10,7 +10,7 @@ import {DatePickerManagerService} from 'app/services/date-picker-manager/datePic
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
 
-describe('filter-params cell component', function() {
+describe('filter cell component', function() {
     let component: GridFilterCellComponent;
     let fixture: ComponentFixture<GridFilterCellComponent>;
     let fixtureDebug: DebugElement;
@@ -47,7 +47,7 @@ describe('filter-params cell component', function() {
 
         const subscription: Subscription = component.onFilter.subscribe((value) => {
             expect(value.column).toBe('originText');
-            expect(value.text).toBe(testString);
+            expect(value.filter).toBe(testString);
         });
 
         const input = fixtureDebug.query(By.css('input')).nativeElement;

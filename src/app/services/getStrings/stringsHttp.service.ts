@@ -13,7 +13,7 @@ export class StringsHttpService {
     public getStrings() {
         return this.http.get<any>('http://localhost:3000/strings').pipe(map((value) => {
             return lodashMap(value, (item) => {
-                return new StringGridItem(item.text, new Date(item.date), item.status);
+                return new StringGridItem(item.filter, new Date(item.date), item.status);
             });
         }));
     }

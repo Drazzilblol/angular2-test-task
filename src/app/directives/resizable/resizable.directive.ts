@@ -58,7 +58,7 @@ export class ResizableDirective {
         }
     }
 
-    public initResizing(event, rect): void {
+    public initResizing(event, rect: DOMRect): void {
         event.stopPropagation();
         this.start = event.target;
         this.startX = event.pageX;

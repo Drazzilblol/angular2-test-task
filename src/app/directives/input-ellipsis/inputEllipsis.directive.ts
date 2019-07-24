@@ -2,7 +2,7 @@ import {Directive, ElementRef, HostListener, Renderer2} from '@angular/core';
 
 /**
  * Директива для текстовго input, которая при потере фокуса добавляет элементу атрибут readonly а при клике на элемент
- * убирает атрибут readonly. Необходима для работы text-overflow: ellipsis в input на IE.
+ * убирает атрибут readonly. Необходима для работы filter-overflow: ellipsis в input на IE.
  */
 @Directive({
     selector: '[input-ellipsis]',

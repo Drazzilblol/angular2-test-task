@@ -2,7 +2,7 @@
     <input #container input-ellipsis
            (click)="openDatePicker($event)"
            [placeholder]="('FILTER.PLACEHOLDER' | translate) + ': ' + ('GRID_HEADER.' + column.title | translate)"
-           formControlName="text" type="text"
+           formControlName="filter" type="text"
            class="filter-input form-control">
     <div *ngIf="column.date" (click)="openDatePicker($event)" class="input-group-append">
          <span class="input-group-text" style="height: 25px; padding: 0">

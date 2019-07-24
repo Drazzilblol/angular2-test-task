@@ -12,8 +12,8 @@ export class DraggableDirective {
     private mouseUp: () => void;
     private x: number;
     private offsetX: number;
-    private target;
-    private element;
+    private target: HTMLElement;
+    private element: HTMLElement;
     public timerSub: Subscription;
 
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {

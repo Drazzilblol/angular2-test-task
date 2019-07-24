@@ -81,7 +81,7 @@ export class AppComponent implements OnDestroy, OnInit {
      * @return {number} Возвращает номер интервала.
      */
     public countdown(): void {
-        if ((!this.intervalSub || this.intervalSub.closed) && !this.filterParams.text && !this.filterParams.status) {
+        if ((!this.intervalSub || this.intervalSub.closed) && !this.filterParams.filter && !this.filterParams.status) {
             this.intervalSub = interval(1000).subscribe(() => {
                 const currentTime: number = now();
                 let rottenCounter: number = 0;

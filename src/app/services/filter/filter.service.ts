@@ -12,7 +12,7 @@ export class FilterService {
     constructor(private translate: TranslateService) {
     }
 
-    public filterItems(items, filterParams) {
+    public filterItems(items: IGridItem[], filterParams: any) {
         if (size(filterParams) === 0) {
             return items;
         }

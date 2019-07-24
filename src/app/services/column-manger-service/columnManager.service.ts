@@ -67,7 +67,7 @@ export class ColumnManagerService {
      * @param newParams
      * @param resizeEdge
      */
-    private recalculateColumns(oldParams, newParams, resizeEdge: ResizeEdges): void {
+    private recalculateColumns(oldParams: IColumn, newParams: any, resizeEdge: ResizeEdges): void {
         const diff: number = oldParams.width - newParams.width;
         let siblingToResize: any;
         if (resizeEdge === ResizeEdges.RIGHT) {
@@ -109,8 +109,8 @@ export class ColumnManagerService {
      * @param secondColumnIndex
      */
     private moveColumn(firstColumnIndex: number, secondColumnIndex: number): void {
-        const element = this.columns.splice(firstColumnIndex, 1)[0];
-        this.columns.splice(secondColumnIndex, 0, element);
+        const column = this.columns.splice(firstColumnIndex, 1)[0];
+        this.columns.splice(secondColumnIndex, 0, column);
         this.source.next({type: ColumnManagerStatuses.MOVE, cols: this.columns});
     }
 }

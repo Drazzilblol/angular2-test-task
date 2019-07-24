@@ -3,6 +3,7 @@ import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/
 import {ColumnManagerStatuses} from 'app/enums/columnManagerStatuses.enum';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {findIndex} from 'lodash';
 import {SortParams} from '../grid-container/models/SortParams';
 
@@ -49,7 +50,7 @@ export class GridHeaderCellComponent extends AbstractGridCellComponent {
      * будет изменять ширину колонки.
      * @param columns
      */
-    private constructResizeEdges(columns: any[]) {
+    private constructResizeEdges(columns: IColumn[]) {
         if (columns[this.index - 1]) {
             this.edges.left = columns[this.index - 1].resizable;
         } else {
