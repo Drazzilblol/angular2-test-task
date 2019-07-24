@@ -55,7 +55,7 @@ export class ColumnManagerService {
      * @param resizeEdge
      */
     public changeHeaderWidth(index: number, width: number, resizeEdge: ResizeEdges): void {
-        if (width >= 65) {
+        if (width >= this.columns[index].minWidth) {
             this.recalculateColumns(this.columns[index], {index, width}, resizeEdge);
             this.source.next({type: ColumnManagerStatuses.HEADER});
         }
@@ -69,14 +69,14 @@ export class ColumnManagerService {
      */
     private recalculateColumns(oldParams: IColumn, newParams: any, resizeEdge: ResizeEdges): void {
         const diff: number = oldParams.width - newParams.width;
-        let siblingToResize: any;
+        let siblingToResize: IColumn;
         if (resizeEdge === ResizeEdges.RIGHT) {
             siblingToResize = this.columns[newParams.index + 1];
         } else if (resizeEdge === ResizeEdges.LEFT) {
             siblingToResize = this.columns[newParams.index - 1];
         }
 
-        if (siblingToResize && siblingToResize.width + diff >= 65) {
+        if (siblingToResize && siblingToResize.width + diff >= siblingToResize.minWidth) {
             oldParams.width = newParams.width;
             siblingToResize.width += diff;
         }

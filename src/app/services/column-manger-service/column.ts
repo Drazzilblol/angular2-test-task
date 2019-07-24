@@ -10,6 +10,7 @@ export class Column implements IColumn {
     public draggable: boolean;
     public filterable: boolean;
     public date: boolean;
+    public minWidth: number;
 
     /**
      * Конструктор колонки.
@@ -32,6 +33,7 @@ export class Column implements IColumn {
             this.draggable = options.draggable || false;
             this.filterable = options.filterable || false;
             this.date = options.date || false;
+            this.minWidth = options.minWidth || 0;
         }
     }
 }

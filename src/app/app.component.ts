@@ -8,6 +8,8 @@ import {FilterParamsService} from './services/filter-params/filterParams.service
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
 
+const MIN_WIDTH: number = 65;
+
 @Component({
     selector: 'app',
     templateUrl: './app.component.html',
@@ -38,6 +40,7 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    minWidth: MIN_WIDTH,
                 }),
             new Column(Columns.ORIGIN, 'originText', 280,
                 {
@@ -45,6 +48,7 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    minWidth: MIN_WIDTH,
                 }),
             new Column(Columns.DATE, 'parsedDate', 216,
                 {
@@ -54,6 +58,7 @@ export class AppComponent implements OnDestroy, OnInit {
                     defaultSort: true,
                     filterable: true,
                     date: true,
+                    minWidth: MIN_WIDTH,
                 }),
         ];
     }

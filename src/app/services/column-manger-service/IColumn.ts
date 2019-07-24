@@ -8,4 +8,5 @@ export interface IColumn {
     draggable: boolean;
     filterable: boolean;
     date: boolean;
+    minWidth: number;
 }
