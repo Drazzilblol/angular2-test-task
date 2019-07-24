@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {ColumnManagerStatuses} from 'app/enums/columnManagerStatuses.enum';
 import {ResizeEdges} from 'app/enums/resizeEdges.enum';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {concat} from 'lodash';
@@ -44,7 +45,7 @@ export class ColumnManagerService {
      * Сообщает что необходимо перерисовать тело таблицы.
      */
     public changeBodyWidth(): void {
-        this.source.next({type: 'body'});
+        this.source.next({type: ColumnManagerStatuses.BODY});
     }
 
     /**
@@ -56,7 +57,7 @@ export class ColumnManagerService {
     public changeHeaderWidth(index: number, width: number, resizeEdge: ResizeEdges): void {
         if (width >= 65) {
             this.recalculateColumns(this.columns[index], {index, width}, resizeEdge);
-            this.source.next({type: 'header'});
+            this.source.next({type: ColumnManagerStatuses.HEADER});
         }
     }
 
@@ -110,6 +111,6 @@ export class ColumnManagerService {
     private moveColumn(firstColumnIndex: number, secondColumnIndex: number): void {
         const element = this.columns.splice(firstColumnIndex, 1)[0];
         this.columns.splice(secondColumnIndex, 0, element);
-        this.source.next({type: 'move', cols: this.columns});
+        this.source.next({type: ColumnManagerStatuses.MOVE, cols: this.columns});
     }
 }

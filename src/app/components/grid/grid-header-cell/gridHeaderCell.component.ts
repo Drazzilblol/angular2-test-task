@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, Renderer2} from '@angular/core';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
+import {ColumnManagerStatuses} from 'app/enums/columnManagerStatuses.enum';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {findIndex} from 'lodash';
@@ -26,10 +27,10 @@ export class GridHeaderCellComponent extends AbstractGridCellComponent {
 
     protected initSubscriptions(): void {
         this.subscription.add(this.columnManager.getObservable().subscribe((options) => {
-            if (options.type === 'header') {
+            if (options.type === ColumnManagerStatuses.HEADER) {
                 this.changeWidth();
             }
-            if (options.type === 'move') {
+            if (options.type === ColumnManagerStatuses.MOVE) {
                 this.changeIndex(findIndex(options.cols, (col) => {
                     return this.column === col;
                 }));

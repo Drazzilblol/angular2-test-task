@@ -1,4 +1,5 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {ColumnManagerStatuses} from 'app/enums/columnManagerStatuses.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {findIndex} from 'lodash';
@@ -19,10 +20,10 @@ export abstract class AbstractGridCellComponent implements OnInit, OnDestroy {
 
     protected initSubscriptions(): void {
         this.subscription.add(this.columnManager.getObservable().subscribe((options) => {
-            if (options.type === 'body') {
+            if (options.type === ColumnManagerStatuses.BODY) {
                 this.changeWidth();
             }
-            if (options.type === 'move') {
+            if (options.type === ColumnManagerStatuses.MOVE) {
                 this.changeIndex(findIndex(options.cols, (col) => {
                     return this.column === col;
                 }));
