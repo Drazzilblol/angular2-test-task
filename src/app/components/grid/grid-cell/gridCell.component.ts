@@ -17,6 +17,7 @@ import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {IGridItem} from 'app/components/string-add/models/IGridItem';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 
@@ -86,9 +87,9 @@ export class GridCellComponent extends AbstractGridCellComponent {
      * @param item: StringGridItem
      */
     public getTemplate(item: IGridItem): string {
-        if (this.column.dataFieldName === 'status') {
+        if (this.column.type === ColumnsTypes.STATUS) {
             return `<div class="status" [ngClass]="'${item[this.column.dataFieldName]}' | colorsPipe" placement="left"
-                        [ngbTooltip]="'STATUS.' + '${item[this.column.dataFieldName]}' | translate" container="body">
+                        [ngbTooltip]="'STATUS.${item[this.column.dataFieldName]}' | translate" container="body">
                     </div>`;
         } else {
             return `<div class="content" container="body" placement="left"
