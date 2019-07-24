@@ -11,7 +11,7 @@ import {Subscription} from 'rxjs';
 })
 export class DatePickerComponent implements OnInit, OnDestroy {
     public currentDate: moment.Moment = moment();
-    public thisMonth: Date[] = [];
+    public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
     public firstDate: Date;
     public selectedElement: HTMLElement;
@@ -39,7 +39,8 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         const daysInMonth = moment(this.currentDate).daysInMonth();
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
-            this.thisMonth.push(new Date(+this.currentDate.format('YYYY'), +this.currentDate.format('M') - 1, i));
+            const date = new Date(this.currentDate.year().valueOf(), this.currentDate.month().valueOf(), i);
+            this.thisMonth.push({date, weekDay: this.getDayOfWeek(date), weekOfMonth: this.getWeekNumber(date)});
         }
     }
 
@@ -53,11 +54,11 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     /**
      * Рассчитывает номер недели в месяце.
      */
-    public getWeekNumber(date) {
+    public getWeekNumber(date: Date) {
         return this.calculateWeekNumber(date.getDate(), moment(this.currentDate).startOf('month').isoWeekday());
     }
 
-    public calculateWeekNumber(date, firstDay) {
+    public calculateWeekNumber(date: number, firstDay: number) {
         return Math.floor((date + firstDay - 2) / 7) + 1;
     }
 

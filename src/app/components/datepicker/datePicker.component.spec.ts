@@ -86,8 +86,8 @@ describe('date picker component', function() {
         expect(dates[0].nativeElement.classList.contains('selected-date')).toBe(true);
 
         component.onSelectDate.subscribe((result) => {
-            expect(result.firstDate).toEqual((component.thisMonth[0]));
-            expect(result.secondDate).toEqual((component.thisMonth[component.thisMonth.length - 1]));
+            expect(result.firstDate).toEqual((component.thisMonth[0].date));
+            expect(result.secondDate).toEqual((component.thisMonth[component.thisMonth.length - 1].date));
         });
 
         dates[dates.length - 1].nativeElement.dispatchEvent(new Event('click'));
