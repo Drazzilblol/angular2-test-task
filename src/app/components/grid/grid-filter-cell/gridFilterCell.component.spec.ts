@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
 import {Columns} from 'app/enums/columns.enum';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
@@ -27,7 +28,7 @@ describe('filter cell component', function() {
         fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
         columnManager = TestBed.get(ColumnManagerService);
-        columnManager.addColumn(new Column(Columns.ORIGIN, 'originText', 400,
+        columnManager.addColumn(new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 400,
             {
                 filterable: true,
             }));

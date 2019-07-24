@@ -5,6 +5,7 @@ import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
@@ -29,12 +30,12 @@ describe('grid header cell', function() {
         fixtureDebug = fixture.debugElement;
         columnManager = TestBed.get(ColumnManagerService);
         columnManager.addColumns([
-            new Column(Columns.ORIGIN, 'test1', 400,
+            new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'test1', 400,
                 {
                     sortable: true,
                     resizable: true,
                 }),
-            new Column(Columns.ORIGIN, 'test2', 400,
+            new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'test2', 400,
                 {
                     sortable: true,
                     resizable: true,

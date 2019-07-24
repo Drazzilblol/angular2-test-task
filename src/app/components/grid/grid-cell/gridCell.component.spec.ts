@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {Columns} from 'app/enums/columns.enum';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Statuses} from 'app/enums/statuses.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
@@ -21,12 +22,12 @@ describe('grid cell', function() {
 
         fixture = TestBed.createComponent(GridCellComponent);
         columnManager = TestBed.get(ColumnManagerService);
-        columnManager.addColumn(new Column(Columns.ORIGIN, 'originText', 400,
+        columnManager.addColumn(new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 400,
             {
                 sortable: true,
                 resizable: true,
             }));
-        columnManager.addColumn(new Column(Columns.ORIGIN, 'originText', 400,
+        columnManager.addColumn(new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 400,
             {
                 sortable: true,
                 resizable: true,

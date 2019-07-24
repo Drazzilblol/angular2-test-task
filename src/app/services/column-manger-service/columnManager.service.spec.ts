@@ -1,5 +1,6 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {Columns} from 'app/enums/columns.enum';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {ResizeEdges} from 'app/enums/resizeEdges.enum';
 import {Subscription} from 'rxjs';
 import {Column} from './column';
@@ -21,18 +22,18 @@ describe('column manager service', function() {
     });
 
     it('check is service returns columns list', function() {
-        const testColumn: Column = new Column(Columns.ORIGIN, 'test', 800);
+        const testColumn: Column = new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'test', 800);
         columnManager.addColumn(testColumn);
         expect(columnManager.getColumns()[0]).toBe(testColumn);
     });
 
     it('check columns width recalculating', fakeAsync(function() {
-        const testColumn1: Column = new Column(Columns.ORIGIN, 'test1', 400,
+        const testColumn1: Column = new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'test1', 400,
             {
                 sortable: true,
                 resizable: true,
             });
-        const testColumn2: Column = new Column(Columns.ORIGIN, 'test2', 400,
+        const testColumn2: Column = new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'test2', 400,
             {
                 sortable: true,
                 resizable: false,

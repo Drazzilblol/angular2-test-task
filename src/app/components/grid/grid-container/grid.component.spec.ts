@@ -9,6 +9,7 @@ import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/grid
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {Sort} from 'app/enums/sort.enum';
 import {Statuses} from 'app/enums/statuses.enum';
@@ -52,20 +53,20 @@ describe('grid', function() {
         component = fixture.componentInstance;
 
         component.columns = columnsManager.addColumns([
-            new Column('', 'status', 24),
-            new Column(Columns.TRANSFORMED, 'transformedText',
+            new Column('', ColumnsTypes.STATUS, 'status', 24),
+            new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText',
                 280, {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                 }),
-            new Column(Columns.ORIGIN, 'originText', 280,
+            new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                 }),
-            new Column(Columns.DATE, 'parsedDate', 216,
+            new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
                 {
                     sortable: true,
                     defaultSort: true,

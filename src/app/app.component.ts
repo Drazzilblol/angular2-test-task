@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {clone, concat, forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
 import * as config from './config.json';
@@ -34,8 +35,8 @@ export class AppComponent implements OnDestroy, OnInit {
 
     private initColumns() {
         this.columns = [
-            new Column('', 'status', 23),
-            new Column(Columns.TRANSFORMED, 'transformedText', 280,
+            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23),
+            new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText', 280,
                 {
                     sortable: true,
                     resizable: true,
@@ -43,7 +44,7 @@ export class AppComponent implements OnDestroy, OnInit {
                     filterable: true,
                     minWidth: MIN_WIDTH,
                 }),
-            new Column(Columns.ORIGIN, 'originText', 280,
+            new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
                 {
                     sortable: true,
                     resizable: true,
@@ -51,14 +52,13 @@ export class AppComponent implements OnDestroy, OnInit {
                     filterable: true,
                     minWidth: MIN_WIDTH,
                 }),
-            new Column(Columns.DATE, 'parsedDate', 216,
+            new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                     defaultSort: true,
                     filterable: true,
-                    date: true,
                     minWidth: MIN_WIDTH,
                 }),
         ];

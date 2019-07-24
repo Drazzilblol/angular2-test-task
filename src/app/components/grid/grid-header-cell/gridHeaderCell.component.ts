@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, Renderer2} from '@angular/core';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {ColumnManagerStatuses} from 'app/enums/columnManagerStatuses.enum';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
@@ -92,5 +93,13 @@ export class GridHeaderCellComponent extends AbstractGridCellComponent {
 
     public onResizeEnd() {
         this.columnManager.changeBodyWidth();
+    }
+
+    public isStatus() {
+        return this.column.type !== ColumnsTypes.STATUS;
+    }
+
+    public isCurrentSort() {
+        return this.column.dataFieldName === this.currentSort.column;
     }
 }

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import moment from 'moment';
@@ -47,7 +48,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
 
     /**
      * Создает подписку на событие input, при срабатывании собтия если оно не происходит опять в течении 500 милисекунд
-     * то отправляет данные для фиьтрации.
+     * то отправляет данные для фильтрации.
      */
     protected initSubscriptions(): void {
         super.initSubscriptions();
@@ -74,7 +75,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      */
     public openDatePicker(event): void {
         event.stopPropagation();
-        if (this.column.date) {
+        if (this.isDate()) {
             if (!this.isDatePickerOpened) {
                 this.datePickerSubscription = this.datePickerManager
                     .open(this.container)
@@ -102,5 +103,9 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
                 }
             },
         );
+    }
+
+    public isDate() {
+        return this.column.type === ColumnsTypes.DATE;
     }
 }
