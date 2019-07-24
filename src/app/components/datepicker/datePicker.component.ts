@@ -10,25 +10,22 @@ import {Subscription} from 'rxjs';
     templateUrl: './datePicker.template.html',
 })
 export class DatePickerComponent implements OnInit, OnDestroy {
-    public currentDate: Date = new Date();
+    public currentDate: moment.Moment = moment();
     public thisMonth: Date[] = [];
     @Output() public onSelectDate = new EventEmitter();
     public firstDate: Date;
     public selectedElement: HTMLElement;
     public monthName: string;
-    public year: number;
+    public year: string;
     private subscription: Subscription;
-    private formatter: Intl.DateTimeFormat;
 
     constructor(private translate: TranslateService) {
     }
 
     public ngOnInit(): void {
-        this.formatter = new Intl.DateTimeFormat(this.translate.currentLang, {month: 'long'});
         this.recalculateMonth();
 
         this.subscription = this.translate.onLangChange.subscribe(() => {
-            this.formatter = new Intl.DateTimeFormat(this.translate.currentLang, {month: 'long'});
             this.recalculateMonth();
         });
     }
@@ -37,12 +34,12 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      * Перерасчитывает название месяца, год, количество дней в месяце и список дат, согласно выбранному дню.
      */
     public recalculateMonth(): void {
-        this.monthName = startCase(this.formatter.format(this.currentDate));
-        this.year = this.currentDate.getFullYear();
+        this.monthName = startCase(this.currentDate.locale(this.translate.currentLang).format('MMMM'));
+        this.year = this.currentDate.format('YYYY');
         const daysInMonth = moment(this.currentDate).daysInMonth();
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
-            this.thisMonth.push(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i));
+            this.thisMonth.push(new Date(+this.currentDate.format('YYYY'), +this.currentDate.format('M') - 1, i));
         }
     }
 
@@ -50,24 +47,14 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      * Рассчитывает день недели.
      */
     public getDayOfWeek(date: Date) {
-        if (date.getDay() > 0) {
-            return date.getDay();
-        } else {
-            return 7;
-        }
+        return moment(date).isoWeekday();
     }
 
     /**
      * Рассчитывает номер недели в месяце.
      */
     public getWeekNumber(date) {
-        const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-
-        if (firstDay.getDay() > 0) {
-            return this.calculateWeekNumber(date.getDate(), firstDay.getDay());
-        } else {
-            return this.calculateWeekNumber(date.getDate(), 7);
-        }
+        return this.calculateWeekNumber(date.getDate(), moment(this.currentDate).startOf('month').isoWeekday());
     }
 
     public calculateWeekNumber(date, firstDay) {
@@ -104,7 +91,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      * Переходит на следующий месяц.
      */
     public nextMonth(): void {
-        this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 1);
+        this.currentDate.add(1, 'month');
         this.recalculateMonth();
     }
 
@@ -112,7 +99,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      * Переходит на предыдущий месяц.
      */
     public previousMonth(): void {
-        this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 1, 1);
+        this.currentDate.add(-1, 'month');
         this.recalculateMonth();
     }
 

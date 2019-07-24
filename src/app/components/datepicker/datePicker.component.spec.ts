@@ -6,6 +6,7 @@ import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
 import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
+import moment from 'moment';
 import {translateTestImport} from 'tests/testTranslationConfig';
 
 describe('date picker component', function() {
@@ -45,7 +46,7 @@ describe('date picker component', function() {
     });
 
     it('check month change', function() {
-        component.currentDate = new Date(2019, 1, 1);
+        component.currentDate =  moment('2019/02/01', 'YYYY/MM/DD');
         component.recalculateMonth();
         fixture.detectChanges();
 
@@ -63,7 +64,7 @@ describe('date picker component', function() {
     });
 
     it('check days order', function() {
-        component.currentDate = new Date(2019, 1, 1);
+        component.currentDate = moment('2019/02/01', 'YYYY/MM/DD');
         component.recalculateMonth();
         fixture.detectChanges();
 
@@ -75,7 +76,7 @@ describe('date picker component', function() {
     });
 
     it('check dates selection', fakeAsync(function() {
-        component.currentDate = new Date(2019, 1, 1);
+        component.currentDate = moment('2019/02/01', 'YYYY/MM/DD');
         component.recalculateMonth();
         fixture.detectChanges();
         const dates = fixtureDebug.queryAll(By.css('.datepicker-element'));
@@ -95,7 +96,7 @@ describe('date picker component', function() {
     }));
 
     it('check localization', function() {
-        component.currentDate = new Date(2019, 1, 1);
+        component.currentDate =  moment('2019/02/01', 'YYYY/MM/DD');
         component.recalculateMonth();
         fixture.detectChanges();
         translate.use('ru');

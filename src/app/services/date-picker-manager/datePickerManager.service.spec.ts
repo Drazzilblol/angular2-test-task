@@ -2,6 +2,7 @@ import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {TranslateService} from '@ngx-translate/core';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {translateTestImport} from 'tests/testTranslationConfig';
@@ -20,6 +21,7 @@ describe('date picker manager service', function() {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
     let datePickerManagerService: DatePickerManagerService;
+    let translate: TranslateService;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
@@ -32,6 +34,8 @@ describe('date picker manager service', function() {
             },
         }).compileComponents();
 
+        translate = TestBed.get(TranslateService);
+        translate.use('en');
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
