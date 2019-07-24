@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {clone, concat, forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
+import * as config from './config.json';
 import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
 import {Column} from './services/column-manger-service/column';
@@ -8,7 +9,7 @@ import {FilterParamsService} from './services/filter-params/filterParams.service
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
 
-const MIN_WIDTH: number = 65;
+const MIN_WIDTH: number = config.COLUMN.MIN_WIDTH;
 
 @Component({
     selector: 'app',
