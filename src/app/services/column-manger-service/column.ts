@@ -1,4 +1,3 @@
-import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 
 export class Column implements IColumn {
@@ -33,19 +32,6 @@ export class Column implements IColumn {
             this.draggable = options.draggable || false;
             this.filterable = options.filterable || false;
             this.date = options.date || false;
-        }
-    }
-
-    public functionValue(item: IGridItem): string {
-        if (this.dataFieldName === 'status') {
-            return `<div class="status" [ngClass]="item.status | colorsPipe" placement="left"
-                        [ngbTooltip]="'STATUS.' + item.status | translate" container="body">
-                    </div>`;
-        } else {
-            return `<div class="content" placement="left" [ngbTooltip]="'${item[this.dataFieldName]}' | translate"
-                    container="body">
-                        {{'${item[this.dataFieldName]}' | translate}}
-                    </div>`;
         }
     }
 }

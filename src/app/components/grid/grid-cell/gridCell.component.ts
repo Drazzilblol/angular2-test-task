@@ -45,7 +45,7 @@ export class GridCellComponent extends AbstractGridCellComponent {
     }
 
     /**
-     * Динамически создает компонент содержащий шаблон возвращенный из Column.functionValue() и привязывает
+     * Динамически создает компонент содержащий шаблон возвращенный из Column.getTemplate() и привязывает
      * его к контейнеру.
      */
     private compileTemplate() {
@@ -58,7 +58,7 @@ export class GridCellComponent extends AbstractGridCellComponent {
      * Создает фабрику для динамического создания компонента.
      */
     private createComponentFactorySync(): ComponentFactory<any> {
-        const template: string = this.column.functionValue(this.item);
+        const template: string = this.getTemplate(this.item);
 
         @Component({
             changeDetection: ChangeDetectionStrategy.OnPush,
@@ -79,5 +79,22 @@ export class GridCellComponent extends AbstractGridCellComponent {
         const module: ModuleWithComponentFactories<any> =
             this.compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
         return module.componentFactories.find((factory) => factory.componentType === RuntimeComponent);
+    }
+
+    /**
+     * В зависимости от колонки возвращает шаблон для отображения соответствующего свойства из модели.
+     * @param item: StringGridItem
+     */
+    public getTemplate(item: IGridItem): string {
+        if (this.column.dataFieldName === 'status') {
+            return `<div class="status" [ngClass]="'${item[this.column.dataFieldName]}' | colorsPipe" placement="left"
+                        [ngbTooltip]="'STATUS.' + '${item[this.column.dataFieldName]}' | translate" container="body">
+                    </div>`;
+        } else {
+            return `<div class="content" container="body" placement="left"
+                    [ngbTooltip]="'${item[this.column.dataFieldName]}' | translate">
+                        {{'${item[this.column.dataFieldName]}' | translate}}
+                    </div>`;
+        }
     }
 }
