@@ -13,11 +13,12 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     public currentDate: moment.Moment = moment();
     public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
-    public date: Date;
+    public date: Date = new Date();
     public selectedElement: HTMLElement;
     public monthName: string;
     public year: string;
     private subscription: Subscription;
+    private time: Date = new Date(0, 0, 0, 0, 0, 0);
 
     constructor(private translate: TranslateService) {
     }
@@ -90,6 +91,7 @@ export class DatePickerComponent implements OnInit, OnDestroy {
             this.selectedElement = event.target;
             this.selectedElement.classList.add('selected-date');
         }
+        date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
         this.onSelectDate.emit(date);
     }
 
@@ -115,5 +117,11 @@ export class DatePickerComponent implements OnInit, OnDestroy {
 
     public trackByFn(index: number, item): any {
         return item;
+    }
+
+    public changeTime(time: Date): any {
+        this.time = time;
+        this.date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
+        this.onSelectDate.emit(this.date);
     }
 }

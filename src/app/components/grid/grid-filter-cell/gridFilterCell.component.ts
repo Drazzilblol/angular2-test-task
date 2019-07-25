@@ -70,8 +70,9 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      */
     public selectDate(date: any) {
         if (date.firstDate && date.secondDate) {
-            const parsedDate = `${moment(date.firstDate.getTime()).format('DD-MM-YYYY')} - ${moment(date.secondDate
-                .getTime()).format('DD-MM-YYYY')}`;
+            const parsedDate = `${moment(date.firstDate.getTime())
+                .format('DD-MM-YYYY HH:mm:ss')} - ${moment(date.secondDate.getTime())
+                .format('DD-MM-YYYY HH:mm:ss')}`;
 
             this.filterForm.controls.filter.setValue(parsedDate);
             this.onFilter.emit({column: this.column.dataFieldName, filter: parsedDate});

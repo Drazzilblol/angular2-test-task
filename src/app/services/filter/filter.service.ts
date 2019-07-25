@@ -32,7 +32,7 @@ export class FilterService {
                 if (key === 'parsedDate') {
                     const interval = value.split(' - ');
                     const firstDate = moment(interval[0], DATE_FORMAT);
-                    const secondDate = moment(interval[1], DATE_FORMAT).endOf('day');
+                    const secondDate = moment(interval[1], DATE_FORMAT);
                     const valueDate = moment(item[key], DATE_FORMAT);
                     if (value === '' || valueDate.isBetween(firstDate, secondDate)) {
                         counter++;

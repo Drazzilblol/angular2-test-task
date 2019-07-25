@@ -327,10 +327,18 @@ date-time-picker > div {
     background-color: gray !important;
 }
 
-time-picker {
+time-picker > div {
     padding: 5px;
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
+}
+
+.time-container {
+    display: inline-block;
+}
+
+.time-container > * {
+    display: block;
 }
