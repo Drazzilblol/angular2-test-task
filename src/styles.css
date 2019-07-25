@@ -273,13 +273,25 @@ body {
 }
 
 /*Datepicker*/
-datepicker {
+date-picker {
+    position: relative;
+    background-color: white;
+    z-index: 1;
+}
+
+date-time-picker {
     position: absolute;
     text-align: center;
     background-color: white;
-    width: 175px;
+    width: fit-content;
     height: fit-content;
     z-index: 1;
+    border: 1px solid #ddd;
+}
+
+date-time-picker > div {
+    margin: 5px;
+    width: 175px;
     border: 1px solid #ddd;
 }
 
@@ -291,7 +303,7 @@ datepicker {
 }
 
 .selected-date {
-    background-color: lightblue;
+    background-color: lightblue !important;
 }
 
 .month-changer {
@@ -313,4 +325,12 @@ datepicker {
 
 .datepicker-element:hover {
     background-color: gray !important;
+}
+
+time-picker {
+    padding: 5px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }

@@ -5,9 +5,9 @@
 </div>
 
 <div class="calendar">
-    <div class="datepicker-element" *ngFor="let day of thisMonth"
+    <div class="datepicker-element" *ngFor="let day of thisMonth;  trackBy:trackByFn"
          [ngStyle]="{ '-ms-grid-column': day.weekDay, 'grid-column': day.weekDay,
-          '-ms-grid-row': day.weekOfMonth,  'grid-row':  day.weekOfMonth}"
+          '-ms-grid-row': day.weekOfMonth,  'grid-row':  day.weekOfMonth, 'background-color': day.color}"
          (click)="selectDate(day.date, $event)">
         {{day.date.getDate()}}
     </div>

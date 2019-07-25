@@ -6,14 +6,14 @@ import {Subscription} from 'rxjs';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    selector: 'datepicker',
+    selector: 'date-picker',
     templateUrl: './datePicker.template.html',
 })
 export class DatePickerComponent implements OnInit, OnDestroy {
     public currentDate: moment.Moment = moment();
     public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
-    public firstDate: Date;
+    public date: Date;
     public selectedElement: HTMLElement;
     public monthName: string;
     public year: string;
@@ -40,7 +40,21 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
             const date = new Date(this.currentDate.year().valueOf(), this.currentDate.month().valueOf(), i);
-            this.thisMonth.push({date, weekDay: this.getDayOfWeek(date), weekOfMonth: this.getWeekNumber(date)});
+            if (this.date && date.getTime() === this.date.getTime()) {
+                this.thisMonth.push({
+                    date,
+                    weekDay: this.getDayOfWeek(date),
+                    weekOfMonth: this.getWeekNumber(date),
+                    color: 'lightblue',
+                });
+            } else {
+                this.thisMonth.push({
+                    date,
+                    weekDay: this.getDayOfWeek(date),
+                    weekOfMonth: this.getWeekNumber(date),
+                    color: 'white',
+                });
+            }
         }
     }
 
@@ -66,26 +80,17 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      * Выделяет выбраную дату, при выборе второй даты отправляет интервал.
      */
     public selectDate(date: Date, event): void {
-        if (!this.firstDate) {
-            this.firstDate = date;
+        if (!this.selectedElement) {
+            this.date = date;
             this.selectedElement = event.target;
             this.selectedElement.classList.add('selected-date');
         } else {
-            this.onSelectDate.emit(this.createTimeInterval(this.firstDate, date));
-            this.firstDate = null;
+            this.date = date;
             this.selectedElement.classList.remove('selected-date');
+            this.selectedElement = event.target;
+            this.selectedElement.classList.add('selected-date');
         }
-    }
-
-    /**
-     * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
-     */
-    public createTimeInterval(firstDate: Date, secondDate: Date): any {
-        if (moment(firstDate).isSameOrBefore(secondDate)) {
-            return {firstDate, secondDate};
-        } else {
-            return {firstDate: secondDate, secondDate: firstDate};
-        }
+        this.onSelectDate.emit(date);
     }
 
     /**
@@ -106,5 +111,9 @@ export class DatePickerComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    public trackByFn(index: number, item): any {
+        return item;
     }
 }

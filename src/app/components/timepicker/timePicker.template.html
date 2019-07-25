@@ -1,0 +1,15 @@
+<div style="display: inline-block">
+    <i (click)="nextHour()" style="display: block" class="material-icons">expand_less</i>
+    <input [value]="hours" style=" display:block; width: 100%">
+    <i (click)="previousHour()" style="display: block" class="material-icons">expand_more</i>
+</div>
+<div style="display: inline-block">
+    <i (click)="nextMinute()" style="display: block" class="material-icons">expand_less</i>
+    <input [value]="minutes" style=" display:block; width: 100%">
+    <i (click)="previousMinute()" style="display: block" class="material-icons">expand_more</i>
+</div>
+<div style="display: inline-block; text-align: center">
+    <i (click)="nextSecond()" style="display: block" class="material-icons">expand_less</i>
+    <input [value]="seconds" style=" display:block; width: 100%">
+    <i (click)="previousSecond()" style="display: block" class="material-icons">expand_more</i>
+</div>

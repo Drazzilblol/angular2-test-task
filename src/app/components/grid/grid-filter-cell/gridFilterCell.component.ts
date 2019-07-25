@@ -69,11 +69,13 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      * Создает данные для фильтрации из интервала дат, и отправляет их.
      */
     public selectDate(date: any) {
-        const parsedDate = `${moment(date.firstDate.getTime()).format('DD-MM-YYYY')} - ${moment(date.secondDate
-            .getTime()).format('DD-MM-YYYY')}`;
+        if (date.firstDate && date.secondDate) {
+            const parsedDate = `${moment(date.firstDate.getTime()).format('DD-MM-YYYY')} - ${moment(date.secondDate
+                .getTime()).format('DD-MM-YYYY')}`;
 
-        this.filterForm.controls.filter.setValue(parsedDate);
-        this.onFilter.emit({column: this.column.dataFieldName, filter: parsedDate});
+            this.filterForm.controls.filter.setValue(parsedDate);
+            this.onFilter.emit({column: this.column.dataFieldName, filter: parsedDate});
+        }
     }
 
     /**
@@ -84,8 +86,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         if (this.isDate()) {
             if (!this.isDatePickerOpened) {
                 this.datePickerSubscription = this.datePickerManager
-                    .open(this.container)
-                    .onSelectDate
+                    .open(this.container).onSelectDate
                     .subscribe((date) => {
                         this.selectDate(date);
                     });
