@@ -214,7 +214,7 @@ body {
     transform: translate(-50%, 0);
 }
 
-.unselectable {
+.noselect {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -292,6 +292,7 @@ date-time-picker {
 date-time-picker > div {
     margin: 5px;
     width: 175px;
+    height: 100%;
     border: 1px solid #ddd;
 }
 
@@ -313,7 +314,6 @@ date-time-picker > div {
 .month-changer > span {
     padding: 0;
     height: 22px;
-    cursor: default;
 }
 
 .datepicker-element {
@@ -331,8 +331,30 @@ time-picker > div {
     padding: 5px;
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
+    -ms-grid-columns: 1fr 10px 1fr 10px 1fr;
+    grid-template-columns: 1fr 10px 1fr 10px 1fr;
+    border-top: 1px solid #ddd;
+}
+
+.divider {
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.time-input {
+    text-align: center;
+    height: 25px;
+    width: 100%;
+    padding: 0 5px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
 }
 
 .time-container {
@@ -341,4 +363,8 @@ time-picker > div {
 
 .time-container > * {
     display: block;
+}
+
+i {
+    cursor: default;
 }

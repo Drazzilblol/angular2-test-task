@@ -8,6 +8,7 @@ export class DatePickerManagerService {
     }
 
     public open(container: ViewContainerRef): DateTimePickerComponent {
+        container.clear();
         const factory = this.componentFactoryResolver.resolveComponentFactory(DateTimePickerComponent);
         const componentRef: ComponentRef<DateTimePickerComponent> = container.createComponent(factory);
         componentRef.location.nativeElement.style.left = `${container.element.nativeElement.offsetLeft}px`;

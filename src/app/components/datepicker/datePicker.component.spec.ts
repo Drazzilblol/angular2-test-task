@@ -5,6 +5,7 @@ import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
+import {TimePickerComponent} from 'app/components/timepicker/timePicker.component';
 import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import moment from 'moment';
 import {translateTestImport} from 'tests/testTranslationConfig';
@@ -18,7 +19,7 @@ describe('date picker component', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [DatePickerComponent],
+            declarations: [DatePickerComponent, TimePickerComponent],
             imports: [NgbTooltipModule, ReactiveFormsModule, translateTestImport],
             providers: [
                 FilterParamsService,
@@ -86,8 +87,7 @@ describe('date picker component', function() {
         expect(dates[0].nativeElement.classList.contains('selected-date')).toBe(true);
 
         component.onSelectDate.subscribe((result) => {
-            expect(result.firstDate).toEqual((component.thisMonth[0].date));
-            expect(result.secondDate).toEqual((component.thisMonth[component.thisMonth.length - 1].date));
+            expect(result).toEqual(component.thisMonth[0].date);
         });
 
         dates[dates.length - 1].nativeElement.dispatchEvent(new Event('click'));

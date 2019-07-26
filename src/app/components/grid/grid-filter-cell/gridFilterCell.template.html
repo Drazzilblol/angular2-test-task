@@ -3,6 +3,7 @@
            (click)="openDatePicker($event)"
            [placeholder]="('FILTER.PLACEHOLDER' | translate) + ': ' + ('GRID_HEADER.' + column.title | translate)"
            formControlName="filter" type="text"
+           placement="top" [ngbTooltip]="filterForm.value.filter" container="body"
            class="filter-input form-control">
     <div *ngIf="isDate()" (click)="openDatePicker($event)" class="input-group-append">
          <span class="input-group-text" style="height: 25px; padding: 0">

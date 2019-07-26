@@ -1,9 +1,12 @@
 import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {TranslateService} from '@ngx-translate/core';
+import {DateTimePickerComponent} from 'app/components/date-time-picker/dateTimePicker.component';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
+import {TimePickerComponent} from 'app/components/timepicker/timePicker.component';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {translateTestImport} from 'tests/testTranslationConfig';
 
@@ -15,7 +18,6 @@ describe('date picker manager service', function() {
     class TestComponent {
         @ViewChild('container', {read: ViewContainerRef})
         public container: ViewContainerRef;
-
     }
 
     let component: TestComponent;
@@ -25,12 +27,12 @@ describe('date picker manager service', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            imports: [translateTestImport],
-            declarations: [TestComponent, DatePickerComponent],
+            imports: [translateTestImport, ReactiveFormsModule],
+            declarations: [TestComponent, DatePickerComponent, TimePickerComponent, DateTimePickerComponent],
             providers: [DatePickerManagerService],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
-                entryComponents: [DatePickerComponent],
+                entryComponents: [DateTimePickerComponent],
             },
         }).compileComponents();
 
@@ -52,7 +54,7 @@ describe('date picker manager service', function() {
         datePickerManagerService.open(component.container);
         fixture.detectChanges();
 
-        expect(fixture.debugElement.query(By.css('datepicker'))).not.toBe(null);
+        expect(fixture.debugElement.query(By.css('date-time-picker'))).not.toBe(null);
     });
 
     it('check is date picker destroyed', function() {
@@ -61,6 +63,6 @@ describe('date picker manager service', function() {
         datePickerManagerService.close(component.container);
         fixture.detectChanges();
 
-        expect(fixture.debugElement.query(By.css('datepicker'))).toBe(null);
+        expect(fixture.debugElement.query(By.css('date-time-picker'))).toBe(null);
     });
 });

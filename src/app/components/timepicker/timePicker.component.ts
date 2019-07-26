@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment';
 import {fromEvent} from 'rxjs';
 
@@ -21,21 +21,24 @@ export class TimePickerComponent implements OnInit {
 
     public ngOnInit(): void {
         this.timeForm = new FormGroup({
-            hours: new FormControl(this.hours),
-            minutes: new FormControl(this.minutes),
-            seconds: new FormControl(this.seconds),
+            hours: new FormControl(this.hours, [Validators.required, Validators.max(23), Validators.min(0)]),
+            minutes: new FormControl(this.minutes, [Validators.required, Validators.max(59), Validators.min(0)]),
+            seconds: new FormControl(this.seconds, [Validators.required, Validators.max(59), Validators.min(0)]),
         });
 
         fromEvent(this.elementRef.nativeElement, 'input')
             .subscribe(() => {
-                this.emitTime();
+                if (this.timeForm.valid) {
+                    this.emitTime();
+                }
             });
     }
 
     public emitTime() {
-        const date: Date = this.currentDate.toDate();
-        date.setHours(this.timeForm.value.hours, this.timeForm.value.minutes, this.timeForm.value.seconds);
-        this.onChangeTime.emit(date);
+        this.currentDate.hour(this.timeForm.value.hours)
+            .minute(this.timeForm.value.minutes)
+            .second(this.timeForm.value.seconds);
+        this.onChangeTime.emit(this.currentDate.toDate());
     }
 
     /**
