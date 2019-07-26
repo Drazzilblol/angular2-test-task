@@ -47,7 +47,7 @@ describe('date picker component', function() {
     });
 
     it('check month change', function() {
-        component.currentDate =  moment('2019/02/01', 'YYYY/MM/DD');
+        component.currentDate = moment('2019/02/01', 'YYYY/MM/DD');
         component.recalculateMonth();
         fixture.detectChanges();
 
@@ -87,7 +87,7 @@ describe('date picker component', function() {
         expect(dates[0].nativeElement.classList.contains('selected-date')).toBe(true);
 
         component.onSelectDate.subscribe((result) => {
-            expect(result).toEqual(component.thisMonth[0].date);
+            expect(result).toEqual(component.thisMonth[dates.length - 1].date);
         });
 
         dates[dates.length - 1].nativeElement.dispatchEvent(new Event('click'));
@@ -96,7 +96,7 @@ describe('date picker component', function() {
     }));
 
     it('check localization', function() {
-        component.currentDate =  moment('2019/02/01', 'YYYY/MM/DD');
+        component.currentDate = moment('2019/02/01', 'YYYY/MM/DD');
         component.recalculateMonth();
         fixture.detectChanges();
         translate.use('ru');

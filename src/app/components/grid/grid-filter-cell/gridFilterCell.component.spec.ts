@@ -2,6 +2,7 @@ import {DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
 import {Columns} from 'app/enums/columns.enum';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
@@ -20,7 +21,7 @@ describe('filter cell component', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [GridFilterCellComponent],
-            imports: [ReactiveFormsModule, translateTestImport],
+            imports: [ReactiveFormsModule, translateTestImport, NgbTooltipModule],
             providers: [ColumnManagerService, DatePickerManagerService],
         }).compileComponents();
 
