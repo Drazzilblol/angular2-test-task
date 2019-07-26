@@ -47,7 +47,10 @@ export class GridComponent implements OnInit, OnChanges {
         this.currentSort = new SortParams(defaultSortColumn.dataFieldName, Order.ASC);
     }
 
-    public filter(params): void {
+    /**
+     * Фильтрует элементы согласно параметрам фильтрации.
+     */
+    public filter(params: any): void {
         this.filterParams[params.column] = params.filter;
         this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
     }
@@ -60,6 +63,10 @@ export class GridComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
+        if (changes.items) {
+            this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
+        } else if (changes.filterParams) {
+            this.filter(changes.filterParams);
+        }
     }
 }

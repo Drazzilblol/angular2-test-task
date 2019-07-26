@@ -1,13 +1,14 @@
 <div resizable [isResizable]="column.resizable" [resizeEdges]="edges" (onResize)="onResize($event)"
      (onResizeEnd)="onResizeEnd()">
     <ng-container *ngIf="column.sortable">
-        <i *ngIf="isCurrentSort()" class="material-icons icon-left">{{icon}}</i>
+        <i *ngIf="isCurrentSort()" class="material-icons icon-right">{{icon}}</i>
     </ng-container>
     <div draggable [isDraggable]="column.draggable" (onDragStart)="dragStart()"
          (onDragEnd)="dragEnd()"
          class="content" container="body" [ngbTooltip]="'GRID_HEADER.' + column.title | translate"
          *ngIf="isStatus()" placement="left" (click)="sort(column)">
-        {{'GRID_HEADER.' + column.title | translate}}
+
+        <span>{{'GRID_HEADER.' + column.title | translate}}</span>
     </div>
     <div class="grid-border"></div>
 </div>

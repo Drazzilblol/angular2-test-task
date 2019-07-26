@@ -5,7 +5,7 @@
 </div>
 
 <div class="calendar noselect">
-    <div class="datepicker-element" *ngFor="let day of thisMonth;  trackBy:trackByFn"
+    <div class="datepicker-element" *ngFor="let day of thisMonth"
          [ngStyle]="{ '-ms-grid-column': day.weekDay, 'grid-column': day.weekDay,
           '-ms-grid-row': day.weekOfMonth,  'grid-row':  day.weekOfMonth, 'background-color': day.color}"
          (click)="selectDate(day.date, $event)">

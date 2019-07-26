@@ -4,9 +4,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {TranslateService} from '@ngx-translate/core';
-import {IntervalPickerComponent} from 'app/components/date-time-picker/intervalPicker.component';
-import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
-import {TimePickerComponent} from 'app/components/timepicker/timePicker.component';
+import {IntervalPickerComponent} from 'app/components/date-interval-picker/interval-picker/intervalPicker.component';
+import {DatePickerComponent} from 'app/components/date-interval-picker/datepicker/datePicker.component';
+import {TimePickerComponent} from 'app/components/date-interval-picker/timepicker/timePicker.component';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {translateTestImport} from 'tests/testTranslationConfig';
 

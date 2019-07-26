@@ -13,6 +13,9 @@ export class IntervalPickerComponent {
     public secondDate: Date;
     public dateRange = {};
 
+    /**
+     * Выбор даты в первом дата пикере.
+     */
     public selectFirstDate(date): void {
         if (this.secondDate) {
             this.dateRange = this.createTimeInterval(this.secondDate, date);
@@ -23,6 +26,9 @@ export class IntervalPickerComponent {
         }
     }
 
+    /**
+     * Выбор даты во втором дата пикере.
+     */
     public selectSecondDate(date): void {
         if (this.firstDate) {
             this.dateRange = this.createTimeInterval(this.firstDate, date);

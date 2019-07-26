@@ -73,6 +73,9 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         return this.calculateWeekNumber(date.getDate(), moment(this.currentDate).startOf('month').isoWeekday());
     }
 
+    /**
+     * Рассчитывает номер недели в месяце.
+     */
     public calculateWeekNumber(date: number, firstDay: number): number {
         return Math.floor((date + firstDay - 2) / 7) + 1;
     }
@@ -115,10 +118,9 @@ export class DatePickerComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    public trackByFn(index: number, item): any {
-        return item;
-    }
-
+    /**
+     * Изменяет время выбраной даты.
+     */
     public changeTime(time: Date): any {
         this.time = time;
         this.date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());

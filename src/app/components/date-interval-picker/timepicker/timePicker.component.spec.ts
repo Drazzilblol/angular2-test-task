@@ -3,10 +3,10 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
-import {TimePickerComponent} from 'app/components/timepicker/timePicker.component';
+import {TimePickerComponent} from 'app/components/date-interval-picker/timepicker/timePicker.component';
 import {Subscription} from 'rxjs';
 
-describe('time picker', function() {
+describe('time picker component', function() {
     let component: TimePickerComponent;
     let fixture: ComponentFixture<TimePickerComponent>;
     let fixtureDebug: DebugElement;

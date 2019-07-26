@@ -53,8 +53,8 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     }
 
     /**
-     * Создает подписку на событие input, при срабатывании события если оно не происходит опять в течении 0.5 секунды
-     * то отправляет данные для фильтрации.
+     * Создает подписку на событие input, через 0.5 секунд после срабатывании события отправляет данные для фильтрации,
+     * если событие больше не призошло.
      */
     protected initSubscriptions(): void {
         super.initSubscriptions();

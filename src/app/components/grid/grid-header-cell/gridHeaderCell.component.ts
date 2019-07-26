@@ -47,8 +47,7 @@ export class GridHeaderCellComponent extends AbstractGridCellComponent {
     }
 
     /**
-     * На основании соседних колонок создает объект содержащий в себе границы колонки с помощью которых можно
-     * будет изменять ширину колонки.
+     * На основании соседних колонок создает границы колонки для изменения ширины.
      * @param columns
      */
     private constructResizeEdges(columns: IColumn[]) {
