@@ -4,7 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {TranslateService} from '@ngx-translate/core';
-import {DateTimePickerComponent} from 'app/components/date-time-picker/dateTimePicker.component';
+import {IntervalPickerComponent} from 'app/components/date-time-picker/intervalPicker.component';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
 import {TimePickerComponent} from 'app/components/timepicker/timePicker.component';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
@@ -28,11 +28,11 @@ describe('date picker manager service', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             imports: [translateTestImport, ReactiveFormsModule],
-            declarations: [TestComponent, DatePickerComponent, TimePickerComponent, DateTimePickerComponent],
+            declarations: [TestComponent, DatePickerComponent, TimePickerComponent, IntervalPickerComponent],
             providers: [DatePickerManagerService],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {
-                entryComponents: [DateTimePickerComponent],
+                entryComponents: [IntervalPickerComponent],
             },
         }).compileComponents();
 
@@ -54,7 +54,7 @@ describe('date picker manager service', function() {
         datePickerManagerService.open(component.container);
         fixture.detectChanges();
 
-        expect(fixture.debugElement.query(By.css('date-time-picker'))).not.toBe(null);
+        expect(fixture.debugElement.query(By.css('interval-picker'))).not.toBe(null);
     });
 
     it('check is date picker destroyed', function() {
@@ -63,6 +63,6 @@ describe('date picker manager service', function() {
         datePickerManagerService.close(component.container);
         fixture.detectChanges();
 
-        expect(fixture.debugElement.query(By.css('date-time-picker'))).toBe(null);
+        expect(fixture.debugElement.query(By.css('interval-picker'))).toBe(null);
     });
 });

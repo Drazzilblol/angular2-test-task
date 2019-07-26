@@ -5,7 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {DateTimePickerComponent} from 'app/components/date-time-picker/dateTimePicker.component';
+import {IntervalPickerComponent} from 'app/components/date-time-picker/intervalPicker.component';
 import {DatePickerComponent} from 'app/components/datepicker/datePicker.component';
 import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
 import {TimePickerComponent} from 'app/components/timepicker/timePicker.component';
@@ -29,9 +29,9 @@ import {StringAddComponent} from './string-add/stringAdd.component';
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
         FilterComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective,
-        GridFilterCellComponent, InputEllipsisDirective, DatePickerComponent, DateTimePickerComponent,
+        GridFilterCellComponent, InputEllipsisDirective, DatePickerComponent, IntervalPickerComponent,
         TimePickerComponent],
-    entryComponents: [LanguageDialogComponent, DatePickerComponent, DateTimePickerComponent, TimePickerComponent],
+    entryComponents: [LanguageDialogComponent, DatePickerComponent, IntervalPickerComponent, TimePickerComponent],
     exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,
         TranslateModule.forRoot({

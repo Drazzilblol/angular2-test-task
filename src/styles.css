@@ -279,7 +279,7 @@ date-picker {
     z-index: 1;
 }
 
-date-time-picker {
+interval-picker {
     position: absolute;
     text-align: center;
     background-color: white;
@@ -289,11 +289,12 @@ date-time-picker {
     border: 1px solid #ddd;
 }
 
-date-time-picker > div {
+interval-picker > div {
     margin: 5px;
     width: 175px;
     height: 100%;
     border: 1px solid #ddd;
+    display: inline-block
 }
 
 .calendar {

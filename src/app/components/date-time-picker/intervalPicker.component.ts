@@ -3,10 +3,10 @@ import moment from 'moment';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
-    selector: 'date-time-picker',
-    templateUrl: './dateTimePicker.template.html',
+    selector: 'interval-picker',
+    templateUrl: './intervalPicker.template.html',
 })
-export class DateTimePickerComponent {
+export class IntervalPickerComponent {
     @Output() public onSelectDate = new EventEmitter();
 
     public firstDate: Date;
