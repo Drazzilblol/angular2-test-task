@@ -7,7 +7,6 @@
          (onDragEnd)="dragEnd()"
          class="content" container="body" [ngbTooltip]="'GRID_HEADER.' + column.title | translate"
          *ngIf="isStatus()" placement="left" (click)="sort(column)">
-
         <span>{{'GRID_HEADER.' + column.title | translate}}</span>
     </div>
     <div class="grid-border"></div>

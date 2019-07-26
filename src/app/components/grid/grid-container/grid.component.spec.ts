@@ -167,7 +167,7 @@ describe('grid', function() {
             expect(testElem1.classList.contains('draggable')).toBe(false);
             expect(fixture.debugElement.queryAll(By.css('grid-header-cell'))[1]
                 .nativeElement.parentNode.style.gridColumn)
-                .toBe('3 / auto');
+                .toBe('2 / auto');
         }));
     });
 });

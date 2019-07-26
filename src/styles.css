@@ -135,7 +135,7 @@ body {
 }
 
 /*String grid container*/
-.grid-container {
+grid {
     position: absolute;
     width: 818px;
     left: 50%;

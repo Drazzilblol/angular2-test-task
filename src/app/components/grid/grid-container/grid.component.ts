@@ -40,7 +40,7 @@ export class GridComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
-        this.columnManager.addColumns(this.columns);
+        this.columns = this.columnManager.addColumns(this.columns);
         const defaultSortColumn = find(this.columns, (column) => {
             return column.defaultSort;
         });
