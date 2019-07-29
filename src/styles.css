@@ -318,10 +318,6 @@ interval-picker > div {
     grid-template-columns: repeat(7, 1fr);
 }
 
-.selected-date {
-    background-color: lightblue !important;
-}
-
 .month-changer {
     background-color: #e9ecef;
     position: relative;

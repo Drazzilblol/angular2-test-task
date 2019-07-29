@@ -25,7 +25,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     @Output() public onSelectDate = new EventEmitter();
     public selectedDate: Date;
     @Input() public dateBlock: any = {};
-    public selectedElement: HTMLElement;
+    @Input() public initialDate: Date;
     public monthName: string;
     public year: string;
     private subscription: Subscription;
@@ -35,6 +35,10 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public ngOnInit(): void {
+        if (this.initialDate) {
+            this.currentDate = moment(this.initialDate);
+            this.selectedDate = this.initialDate;
+        }
         this.recalculateMonth();
 
         this.subscription = this.translate.onLangChange.subscribe(() => {
@@ -52,33 +56,44 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
             const date = new Date(this.currentDate.year().valueOf(), this.currentDate.month().valueOf(), i);
-            if (this.dateBlock &&
-                ((this.dateBlock.direction === 'forward' && moment(date).isSameOrAfter(this.dateBlock.date))
-                    || (this.dateBlock.direction === 'backward' && moment(date).isSameOrBefore(this.dateBlock.date)))) {
-                this.thisMonth.push({
-                    date,
-                    weekDay: this.getDayOfWeek(date),
-                    weekOfMonth: this.getWeekNumber(date),
-                    color: 'white',
-                    disabled: true,
-                });
+            if (this.isDisabledDay(date)) {
+                this.thisMonth.push(this.configureDisabledDay(date));
             } else {
-                if (this.selectedDate && date.getTime() === this.selectedDate.getTime()) {
-                    this.thisMonth.push({
-                        date,
-                        weekDay: this.getDayOfWeek(date),
-                        weekOfMonth: this.getWeekNumber(date),
-                        color: 'lightblue',
-                    });
-                } else {
-                    this.thisMonth.push({
-                        date,
-                        weekDay: this.getDayOfWeek(date),
-                        weekOfMonth: this.getWeekNumber(date),
-                        color: 'white',
-                    });
-                }
+                this.thisMonth.push(this.configureEnabledDay(date));
             }
+        }
+    }
+
+    private isDisabledDay(date: Date) {
+        return this.dateBlock &&
+            ((this.dateBlock.direction === 'forward' && moment(date).isSameOrAfter(this.dateBlock.date))
+                || (this.dateBlock.direction === 'backward' && moment(date).isSameOrBefore(this.dateBlock.date)));
+    }
+
+    private configureDisabledDay(date: Date) {
+        return {
+            date,
+            weekDay: this.getDayOfWeek(date),
+            weekOfMonth: this.getWeekNumber(date),
+            color: 'white',
+            disabled: true,
+        };
+    }
+
+    private configureEnabledDay(date: Date) {
+        return {
+            date,
+            weekDay: this.getDayOfWeek(date),
+            weekOfMonth: this.getWeekNumber(date),
+            color: this.getDayColor(date),
+        };
+    }
+
+    private getDayColor(date: Date) {
+        if (this.selectedDate && date.getTime() === this.selectedDate.getTime()) {
+            return 'lightblue';
+        } else {
+            return 'white';
         }
     }
 
@@ -106,19 +121,11 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     /**
      * Выделяет выбраную дату, при выборе второй даты отправляет интервал.
      */
-    public selectDate(date: Date, event): void {
-        if (!this.selectedElement) {
-            this.selectedDate = date;
-            this.selectedElement = event.target;
-            this.selectedElement.classList.add('selected-date');
-        } else {
-            this.selectedDate = date;
-            this.selectedElement.classList.remove('selected-date');
-            this.selectedElement = event.target;
-            this.selectedElement.classList.add('selected-date');
-        }
+    public selectDate(date: Date): void {
+        this.selectedDate = date;
         date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
         this.onSelectDate.emit(date);
+        this.recalculateMonth();
     }
 
     /**
@@ -157,5 +164,9 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         if (changes.dateBlock) {
             this.recalculateMonth();
         }
+    }
+
+    public trackByFn(index, item): void {
+        return index;
     }
 }

@@ -84,8 +84,6 @@ describe('date picker component', function() {
         dates[0].nativeElement.dispatchEvent(new Event('click'));
         fixture.detectChanges();
 
-        expect(dates[0].nativeElement.classList.contains('selected-date')).toBe(true);
-
         component.onSelectDate.subscribe((result) => {
             expect(result).toEqual(component.thisMonth[dates.length - 1].date);
         });

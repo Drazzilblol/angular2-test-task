@@ -13,7 +13,6 @@ import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
-import moment from 'moment';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -31,6 +30,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     private isDatePickerOpened: boolean = false;
     private mouseClick: () => void;
     private datePickerSubscription: Subscription;
+    private parsedDate: string;
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService,
                 public datePickerManager: DatePickerManagerService) {
@@ -56,14 +56,10 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     /**
      * Создает данные для фильтрации из интервала дат, и отправляет их.
      */
-    public selectDate(date: any) {
-        if (date.firstDate && date.secondDate) {
-            const parsedDate = `${moment(date.firstDate.getTime()).format('DD-MM-YYYY HH:mm:ss')} - `
-                + `${moment(date.secondDate.getTime()).format('DD-MM-YYYY HH:mm:ss')}`;
-
-            this.filterForm.controls.filter.setValue(parsedDate);
-            this.onFilter.emit({column: this.column.dataFieldName, filter: parsedDate});
-        }
+    public selectDate(interval: string) {
+        this.parsedDate = interval;
+        this.filterForm.controls.filter.setValue(this.parsedDate);
+        this.onFilter.emit({column: this.column.dataFieldName, filter: this.parsedDate});
     }
 
     /**
@@ -73,8 +69,10 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         event.stopPropagation();
         if (this.isDate()) {
             if (!this.isDatePickerOpened) {
-                this.datePickerSubscription = this.datePickerManager
-                    .open(this.container).onSelectDate
+                const datePicker = this.datePickerManager
+                    .open(this.container);
+                datePicker.initialInterval = this.parsedDate;
+                this.datePickerSubscription = datePicker.onSelectDate
                     .subscribe((date) => {
                         this.selectDate(date);
                     });
