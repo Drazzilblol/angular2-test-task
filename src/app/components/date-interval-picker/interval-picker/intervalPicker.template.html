@@ -1,7 +1,7 @@
 <div style="display: inline-block">
-    <date-picker (onSelectDate)="selectFirstDate($event)"></date-picker>
+    <date-picker (onSelectDate)="selectFirstDate($event)" [dateBlock]=secondDateBlock></date-picker>
 </div>
 
 <div style="display: inline-block">
-    <date-picker (onSelectDate)="selectSecondDate($event)"></date-picker>
+    <date-picker (onSelectDate)="selectSecondDate($event)" [dateBlock]=firstDateBlock></date-picker>
 </div>

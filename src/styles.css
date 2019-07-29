@@ -10,6 +10,10 @@ body {
     height: 100vh;
 }
 
+input::-ms-clear {
+    display: none;
+}
+
 .string-add {
     position: absolute;
     left: 50%;
@@ -191,7 +195,7 @@ grid {
     white-space: nowrap;
 }
 
-.header{
+.header {
     padding-right: 12px;
     padding-left: 12px;
 }
@@ -329,10 +333,14 @@ interval-picker > div {
 }
 
 .datepicker-element {
-    width: 24px;
     height: 24px;
     text-align: center;
     cursor: default;
+}
+
+.disabled-element {
+    pointer-events: none;
+    background-color: lightgray !important;
 }
 
 .datepicker-element:hover {

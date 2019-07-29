@@ -12,6 +12,8 @@ export class IntervalPickerComponent {
     public firstDate: Date;
     public secondDate: Date;
     public dateRange = {};
+    public firstDateBlock: any;
+    public secondDateBlock: any;
 
     /**
      * Выбор даты в первом дата пикере.
@@ -24,6 +26,7 @@ export class IntervalPickerComponent {
         } else {
             this.firstDate = date;
         }
+        this.firstDateBlock = {date, direction: 'backward'};
     }
 
     /**
@@ -37,6 +40,7 @@ export class IntervalPickerComponent {
         } else {
             this.secondDate = date;
         }
+        this.secondDateBlock = {date, direction: 'forward'};
     }
 
     /**

@@ -1,4 +1,14 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {startCase} from 'lodash';
 import moment from 'moment';
@@ -9,11 +19,12 @@ import {Subscription} from 'rxjs';
     selector: 'date-picker',
     templateUrl: './datePicker.template.html',
 })
-export class DatePickerComponent implements OnInit, OnDestroy {
+export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     public currentDate: moment.Moment = moment();
     public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
-    public date: Date = new Date();
+    public selectedDate: Date;
+    @Input() public dateBlock: any = {};
     public selectedElement: HTMLElement;
     public monthName: string;
     public year: string;
@@ -37,24 +48,36 @@ export class DatePickerComponent implements OnInit, OnDestroy {
     public recalculateMonth(): void {
         this.monthName = startCase(this.currentDate.locale(this.translate.currentLang).format('MMMM'));
         this.year = this.currentDate.format('YYYY');
-        const daysInMonth = moment(this.currentDate).daysInMonth();
+        const daysInMonth = this.currentDate.daysInMonth();
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
             const date = new Date(this.currentDate.year().valueOf(), this.currentDate.month().valueOf(), i);
-            if (this.date && date.getTime() === this.date.getTime()) {
-                this.thisMonth.push({
-                    date,
-                    weekDay: this.getDayOfWeek(date),
-                    weekOfMonth: this.getWeekNumber(date),
-                    color: 'lightblue',
-                });
-            } else {
+            if (this.dateBlock &&
+                ((this.dateBlock.direction === 'forward' && moment(date).isSameOrAfter(this.dateBlock.date))
+                    || (this.dateBlock.direction === 'backward' && moment(date).isSameOrBefore(this.dateBlock.date)))) {
                 this.thisMonth.push({
                     date,
                     weekDay: this.getDayOfWeek(date),
                     weekOfMonth: this.getWeekNumber(date),
                     color: 'white',
+                    disabled: true,
                 });
+            } else {
+                if (this.selectedDate && date.getTime() === this.selectedDate.getTime()) {
+                    this.thisMonth.push({
+                        date,
+                        weekDay: this.getDayOfWeek(date),
+                        weekOfMonth: this.getWeekNumber(date),
+                        color: 'lightblue',
+                    });
+                } else {
+                    this.thisMonth.push({
+                        date,
+                        weekDay: this.getDayOfWeek(date),
+                        weekOfMonth: this.getWeekNumber(date),
+                        color: 'white',
+                    });
+                }
             }
         }
     }
@@ -85,11 +108,11 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      */
     public selectDate(date: Date, event): void {
         if (!this.selectedElement) {
-            this.date = date;
+            this.selectedDate = date;
             this.selectedElement = event.target;
             this.selectedElement.classList.add('selected-date');
         } else {
-            this.date = date;
+            this.selectedDate = date;
             this.selectedElement.classList.remove('selected-date');
             this.selectedElement = event.target;
             this.selectedElement.classList.add('selected-date');
@@ -123,7 +146,16 @@ export class DatePickerComponent implements OnInit, OnDestroy {
      */
     public changeTime(time: Date): any {
         this.time = time;
-        this.date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
-        this.onSelectDate.emit(this.date);
+        if (!this.selectedDate) {
+            this.selectedDate = new Date();
+        }
+        this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
+        this.onSelectDate.emit(this.selectedDate);
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.dateBlock) {
+            this.recalculateMonth();
+        }
     }
 }
