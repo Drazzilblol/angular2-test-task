@@ -1,3 +1,4 @@
+import * as config from 'app/config.json';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 
@@ -38,7 +39,7 @@ export class Column implements IColumn {
             this.defaultSort = options.defaultSort || false;
             this.draggable = options.draggable || false;
             this.filterable = options.filterable || false;
-            this.minWidth = options.minWidth || 0;
+            this.minWidth = options.minWidth || config.COLUMN.MIN_WIDTH;
         }
     }
 }

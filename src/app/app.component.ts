@@ -2,15 +2,12 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {clone, concat, forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
-import * as config from './config.json';
 import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
 import {Column} from './services/column-manger-service/column';
 import {FilterParamsService} from './services/filter-params/filterParams.service';
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
-
-const MIN_WIDTH: number = config.COLUMN.MIN_WIDTH;
 
 @Component({
     selector: 'app',
@@ -44,7 +41,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    minWidth: MIN_WIDTH,
                 }),
             new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
                 {
@@ -52,7 +48,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    minWidth: MIN_WIDTH,
                 }),
             new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
                 {
@@ -61,7 +56,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     draggable: true,
                     defaultSort: true,
                     filterable: true,
-                    minWidth: MIN_WIDTH,
                 }),
         ];
 
@@ -73,7 +67,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    minWidth: MIN_WIDTH,
                 }),
             new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
                 {
@@ -81,7 +74,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    minWidth: MIN_WIDTH,
                 }),
             new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
                 {
@@ -90,7 +82,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     draggable: true,
                     defaultSort: true,
                     filterable: true,
-                    minWidth: MIN_WIDTH,
                 }),
         ];
     }
