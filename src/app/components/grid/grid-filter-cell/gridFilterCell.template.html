@@ -1,6 +1,7 @@
 <form *ngIf="column.filterable" [formGroup]="filterForm" novalidate autocomplete="off" class="form-content input-group">
     <input #container input-ellipsis
            (click)="openDatePicker($event)"
+           (keypress)="enterPress($event)"
            [placeholder]="('FILTER.PLACEHOLDER' | translate) + ': ' + ('GRID_HEADER.' + column.title | translate)"
            formControlName="filter" type="text"
            placement="top" [ngbTooltip]="filterForm.value.filter" container="body"

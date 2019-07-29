@@ -14,14 +14,7 @@ import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import moment from 'moment';
-import {fromEvent, Subscription} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
-
-/**
- * Время которое должно пройти после события прежде чем данные отправятся, если за время отсчета произойдет новое
- * событие то отсчет начнется заново.
- */
-const DEBOUNCE_TIME: number = 500;
+import {Subscription} from 'rxjs';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,20 +42,15 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         this.filterForm = new FormGroup({
             filter: new FormControl(''),
         });
-        this.initSubscriptions();
     }
 
     /**
-     * Создает подписку на событие input, через 0.5 секунд после срабатывании события отправляет данные для фильтрации,
-     * если событие больше не призошло.
+     * При нажатии на Enter фильтрует список.
      */
-    protected initSubscriptions(): void {
-        super.initSubscriptions();
-        this.subscription.add(fromEvent(this.elementRef.nativeElement, 'input')
-            .pipe(debounceTime(DEBOUNCE_TIME))
-            .subscribe(() => {
-                this.onFilter.emit({column: this.column.dataFieldName, filter: this.filterForm.value.filter});
-            }));
+    public enterPress(event) {
+        if (event.key === 'Enter') {
+            this.onFilter.emit({column: this.column.dataFieldName, filter: this.filterForm.value.filter});
+        }
     }
 
     /**
@@ -70,9 +58,8 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      */
     public selectDate(date: any) {
         if (date.firstDate && date.secondDate) {
-            const parsedDate = `${moment(date.firstDate.getTime())
-                .format('DD-MM-YYYY HH:mm:ss')} - ${moment(date.secondDate.getTime())
-                .format('DD-MM-YYYY HH:mm:ss')}`;
+            const parsedDate = `${moment(date.firstDate.getTime()).format('DD-MM-YYYY HH:mm:ss')} - `
+                + `${moment(date.secondDate.getTime()).format('DD-MM-YYYY HH:mm:ss')}`;
 
             this.filterForm.controls.filter.setValue(parsedDate);
             this.onFilter.emit({column: this.column.dataFieldName, filter: parsedDate});

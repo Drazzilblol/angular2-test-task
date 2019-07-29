@@ -143,7 +143,7 @@ grid {
 }
 
 .cont {
-    height: 84vh;
+    height: 36vh;
     width: 818px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -163,7 +163,12 @@ grid {
     border-left: 1px solid #ddd;
 }
 
-.header {
+.header-row {
+    border-top: 1px solid #ddd;
+    background-color: #f1f1f1;
+}
+
+.filter-row {
     background-color: #f1f1f1;
 }
 
@@ -256,15 +261,15 @@ grid {
 }
 
 .icon-left {
-    float: left;
-    padding-left: 8px;
-    padding-top: 12px;
+    position: absolute;
+    left: 8px;
+    top: 12px;
 }
 
 .icon-right {
-    float: right;
-    padding-right: 8px;
-    padding-top: 12px;
+    position: absolute;
+    right: 8px;
+    top: 12px;
 }
 
 .icon-filter {
@@ -310,10 +315,11 @@ interval-picker > div {
 
 .month-changer {
     background-color: #e9ecef;
+    position: relative;
 }
 
 .month-changer > span {
-    padding: 0;
+    top: 0;
     height: 22px;
 }
 

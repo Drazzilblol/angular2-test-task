@@ -19,10 +19,12 @@ const MIN_WIDTH: number = config.COLUMN.MIN_WIDTH;
 })
 export class AppComponent implements OnDestroy, OnInit {
     public items: any[] = [];
-    public columns: Column[];
+    public columns1: Column[];
+    public columns2: Column[];
     public subscription: Subscription;
     public intervalSub: Subscription;
-    public filterParams: any = {};
+    public filterParams1: any = {};
+    public filterParams2: any = {};
 
     constructor(private gridAddService: GridAddService, private changeDetector: ChangeDetectorRef,
                 private filterService: FilterParamsService, private stringsHttpService: StringsHttpService) {
@@ -34,7 +36,36 @@ export class AppComponent implements OnDestroy, OnInit {
     }
 
     private initColumns() {
-        this.columns = [
+        this.columns1 = [
+            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23),
+            new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText', 280,
+                {
+                    sortable: true,
+                    resizable: true,
+                    draggable: true,
+                    filterable: true,
+                    minWidth: MIN_WIDTH,
+                }),
+            new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
+                {
+                    sortable: true,
+                    resizable: true,
+                    draggable: true,
+                    filterable: true,
+                    minWidth: MIN_WIDTH,
+                }),
+            new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
+                {
+                    sortable: true,
+                    resizable: true,
+                    draggable: true,
+                    defaultSort: true,
+                    filterable: true,
+                    minWidth: MIN_WIDTH,
+                }),
+        ];
+
+        this.columns2 = [
             new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23),
             new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText', 280,
                 {
@@ -76,7 +107,8 @@ export class AppComponent implements OnDestroy, OnInit {
         }));
 
         this.subscription.add(this.filterService.getObservable().subscribe((filterParams: any) => {
-            this.filterParams = filterParams;
+            this.filterParams1 = clone(filterParams);
+            this.filterParams2 = clone(filterParams);
         }));
     }
 
@@ -87,7 +119,7 @@ export class AppComponent implements OnDestroy, OnInit {
      * @return {number} Возвращает номер интервала.
      */
     public countdown(): void {
-        if ((!this.intervalSub || this.intervalSub.closed) && !this.filterParams.filter && !this.filterParams.status) {
+        if ((!this.intervalSub || this.intervalSub.closed) && this.isFiltered()) {
             this.intervalSub = interval(1000).subscribe(() => {
                 const currentTime: number = now();
                 let rottenCounter: number = 0;
@@ -116,6 +148,11 @@ export class AppComponent implements OnDestroy, OnInit {
                 }
             });
         }
+    }
+
+    private isFiltered() {
+        return !this.filterParams1.filter && !this.filterParams1.status
+            && !this.filterParams2.filter && !this.filterParams2.status;
     }
 
     public ngOnDestroy(): void {

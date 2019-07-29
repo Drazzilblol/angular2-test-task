@@ -66,7 +66,7 @@ export class GridComponent implements OnInit, OnChanges {
         if (changes.items) {
             this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
         } else if (changes.filterParams) {
-            this.filter(changes.filterParams);
+            this.filter(this.filterParams);
         }
     }
 }
