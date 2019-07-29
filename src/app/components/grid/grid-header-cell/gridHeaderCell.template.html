@@ -2,11 +2,11 @@
      (onResizeEnd)="onResizeEnd()">
     <div draggable [isDraggable]="column.draggable" (onDragStart)="dragStart()"
          (onDragEnd)="dragEnd()"
-         class="content" container="body" [ngbTooltip]="'GRID_HEADER.' + column.title | translate"
+         class="content header" container="body" [ngbTooltip]="'GRID_HEADER.' + column.title | translate"
          *ngIf="isStatus()" placement="left" (click)="sort(column)">
-        <span style="padding-left: 12px">{{'GRID_HEADER.' + column.title | translate}}</span>
+        <span>{{'GRID_HEADER.' + column.title | translate}}</span>
         <ng-container *ngIf="column.sortable">
-            <i *ngIf="isCurrentSort()" class="material-icons icon-left">{{icon}}</i>
+            <i *ngIf="isCurrentSort()" class="material-icons icon-right md-20">{{icon}}</i>
         </ng-container>
     </div>
     <div class="grid-border"></div>

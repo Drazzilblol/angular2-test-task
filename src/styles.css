@@ -191,6 +191,11 @@ grid {
     white-space: nowrap;
 }
 
+.header{
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
 .form-content {
     padding: 5px 10px;
     white-space: nowrap;
@@ -244,8 +249,8 @@ grid {
     font-size: 18px;
 }
 
-.material-icons.md-22 {
-    font-size: 22px;
+.material-icons.md-20 {
+    font-size: 20px;
 }
 
 .material-icons.md-28 {
@@ -268,8 +273,8 @@ grid {
 
 .icon-right {
     position: absolute;
-    right: 8px;
-    top: 12px;
+    right: 10px;
+    top: 14px;
 }
 
 .icon-filter {
