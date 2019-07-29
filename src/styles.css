@@ -343,6 +343,11 @@ interval-picker > div {
     background-color: gray !important;
 }
 
+.date-picker-icon {
+    height: 25px;
+    padding: 0;
+}
+
 time-picker > div {
     padding: 5px;
     display: -ms-grid;

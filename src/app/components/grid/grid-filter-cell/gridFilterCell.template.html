@@ -5,7 +5,7 @@
            placement="top" [ngbTooltip]="filterForm.value.filter" container="body"
            class="filter-input form-control">
     <div *ngIf="isDate()" (click)="openDatePicker($event)" class="input-group-append">
-         <span class="input-group-text" style="height: 25px; padding: 0">
+         <span class="input-group-text date-picker-icon">
             <i class="material-icons md-22">date_range</i>
          </span>
     </div>
