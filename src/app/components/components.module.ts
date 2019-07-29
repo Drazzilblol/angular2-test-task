@@ -9,7 +9,6 @@ import {DatePickerComponent} from 'app/components/date-interval-picker/datepicke
 import {IntervalPickerComponent} from 'app/components/date-interval-picker/interval-picker/intervalPicker.component';
 import {TimePickerComponent} from 'app/components/date-interval-picker/timepicker/timePicker.component';
 import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
-import {InputEllipsisDirective} from 'app/directives/input-ellipsis/inputEllipsis.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterService} from 'app/services/filter/filter.service';
@@ -29,7 +28,7 @@ import {StringAddComponent} from './string-add/stringAdd.component';
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
         FilterComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective,
-        GridFilterCellComponent, InputEllipsisDirective, DatePickerComponent, IntervalPickerComponent,
+        GridFilterCellComponent, DatePickerComponent, IntervalPickerComponent,
         TimePickerComponent],
     entryComponents: [LanguageDialogComponent, DatePickerComponent, IntervalPickerComponent, TimePickerComponent],
     exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
