@@ -49,7 +49,11 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      */
     public enterPress(event) {
         if (event.key === 'Enter') {
-            this.onFilter.emit({column: this.column.dataFieldName, filter: this.filterForm.value.filter});
+            if (this.column.type === ColumnsTypes.DATE && this.filterForm.value.filter === '') {
+                this.selectDate('');
+            } else {
+                this.onFilter.emit({column: this.column.dataFieldName, filter: this.filterForm.value.filter});
+            }
         }
     }
 
