@@ -87,4 +87,15 @@ export class IntervalPickerComponent implements OnInit {
         }
         this.changeDetector.markForCheck();
     }
+
+    /**
+     * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
+     */
+    public reset() {
+        this.firstDate = undefined;
+        this.secondDate = undefined;
+        this.secondDateBlock = {};
+        this.firstDateBlock = {};
+        this.onSelectDate.emit('');
+    }
 }

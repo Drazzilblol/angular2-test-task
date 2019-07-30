@@ -1,9 +1,15 @@
-<div style="display: inline-block">
-    <date-picker (onSelectDate)="selectFirstDate($event)" [dateBlock]="secondDateBlock"
-                 [initialDate]="firstDate"></date-picker>
+<div>
+    <div class="interval-picker">
+        <date-picker (onSelectDate)="selectFirstDate($event)" [dateBlock]="secondDateBlock"
+                     [initialDate]="firstDate"></date-picker>
+    </div>
+
+    <div class="interval-picker">
+        <date-picker (onSelectDate)="selectSecondDate($event)" [dateBlock]="firstDateBlock"
+                     [initialDate]="secondDate"></date-picker>
+    </div>
 </div>
 
-<div style="display: inline-block">
-    <date-picker (onSelectDate)="selectSecondDate($event)" [dateBlock]="firstDateBlock"
-                 [initialDate]="secondDate"></date-picker>
+<div>
+    <button class="btn btn-outline-secondary" (click)="reset()">{{"FILTER.BUTTON_RESET" | translate}}</button>
 </div>

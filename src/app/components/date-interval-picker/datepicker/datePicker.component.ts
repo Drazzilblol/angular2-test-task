@@ -88,7 +88,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.initialDate) {
             this.currentDate = moment(this.initialDate);
-            this.currentDate.hour(0).minute(0).second(0);
+            this.currentDate.hour(0).minute(0).second(0); //?
             this.selectedDate = this.initialDate;
         }
         if (changes.dateBlock) {

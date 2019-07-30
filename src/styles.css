@@ -301,14 +301,23 @@ interval-picker {
     height: fit-content;
     z-index: 1;
     border: 1px solid #ddd;
+    padding-bottom: 5px;
 }
 
-interval-picker > div {
+.btn-outline-secondary{
+    border: 1px solid #ddd;
+}
+
+.interval-picker {
     margin: 5px;
     width: 175px;
     height: 100%;
     border: 1px solid #ddd;
     display: inline-block
+}
+
+.interval-picker-reset-button {
+    padding: 5px;
 }
 
 .calendar {

@@ -4,9 +4,11 @@ import {
     ElementRef,
     EventEmitter,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
     Output,
+    SimpleChanges,
 } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment';
@@ -17,7 +19,7 @@ import {fromEvent, Subscription} from 'rxjs';
     selector: 'time-picker',
     templateUrl: './timePicker.template.html',
 })
-export class TimePickerComponent implements OnInit, OnDestroy {
+export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
     @Output() public onChangeTime = new EventEmitter();
     @Input() public initialTime: Date;
     public currentDate: moment.Moment = moment(new Date(0, 0, 0, 0, 0, 0));
@@ -121,6 +123,17 @@ export class TimePickerComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.initialTime && this.timeForm && !this.initialTime) {
+            this.currentDate.hour(0);
+            this.currentDate.minute(0);
+            this.currentDate.second(0);
+            this.timeForm.controls.hours.setValue('0');
+            this.timeForm.controls.minutes.setValue('0');
+            this.timeForm.controls.seconds.setValue('0');
+        }
     }
 
 }
