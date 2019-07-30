@@ -336,7 +336,6 @@ interval-picker > div {
 
 .disabled-element {
     pointer-events: none;
-    background-color: lightgray !important;
 }
 
 .datepicker-element:hover {

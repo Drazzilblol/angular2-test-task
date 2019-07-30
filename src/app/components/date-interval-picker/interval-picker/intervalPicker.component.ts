@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+} from '@angular/core';
 import moment from 'moment';
 
 const DATE_FORMAT: string = 'DD-MM-YYYY HH:mm:ss';
@@ -17,7 +25,9 @@ export class IntervalPickerComponent implements OnInit {
     public dateRange: string;
     public firstDateBlock: any;
     public secondDateBlock: any;
-    private parsedDate: string;
+
+    constructor(private changeDetector: ChangeDetectorRef) {
+    }
 
     /**
      * Выбор даты в первом дата пикере.
@@ -26,11 +36,10 @@ export class IntervalPickerComponent implements OnInit {
         if (this.secondDate) {
             this.dateRange = this.createTimeInterval(date, this.secondDate);
             this.onSelectDate.emit(this.dateRange);
-            this.firstDate = date;
-        } else {
-            this.firstDate = date;
         }
+        this.firstDate = date;
         this.firstDateBlock = {date, direction: 'backward'};
+        this.changeDetector.markForCheck();
     }
 
     /**
@@ -40,18 +49,17 @@ export class IntervalPickerComponent implements OnInit {
         if (this.firstDate) {
             this.dateRange = this.createTimeInterval(this.firstDate, date);
             this.onSelectDate.emit(this.dateRange);
-            this.secondDate = date;
-        } else {
-            this.secondDate = date;
         }
+        this.secondDate = date;
         this.secondDateBlock = {date, direction: 'forward'};
+        this.changeDetector.markForCheck();
     }
 
     /**
      * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
      */
     public createTimeInterval(firstDate: Date, secondDate: Date): any {
-        return this.parsedDate = `${moment(firstDate.getTime()).format('DD-MM-YYYY HH:mm:ss')} - `
+        return `${moment(firstDate.getTime()).format('DD-MM-YYYY HH:mm:ss')} - `
             + `${moment(secondDate.getTime()).format('DD-MM-YYYY HH:mm:ss')}`;
     }
 
@@ -65,8 +73,18 @@ export class IntervalPickerComponent implements OnInit {
     public parseTimeInterval(timeInterval: string): any {
         if (timeInterval) {
             const interval: string[] = timeInterval.split(' - ');
-            this.selectFirstDate(moment(interval[0], DATE_FORMAT).toDate());
-            this.selectSecondDate(moment(interval[1], DATE_FORMAT).toDate());
+            if (moment(interval[0], DATE_FORMAT).toDate() < moment(interval[1], DATE_FORMAT).toDate()) {
+                this.firstDate = moment(interval[0], DATE_FORMAT).toDate();
+                this.secondDate = moment(interval[1], DATE_FORMAT).toDate();
+                this.firstDateBlock = {date: moment(interval[0], DATE_FORMAT).toDate(), direction: 'backward'};
+                this.secondDateBlock = {date: moment(interval[1], DATE_FORMAT).toDate(), direction: 'forward'};
+            }
+        } else {
+            this.firstDate = undefined;
+            this.secondDate = undefined;
+            this.secondDateBlock = {};
+            this.firstDateBlock = {};
         }
+        this.changeDetector.markForCheck();
     }
 }

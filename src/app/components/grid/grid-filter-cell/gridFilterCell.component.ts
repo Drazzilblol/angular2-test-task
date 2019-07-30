@@ -9,6 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
+import {IntervalPickerComponent} from 'app/components/date-interval-picker/interval-picker/intervalPicker.component';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
@@ -31,6 +32,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     private mouseClick: () => void;
     private datePickerSubscription: Subscription;
     private parsedDate: string;
+    private datePicker: IntervalPickerComponent;
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService,
                 public datePickerManager: DatePickerManagerService) {
@@ -59,6 +61,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     public selectDate(interval: string) {
         this.parsedDate = interval;
         this.filterForm.controls.filter.setValue(this.parsedDate);
+        this.datePicker.parseTimeInterval(interval);
     }
 
     /**
@@ -68,10 +71,10 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         event.stopPropagation();
         if (this.isDate()) {
             if (!this.isDatePickerOpened) {
-                const datePicker = this.datePickerManager
+                this.datePicker = this.datePickerManager
                     .open(this.container);
-                datePicker.initialInterval = this.parsedDate;
-                this.datePickerSubscription = datePicker.onSelectDate
+                this.datePicker.initialInterval = this.parsedDate;
+                this.datePickerSubscription = this.datePicker.onSelectDate
                     .subscribe((date) => {
                         this.selectDate(date);
                         this.onFilter.emit();
@@ -103,8 +106,8 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     }
 
     public getFilterValue() {
-        if (this.column.type === ColumnsTypes.DATE && this.filterForm.value.filter === '') {
-            this.selectDate('');
+        if (this.column.type === ColumnsTypes.DATE) {
+            this.selectDate(this.filterForm.value.filter);
         }
         return {column: this.column.dataFieldName, filter: this.filterForm.value.filter};
     }

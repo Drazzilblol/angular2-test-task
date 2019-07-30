@@ -1,5 +1,5 @@
 import {
-    ChangeDetectionStrategy,
+    ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
@@ -31,16 +31,11 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     private subscription: Subscription;
     private time: Date = new Date(0, 0, 0, 0, 0, 0);
 
-    constructor(private translate: TranslateService) {
+    constructor(private translate: TranslateService, private changeDetector: ChangeDetectorRef) {
     }
 
     public ngOnInit(): void {
-        if (this.initialDate) {
-            this.currentDate = moment(this.initialDate);
-            this.selectedDate = this.initialDate;
-        }
         this.recalculateMonth();
-
         this.subscription = this.translate.onLangChange.subscribe(() => {
             this.recalculateMonth();
         });
@@ -75,7 +70,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
             date,
             weekDay: this.getDayOfWeek(date),
             weekOfMonth: this.getWeekNumber(date),
-            color: 'white',
+            color: 'lightgray',
             disabled: true,
         };
     }
@@ -126,6 +121,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
         this.onSelectDate.emit(date);
         this.recalculateMonth();
+        this.changeDetector.markForCheck();
     }
 
     /**
@@ -161,6 +157,10 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.initialDate) {
+            this.currentDate = moment(this.initialDate);
+            this.selectedDate = this.initialDate;
+        }
         if (changes.dateBlock) {
             this.recalculateMonth();
         }
