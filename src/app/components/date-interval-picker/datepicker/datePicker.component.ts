@@ -1,5 +1,6 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
@@ -39,6 +40,60 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         this.subscription = this.translate.onLangChange.subscribe(() => {
             this.recalculateMonth();
         });
+    }
+
+    /**
+     * Выделяет выбраную дату, при выборе второй даты отправляет интервал.
+     */
+    public selectDate(date: Date): void {
+        this.selectedDate = date;
+        date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
+        this.onSelectDate.emit(date);
+        this.recalculateMonth();
+        this.changeDetector.markForCheck();
+    }
+
+    /**
+     * Переходит на следующий месяц.
+     */
+    public nextMonth(): void {
+        this.currentDate.add(1, 'month');
+        this.recalculateMonth();
+    }
+
+    /**
+     * Переходит на предыдущий месяц.
+     */
+    public previousMonth(): void {
+        this.currentDate.add(-1, 'month');
+        this.recalculateMonth();
+    }
+
+    public ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+
+    /**
+     * Изменяет время выбраной даты.
+     */
+    public changeTime(time: Date): any {
+        this.time = time;
+        if (!this.selectedDate) {
+            this.selectedDate = this.currentDate.toDate();
+        }
+        this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
+        this.onSelectDate.emit(this.selectedDate);
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.initialDate) {
+            this.currentDate = moment(this.initialDate);
+            this.currentDate.hour(0).minute(0).second(0);
+            this.selectedDate = this.initialDate;
+        }
+        if (changes.dateBlock) {
+            this.recalculateMonth();
+        }
     }
 
     /**
@@ -85,7 +140,8 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private getDayColor(date: Date) {
-        if (this.selectedDate && date.getTime() === this.selectedDate.getTime()) {
+        if (this.selectedDate && moment(date).endOf('day').isSameOrAfter(this.selectedDate)
+            && moment(date).startOf('day').isSameOrBefore(this.selectedDate)) {
             return 'lightblue';
         } else {
             return 'white';
@@ -113,60 +169,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         return Math.floor((date + firstDay - 2) / 7) + 1;
     }
 
-    /**
-     * Выделяет выбраную дату, при выборе второй даты отправляет интервал.
-     */
-    public selectDate(date: Date): void {
-        this.selectedDate = date;
-        date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
-        this.onSelectDate.emit(date);
-        this.recalculateMonth();
-        this.changeDetector.markForCheck();
-    }
-
-    /**
-     * Переходит на следующий месяц.
-     */
-    public nextMonth(): void {
-        this.currentDate.add(1, 'month');
-        this.recalculateMonth();
-    }
-
-    /**
-     * Переходит на предыдущий месяц.
-     */
-    public previousMonth(): void {
-        this.currentDate.add(-1, 'month');
-        this.recalculateMonth();
-    }
-
-    public ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
-
-    /**
-     * Изменяет время выбраной даты.
-     */
-    public changeTime(time: Date): any {
-        this.time = time;
-        if (!this.selectedDate) {
-            this.selectedDate = new Date();
-        }
-        this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
-        this.onSelectDate.emit(this.selectedDate);
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.initialDate) {
-            this.currentDate = moment(this.initialDate);
-            this.selectedDate = this.initialDate;
-        }
-        if (changes.dateBlock) {
-            this.recalculateMonth();
-        }
-    }
-
-    public trackByFn(index, item): void {
+    public trackByFn(index): void {
         return index;
     }
 }

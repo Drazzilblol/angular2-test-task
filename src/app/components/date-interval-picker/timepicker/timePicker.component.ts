@@ -1,37 +1,61 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import moment from 'moment';
-import {fromEvent} from 'rxjs';
+import {fromEvent, Subscription} from 'rxjs';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'time-picker',
     templateUrl: './timePicker.template.html',
 })
-export class TimePickerComponent implements OnInit {
+export class TimePickerComponent implements OnInit, OnDestroy {
     @Output() public onChangeTime = new EventEmitter();
+    @Input() public initialTime: Date;
     public currentDate: moment.Moment = moment(new Date(0, 0, 0, 0, 0, 0));
     public hours: string = this.currentDate.hour().toString();
     public minutes: string = this.currentDate.minute().toString();
     public seconds: string = this.currentDate.second().toString();
     private timeForm: FormGroup;
+    private subscription: Subscription;
 
     constructor(private elementRef: ElementRef) {
     }
 
     public ngOnInit(): void {
-        this.timeForm = new FormGroup({
-            hours: new FormControl(this.hours, [Validators.required, Validators.max(23), Validators.min(0)]),
-            minutes: new FormControl(this.minutes, [Validators.required, Validators.max(59), Validators.min(0)]),
-            seconds: new FormControl(this.seconds, [Validators.required, Validators.max(59), Validators.min(0)]),
-        });
-
-        fromEvent(this.elementRef.nativeElement, 'input')
+        this.initForm();
+        this.initTime();
+        this.subscription = fromEvent(this.elementRef.nativeElement, 'input')
             .subscribe(() => {
                 if (this.timeForm.valid) {
                     this.emitTime();
                 }
             });
+    }
+
+    private initForm() {
+        this.timeForm = new FormGroup({
+            hours: new FormControl(this.hours, [Validators.required, Validators.max(23), Validators.min(0)]),
+            minutes: new FormControl(this.minutes, [Validators.required, Validators.max(59), Validators.min(0)]),
+            seconds: new FormControl(this.seconds, [Validators.required, Validators.max(59), Validators.min(0)]),
+        });
+    }
+
+    private initTime() {
+        if (this.initialTime) {
+            this.currentDate = moment(this.initialTime);
+            this.timeForm.controls.hours.setValue(this.currentDate.hour().toString());
+            this.timeForm.controls.minutes.setValue(this.currentDate.minute().toString());
+            this.timeForm.controls.seconds.setValue(this.currentDate.second().toString());
+        }
     }
 
     public emitTime() {
@@ -94,4 +118,9 @@ export class TimePickerComponent implements OnInit {
         this.timeForm.controls.seconds.setValue(this.currentDate.second().toString());
         this.emitTime();
     }
+
+    public ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+
 }

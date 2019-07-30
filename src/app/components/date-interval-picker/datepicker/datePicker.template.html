@@ -14,4 +14,4 @@
     </div>
 </div>
 
-<time-picker (onChangeTime)="changeTime($event)"></time-picker>
+<time-picker [initialTime]="selectedDate" (onChangeTime)="changeTime($event)"></time-picker>
