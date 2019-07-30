@@ -1,4 +1,14 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    QueryList,
+    SimpleChanges,
+    ViewChildren,
+} from '@angular/core';
+import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
 import {IGridItem} from 'app/components/string-add/models/IGridItem';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
@@ -19,6 +29,9 @@ export class GridComponent implements OnInit, OnChanges {
     @Input() public columns: IColumn[] = [];
     public currentSort: SortParams;
     public filteredItems: IGridItem[] = this.items;
+
+    @ViewChildren(GridFilterCellComponent)
+    private filterCells: QueryList<GridFilterCellComponent>;
 
     constructor(private filterService: FilterService, private columnManager: ColumnManagerService) {
     }
@@ -50,8 +63,7 @@ export class GridComponent implements OnInit, OnChanges {
     /**
      * Фильтрует элементы согласно параметрам фильтрации.
      */
-    public filter(params: any): void {
-        this.filterParams[params.column] = params.filter;
+    public filterItems(): void {
         this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
     }
 
@@ -66,7 +78,14 @@ export class GridComponent implements OnInit, OnChanges {
         if (changes.items) {
             this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
         } else if (changes.filterParams) {
-            this.filter(this.filterParams);
+            this.filterItems();
         }
+    }
+
+    public filter() {
+        this.filterCells.forEach((item) => {
+            this.filterParams[item.getFilterValue().column] = item.getFilterValue().filter;
+            this.filterItems();
+        });
     }
 }

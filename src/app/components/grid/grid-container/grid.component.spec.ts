@@ -59,17 +59,20 @@ describe('grid', function() {
                     sortable: true,
                     resizable: true,
                     draggable: true,
+                    filterable: true,
                 }),
             new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
+                    filterable: true,
                 }),
             new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
                 {
                     sortable: true,
                     defaultSort: true,
+                    filterable: true,
                 }),
         ]);
         fixture.detectChanges();
@@ -107,22 +110,36 @@ describe('grid', function() {
             expect(firstElement.innerText).toBe(russian.MESSAGE);
         });
 
-        it('check filter-params', fakeAsync(function() {
+        it('check filter', function() {
             const testListItem1: StringGridItem = new StringGridItem('test1', new Date(), Statuses.YESTERDAY);
             const testListItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
-
             component.items = [testListItem1, testListItem2];
             fixture.detectChanges();
-            component.filter({column: 'transformedText', filter: '1'});
+            const input = fixtureDebug.queryAll(By.css('grid-filter-cell .filter-input'))[0].nativeElement;
+            input.value = '1';
+            input.dispatchEvent(new Event('input'));
+            input.dispatchEvent(new KeyboardEvent('keypress', {
+                bubbles: true,
+                cancelable: true,
+                code: 'Enter',
+                key: 'Enter',
+            }));
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('1');
 
-            component.filter({column: 'transformedText', filter: '2'});
+            input.value = '2';
+            input.dispatchEvent(new Event('input'));
+            input.dispatchEvent(new KeyboardEvent('keypress', {
+                bubbles: true,
+                cancelable: true,
+                code: 'Enter',
+                key: 'Enter',
+            }));
             fixture.detectChanges();
 
             expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('2');
-        }));
+        });
 
         it('check sorting', function() {
             const testListItem1: StringGridItem = new StringGridItem('test1', new Date(), Statuses.FRESH);

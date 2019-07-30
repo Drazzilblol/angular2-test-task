@@ -49,11 +49,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      */
     public enterPress(event) {
         if (event.key === 'Enter') {
-            if (this.column.type === ColumnsTypes.DATE && this.filterForm.value.filter === '') {
-                this.selectDate('');
-            } else {
-                this.onFilter.emit({column: this.column.dataFieldName, filter: this.filterForm.value.filter});
-            }
+            this.onFilter.emit();
         }
     }
 
@@ -63,7 +59,6 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     public selectDate(interval: string) {
         this.parsedDate = interval;
         this.filterForm.controls.filter.setValue(this.parsedDate);
-        this.onFilter.emit({column: this.column.dataFieldName, filter: this.parsedDate});
     }
 
     /**
@@ -79,6 +74,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
                 this.datePickerSubscription = datePicker.onSelectDate
                     .subscribe((date) => {
                         this.selectDate(date);
+                        this.onFilter.emit();
                     });
                 this.isDatePickerOpened = true;
                 this.initClickListener();
@@ -104,5 +100,12 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
 
     public isDate() {
         return this.column.type === ColumnsTypes.DATE;
+    }
+
+    public getFilterValue() {
+        if (this.column.type === ColumnsTypes.DATE && this.filterForm.value.filter === '') {
+            this.selectDate('');
+        }
+        return {column: this.column.dataFieldName, filter: this.filterForm.value.filter};
     }
 }
