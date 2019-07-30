@@ -61,7 +61,9 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     public selectDate(interval: string) {
         this.parsedDate = interval;
         this.filterForm.controls.filter.setValue(this.parsedDate);
-        this.datePicker.parseTimeInterval(interval);
+        if (this.datePicker) {
+            this.datePicker.parseTimeInterval(interval);
+        }
     }
 
     /**
