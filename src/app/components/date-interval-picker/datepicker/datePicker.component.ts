@@ -116,8 +116,10 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
 
     private isDisabledDay(date: Date) {
         return this.dateBlock &&
-            ((this.dateBlock.direction === 'forward' && moment(date).isSameOrAfter(this.dateBlock.date))
-                || (this.dateBlock.direction === 'backward' && moment(date).isSameOrBefore(this.dateBlock.date)));
+            ((this.dateBlock.direction === 'forward'
+                && moment(date).startOf('day').isSameOrAfter(this.dateBlock.date))
+                || (this.dateBlock.direction === 'backward'
+                    && moment(date).endOf('day').isSameOrBefore(this.dateBlock.date)));
     }
 
     private configureDisabledDay(date: Date) {
