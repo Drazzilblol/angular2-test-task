@@ -41,7 +41,6 @@ export class IntervalPickerComponent implements OnInit {
         }
         this.firstDate = date;
         this.firstDisabledDates = {date, direction: DisableDirections.BACKWARD};
-        this.changeDetector.markForCheck();
     }
 
     /**
@@ -54,7 +53,6 @@ export class IntervalPickerComponent implements OnInit {
         }
         this.secondDate = date;
         this.secondDisabledDates = {date, direction: DisableDirections.FORWARD};
-        this.changeDetector.markForCheck();
     }
 
     /**
@@ -74,21 +72,21 @@ export class IntervalPickerComponent implements OnInit {
      */
     public parseDateInterval(timeInterval: string): any {
         if (timeInterval) {
-            const interval: string[] = timeInterval.split(' - ');
-            if (moment(interval[0], DATE_FORMAT).toDate() < moment(interval[1], DATE_FORMAT).toDate()) {
-                this.firstDate = moment(interval[0], DATE_FORMAT).toDate();
-                this.secondDate = moment(interval[1], DATE_FORMAT).toDate();
+            const days: string[] = timeInterval.split(' - ');
+            if (moment(days[0], DATE_FORMAT).toDate() < moment(days[1], DATE_FORMAT).toDate()) {
+                this.firstDate = moment(days[0], DATE_FORMAT).toDate();
+                this.secondDate = moment(days[1], DATE_FORMAT).toDate();
                 this.firstDisabledDates = {
-                    date: moment(interval[0], DATE_FORMAT).toDate(),
+                    date: moment(days[0], DATE_FORMAT).toDate(),
                     direction: DisableDirections.BACKWARD,
                 };
                 this.secondDisabledDates = {
-                    date: moment(interval[1], DATE_FORMAT).toDate(),
+                    date: moment(days[1], DATE_FORMAT).toDate(),
                     direction: DisableDirections.FORWARD,
                 };
             }
         } else {
-            this.resetDates();
+            this.reset();
         }
         this.changeDetector.markForCheck();
     }
@@ -96,15 +94,15 @@ export class IntervalPickerComponent implements OnInit {
     /**
      * Сбросить интервал дат.
      */
-    public reset() {
-        this.resetDates();
+    public resetPicker() {
+        this.reset();
         this.onSelectDate.emit('');
     }
 
     /**
      * Сбросить интервал дат.
      */
-    public resetDates() {
+    public reset() {
         this.firstDate = undefined;
         this.secondDate = undefined;
         this.secondDisabledDates = {};

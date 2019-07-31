@@ -84,8 +84,9 @@ export class GridComponent implements OnInit, OnChanges {
      */
     public filter() {
         this.filterCells.forEach((item) => {
-            this.filterParams[item.getFilterValue().column] = item.getFilterValue().filter;
-            this.filterItems();
+            const filterValue = item.getFilterValue();
+            this.filterParams[filterValue.column] = filterValue.filter;
         });
+        this.filterItems();
     }
 }

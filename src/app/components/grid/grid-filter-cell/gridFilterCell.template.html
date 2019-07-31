@@ -1,4 +1,4 @@
-<form *ngIf="column.filterable" [formGroup]="filterForm" novalidate autocomplete="off" class="form-content input-group">
+<div *ngIf="column.filterable" [formGroup]="filterForm" novalidate autocomplete="off" class="form-content input-group">
     <input #container (click)="openDatePicker($event)"
            (keypress)="enterPress($event)"
            formControlName="filter" type="text"
@@ -9,4 +9,4 @@
             <i class="material-icons md-22">date_range</i>
          </span>
     </div>
-</form>
+</div>

@@ -28,15 +28,15 @@ const COMMON_ELEMENT_COLOR: string = config.DATE.COMMON_ELEMENT_COLOR;
 })
 export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     public currentDate: moment.Moment = moment();
+    public selectedDate: Date;
+    @Input() public initialDate: Date;
+    private time: Date = new Date(0, 0, 0, 0, 0, 0);
     public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
-    public selectedDate: Date;
     @Input() public disabledDates: any = {};
-    @Input() public initialDate: Date;
     public monthName: string;
     public year: string;
     private subscription: Subscription;
-    private time: Date = new Date(0, 0, 0, 0, 0, 0);
 
     constructor(private translate: TranslateService, private changeDetector: ChangeDetectorRef) {
     }
@@ -53,10 +53,10 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
      */
     public selectDate(date: Date): void {
         this.selectedDate = date;
-        date.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
-        this.onSelectDate.emit(date);
+        this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
+        this.onSelectDate.emit(this.selectedDate);
         this.recalculateMonth();
-        this.changeDetector.markForCheck();
+  //      this.changeDetector.markForCheck();
     }
 
     /**
@@ -106,7 +106,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         const daysInMonth = this.currentDate.daysInMonth();
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
-            const date = new Date(this.currentDate.year().valueOf(), this.currentDate.month().valueOf(), i);
+            const date = new Date(this.currentDate.year(), this.currentDate.month(), i);
             if (this.isDayDisabled(date)) {
                 this.thisMonth.push(this.configureDisabledDay(date));
             } else {
@@ -182,7 +182,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
      * Рассчитывает номер недели в месяце.
      */
     public getWeekNumber(date: Date): number {
-        return this.calculateWeekNumber(date.getDate(), moment(this.currentDate).startOf('month').isoWeekday());
+        return this.calculateWeekNumber(date.getDate(), this.currentDate.startOf('month').isoWeekday());
     }
 
     /**
