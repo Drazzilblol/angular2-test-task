@@ -11,14 +11,15 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import config from 'app/config.json';
 import {DisableDirections} from 'app/enums/disableDirections.enum';
 import {startCase} from 'lodash';
 import moment from 'moment';
 import {Subscription} from 'rxjs';
 
-const DISABLED_ELEMENT_COLOR: string = 'lightgray';
-const SELECTED_ELEMENT_COLOR: string = 'lightblue';
-const COMMON_ELEMENT_COLOR: string = 'white';
+const DISABLED_ELEMENT_COLOR: string = config.DATE.DISABLED_ELEMENT_COLOR;
+const SELECTED_ELEMENT_COLOR: string = config.DATE.SELECTED_ELEMENT_COLOR;
+const COMMON_ELEMENT_COLOR: string = config.DATE.COMMON_ELEMENT_COLOR;
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -89,7 +90,6 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.initialDate) {
             this.currentDate = moment(this.initialDate);
-            this.currentDate.hour(0).minute(0).second(0); //?
             this.selectedDate = this.initialDate;
         }
         if (changes.disabledDates) {
@@ -138,6 +138,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
             disabled: true,
         };
     }
+
     /**
      * Создает обычную дату.
      */
