@@ -56,17 +56,6 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     }
 
     /**
-     * Создает данные для фильтрации из интервала дат, и отправляет их.
-     */
-    public selectDate(interval: string) {
-        this.parsedDate = interval;
-        this.filterForm.controls.filter.setValue(this.parsedDate);
-        if (this.datePicker) {
-            this.datePicker.parseTimeInterval(interval);
-        }
-    }
-
-    /**
      * Открывает date picker, и подписывается на его событие onSelectDate.
      */
     public openDatePicker(event): void {
@@ -84,6 +73,24 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
                 this.isDatePickerOpened = true;
                 this.initClickListener();
             }
+        }
+    }
+
+    public getFilterValue() {
+        if (this.column.type === ColumnsTypes.DATE) {
+            this.selectDate(this.filterForm.value.filter);
+        }
+        return {column: this.column.dataFieldName, filter: this.filterForm.value.filter};
+    }
+
+    /**
+     * Создает данные для фильтрации из интервала дат, и отправляет их.
+     */
+    public selectDate(interval: string) {
+        this.parsedDate = interval;
+        this.filterForm.controls.filter.setValue(this.parsedDate);
+        if (this.isDatePickerOpened) {
+            this.datePicker.parseTimeInterval(interval);
         }
     }
 
@@ -105,12 +112,5 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
 
     public isDate() {
         return this.column.type === ColumnsTypes.DATE;
-    }
-
-    public getFilterValue() {
-        if (this.column.type === ColumnsTypes.DATE) {
-            this.selectDate(this.filterForm.value.filter);
-        }
-        return {column: this.column.dataFieldName, filter: this.filterForm.value.filter};
     }
 }

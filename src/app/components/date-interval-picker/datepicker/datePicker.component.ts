@@ -70,7 +70,9 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     /**

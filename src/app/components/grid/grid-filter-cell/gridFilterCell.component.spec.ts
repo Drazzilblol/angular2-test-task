@@ -2,7 +2,11 @@ import {DebugElement} from '@angular/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {DatePickerComponent} from 'app/components/date-interval-picker/datepicker/datePicker.component';
+import {IntervalPickerComponent} from 'app/components/date-interval-picker/interval-picker/intervalPicker.component';
+import {TimePickerComponent} from 'app/components/date-interval-picker/timepicker/timePicker.component';
 import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
 import {Columns} from 'app/enums/columns.enum';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
@@ -20,9 +24,13 @@ describe('filter cell component', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridFilterCellComponent],
+            declarations: [GridFilterCellComponent, IntervalPickerComponent, DatePickerComponent, TimePickerComponent],
             imports: [ReactiveFormsModule, translateTestImport, NgbTooltipModule],
             providers: [ColumnManagerService, DatePickerManagerService],
+        }).overrideModule(BrowserDynamicTestingModule, {
+            set: {
+                entryComponents: [IntervalPickerComponent],
+            },
         }).compileComponents();
 
         fixture = TestBed.createComponent(GridFilterCellComponent);
@@ -30,6 +38,10 @@ describe('filter cell component', function() {
         component = fixture.componentInstance;
         columnManager = TestBed.get(ColumnManagerService);
         columnManager.addColumn(new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 400,
+            {
+                filterable: true,
+            }));
+        columnManager.addColumn(new Column(Columns.DATE, ColumnsTypes.DATE, 'date', 400,
             {
                 filterable: true,
             }));
@@ -61,4 +73,15 @@ describe('filter cell component', function() {
         subscription.unsubscribe();
     }));
 
+    it('check is date picker opens', function() {
+        component.index = 1;
+        component.column = columnManager.getColumns()[1];
+        fixture.detectChanges();
+        const input = fixtureDebug.query(By.css('input')).nativeElement;
+        input.dispatchEvent(new Event('click', {
+            bubbles: true,
+        }));
+
+        expect(fixtureDebug.query(By.css('interval-picker'))).not.toBe(null);
+    });
 });
