@@ -56,7 +56,7 @@ export class IntervalPickerComponent implements OnInit {
     }
 
     /**
-     * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
+     * Создает интервал из 2-х дат.
      */
     public createTimeInterval(firstDate: Date, secondDate: Date): any {
         return `${moment(firstDate.getTime()).format(DATE_FORMAT)} - `
@@ -73,18 +73,16 @@ export class IntervalPickerComponent implements OnInit {
     public parseDateInterval(timeInterval: string): any {
         if (timeInterval) {
             const days: string[] = timeInterval.split(' - ');
-            if (moment(days[0], DATE_FORMAT).toDate() < moment(days[1], DATE_FORMAT).toDate()) {
-                this.firstDate = moment(days[0], DATE_FORMAT).toDate();
-                this.secondDate = moment(days[1], DATE_FORMAT).toDate();
-                this.firstDisabledDates = {
-                    date: moment(days[0], DATE_FORMAT).toDate(),
-                    direction: DisableDirections.BACKWARD,
-                };
-                this.secondDisabledDates = {
-                    date: moment(days[1], DATE_FORMAT).toDate(),
-                    direction: DisableDirections.FORWARD,
-                };
-            }
+            this.firstDate = moment(days[0], DATE_FORMAT).toDate();
+            this.secondDate = moment(days[1], DATE_FORMAT).toDate();
+            this.firstDisabledDates = {
+                date: moment(days[0], DATE_FORMAT).toDate(),
+                direction: DisableDirections.BACKWARD,
+            };
+            this.secondDisabledDates = {
+                date: moment(days[1], DATE_FORMAT).toDate(),
+                direction: DisableDirections.FORWARD,
+            };
         } else {
             this.reset();
         }

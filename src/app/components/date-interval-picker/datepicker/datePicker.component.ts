@@ -55,7 +55,6 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
         this.onSelectDate.emit(this.selectedDate);
         this.recalculateMonth();
-        //      this.changeDetector.markForCheck();
     }
 
     /**
@@ -120,9 +119,9 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     private isDayDisabled(date: Date) {
         return this.disabledDates &&
             ((this.disabledDates.direction === DisableDirections.FORWARD
-                && moment(date).startOf('day').isSameOrAfter(this.disabledDates.date))
+                && moment(date).startOf('day').isSameOrAfter(moment(this.disabledDates.date).endOf('day')))
                 || (this.disabledDates.direction === DisableDirections.BACKWARD
-                    && moment(date).endOf('day').isSameOrBefore(this.disabledDates.date)));
+                    && moment(date).endOf('day').isSameOrBefore(moment(this.disabledDates.date).startOf('day'))));
     }
 
     /**
