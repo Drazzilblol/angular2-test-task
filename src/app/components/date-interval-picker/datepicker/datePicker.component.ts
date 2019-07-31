@@ -29,7 +29,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     public currentDate: moment.Moment = moment();
     public selectedDate: Date;
     @Input() public initialDate: Date;
-    private time: Date = new Date(0, 0, 0, 0, 0, 0);
+    private time: Date = new Date(0, 0, 0, 0, 0);
     public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
     @Input() public disabledDates: any = {};
@@ -89,9 +89,18 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         if (changes.initialDate) {
             this.currentDate = moment(this.initialDate);
             this.selectedDate = this.initialDate;
+            this.initTime();
         }
         if (changes.disabledDates) {
             this.recalculateMonth();
+        }
+    }
+
+    public initTime() {
+        if (this.initialDate) {
+            this.time.setHours(this.currentDate.hour(),
+                this.currentDate.minute(),
+                this.currentDate.second());
         }
     }
 

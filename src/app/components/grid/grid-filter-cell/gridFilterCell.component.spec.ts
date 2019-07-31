@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from '@ngx-translate/core';
 import {DatePickerComponent} from 'app/components/date-interval-picker/datepicker/datePicker.component';
 import {IntervalPickerComponent} from 'app/components/date-interval-picker/interval-picker/intervalPicker.component';
 import {TimePickerComponent} from 'app/components/date-interval-picker/timepicker/timePicker.component';
@@ -21,6 +22,7 @@ describe('filter cell component', function() {
     let fixture: ComponentFixture<GridFilterCellComponent>;
     let fixtureDebug: DebugElement;
     let columnManager: ColumnManagerService;
+    let translate: TranslateService;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
@@ -36,6 +38,8 @@ describe('filter cell component', function() {
         fixture = TestBed.createComponent(GridFilterCellComponent);
         fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
+        translate = TestBed.get(TranslateService);
+        translate.use('en');
         columnManager = TestBed.get(ColumnManagerService);
         columnManager.addColumn(new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 400,
             {
@@ -73,7 +77,7 @@ describe('filter cell component', function() {
         subscription.unsubscribe();
     }));
 
-    it('check is date picker opens', function() {
+    it('check is date picker open/close', function() {
         component.index = 1;
         component.column = columnManager.getColumns()[1];
         fixture.detectChanges();
@@ -83,5 +87,48 @@ describe('filter cell component', function() {
         }));
 
         expect(fixtureDebug.query(By.css('interval-picker'))).not.toBe(null);
+
+        fixtureDebug.nativeElement.parentNode.dispatchEvent(new Event('click', {
+            bubbles: true,
+        }));
+        fixture.detectChanges();
+
+        expect(fixtureDebug.query(By.css('interval-picker'))).toBe(null);
+    });
+
+    it('should restore selected dates after repeat opening', function() {
+        component.index = 1;
+        component.column = columnManager.getColumns()[1];
+        fixture.detectChanges();
+        fixtureDebug.query(By.css('input')).nativeElement
+            .dispatchEvent(new Event('click', {
+                bubbles: true,
+            }));
+        fixture.detectChanges();
+        let pickers = fixtureDebug.queryAll(By.css('date-picker'));
+        let firstSelectedDay = pickers[0].queryAll(By.css('.datepicker-element'))[15].nativeElement;
+        firstSelectedDay.dispatchEvent(new Event('click'));
+        let days = pickers[1].queryAll(By.css('.datepicker-element'));
+        days[days.length - 1].nativeElement.dispatchEvent(new Event('click'));
+        fixtureDebug.nativeElement.parentNode.dispatchEvent(new Event('click', {
+            bubbles: true,
+        }));
+        fixture.detectChanges();
+
+        expect(fixtureDebug.query(By.css('interval-picker'))).toBe(null);
+
+        fixtureDebug.query(By.css('input')).nativeElement
+            .dispatchEvent(new Event('click', {
+                bubbles: true,
+            }));
+        fixture.detectChanges();
+
+        pickers = fixtureDebug.queryAll(By.css('date-picker'));
+        firstSelectedDay = pickers[0].queryAll(By.css('.datepicker-element'))[15].nativeElement;
+        days = pickers[1].queryAll(By.css('.datepicker-element'));
+
+        expect(firstSelectedDay.style.backgroundColor).toBe('lightblue');
+        expect(days[days.length - 1].nativeElement.style.backgroundColor).toBe('lightblue');
+
     });
 });

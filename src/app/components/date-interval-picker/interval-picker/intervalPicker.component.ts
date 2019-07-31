@@ -76,11 +76,11 @@ export class IntervalPickerComponent implements OnInit {
             this.firstDate = moment(days[0], DATE_FORMAT).toDate();
             this.secondDate = moment(days[1], DATE_FORMAT).toDate();
             this.firstDisabledDates = {
-                date: moment(days[0], DATE_FORMAT).toDate(),
+                date: this.firstDate,
                 direction: DisableDirections.BACKWARD,
             };
             this.secondDisabledDates = {
-                date: moment(days[1], DATE_FORMAT).toDate(),
+                date: this.secondDate,
                 direction: DisableDirections.FORWARD,
             };
         } else {
