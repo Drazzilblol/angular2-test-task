@@ -1,6 +1,5 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
@@ -38,7 +37,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     public year: string;
     private subscription: Subscription;
 
-    constructor(private translate: TranslateService, private changeDetector: ChangeDetectorRef) {
+    constructor(private translate: TranslateService) {
     }
 
     public ngOnInit(): void {
@@ -56,7 +55,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
         this.onSelectDate.emit(this.selectedDate);
         this.recalculateMonth();
-  //      this.changeDetector.markForCheck();
+        //      this.changeDetector.markForCheck();
     }
 
     /**

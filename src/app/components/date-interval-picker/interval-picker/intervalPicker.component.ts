@@ -34,7 +34,7 @@ export class IntervalPickerComponent implements OnInit {
     /**
      * Выбор даты в первом дата пикере.
      */
-    public selectFirstDate(date): void {
+    public selectFirstDate(date: Date): void {
         if (this.secondDate) {
             this.dateRange = this.createTimeInterval(date, this.secondDate);
             this.onSelectDate.emit(this.dateRange);
@@ -46,7 +46,7 @@ export class IntervalPickerComponent implements OnInit {
     /**
      * Выбор даты во втором дата пикере.
      */
-    public selectSecondDate(date): void {
+    public selectSecondDate(date: Date): void {
         if (this.firstDate) {
             this.dateRange = this.createTimeInterval(this.firstDate, date);
             this.onSelectDate.emit(this.dateRange);
