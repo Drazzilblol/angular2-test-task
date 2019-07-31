@@ -25,8 +25,6 @@ describe('interval picker component', function() {
             providers: [
                 FilterParamsService,
             ],
-        }).overrideComponent(DatePickerComponent, {
-            set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);
@@ -58,5 +56,37 @@ describe('interval picker component', function() {
         days[days.length - 1].nativeElement.dispatchEvent(new Event('click'));
         fixture.detectChanges();
         subscription.unsubscribe();
+    });
+
+    it('should reset selected dates', function() {
+        const pickers = fixtureDebug.queryAll(By.css('date-picker'));
+        const firstSelectedDay = pickers[0].queryAll(By.css('.datepicker-element'))[15].nativeElement;
+        firstSelectedDay.dispatchEvent(new Event('click'));
+        const days = pickers[1].queryAll(By.css('.datepicker-element'));
+        days[days.length - 1].nativeElement.dispatchEvent(new Event('click'));
+
+        const testValue = 10;
+        const inputs = fixtureDebug.queryAll(By.css('input'));
+        inputs[0].nativeElement.value = testValue;
+        inputs[0].nativeElement.dispatchEvent(new Event('input', {
+            bubbles: true,
+        }));
+        inputs[1].nativeElement.value = testValue;
+        inputs[1].nativeElement.dispatchEvent(new Event('input', {
+            bubbles: true,
+        }));
+        inputs[2].nativeElement.value = testValue;
+        inputs[2].nativeElement.dispatchEvent(new Event('input', {
+            bubbles: true,
+        }));
+        fixture.detectChanges();
+
+        fixtureDebug.query(By.css('button')).nativeElement.dispatchEvent(new Event('click'));
+        fixture.detectChanges();
+
+        expect(firstSelectedDay.style.backgroundColor).toBe('white');
+        expect(days[days.length - 1].nativeElement.style.backgroundColor).toBe('white');
+        expect(days[0].nativeElement.style.backgroundColor).toBe('white');
+        expect(inputs[0].nativeElement.value).toBe('0');
     });
 });
