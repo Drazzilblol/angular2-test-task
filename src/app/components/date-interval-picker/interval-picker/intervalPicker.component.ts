@@ -7,9 +7,11 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
+import config from 'app/config.json';
+import {DisableDirections} from 'app/enums/disableDirections.enum';
 import moment from 'moment';
 
-const DATE_FORMAT: string = 'DD-MM-YYYY HH:mm:ss';
+const DATE_FORMAT: string = config.DATE.DATE_FORMAT;
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,8 +25,8 @@ export class IntervalPickerComponent implements OnInit {
     public firstDate: Date;
     public secondDate: Date;
     public dateRange: string;
-    public firstDateBlock: any;
-    public secondDateBlock: any;
+    public firstDisabledDates: any;
+    public secondDisabledDates: any;
 
     constructor(private changeDetector: ChangeDetectorRef) {
     }
@@ -38,7 +40,7 @@ export class IntervalPickerComponent implements OnInit {
             this.onSelectDate.emit(this.dateRange);
         }
         this.firstDate = date;
-        this.firstDateBlock = {date, direction: 'backward'};
+        this.firstDisabledDates = {date, direction: DisableDirections.BACKWARD};
         this.changeDetector.markForCheck();
     }
 
@@ -51,7 +53,7 @@ export class IntervalPickerComponent implements OnInit {
             this.onSelectDate.emit(this.dateRange);
         }
         this.secondDate = date;
-        this.secondDateBlock = {date, direction: 'forward'};
+        this.secondDisabledDates = {date, direction: DisableDirections.FORWARD};
         this.changeDetector.markForCheck();
     }
 
@@ -59,43 +61,53 @@ export class IntervalPickerComponent implements OnInit {
      * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
      */
     public createTimeInterval(firstDate: Date, secondDate: Date): any {
-        return `${moment(firstDate.getTime()).format('DD-MM-YYYY HH:mm:ss')} - `
-            + `${moment(secondDate.getTime()).format('DD-MM-YYYY HH:mm:ss')}`;
+        return `${moment(firstDate.getTime()).format(DATE_FORMAT)} - `
+            + `${moment(secondDate.getTime()).format(DATE_FORMAT)}`;
     }
 
     public ngOnInit(): void {
-        this.parseTimeInterval(this.initialInterval);
+        this.parseDateInterval(this.initialInterval);
     }
 
     /**
      * Парсит строку содержащую интервал из 2-х дат.
      */
-    public parseTimeInterval(timeInterval: string): any {
+    public parseDateInterval(timeInterval: string): any {
         if (timeInterval) {
             const interval: string[] = timeInterval.split(' - ');
             if (moment(interval[0], DATE_FORMAT).toDate() < moment(interval[1], DATE_FORMAT).toDate()) {
                 this.firstDate = moment(interval[0], DATE_FORMAT).toDate();
                 this.secondDate = moment(interval[1], DATE_FORMAT).toDate();
-                this.firstDateBlock = {date: moment(interval[0], DATE_FORMAT).toDate(), direction: 'backward'};
-                this.secondDateBlock = {date: moment(interval[1], DATE_FORMAT).toDate(), direction: 'forward'};
+                this.firstDisabledDates = {
+                    date: moment(interval[0], DATE_FORMAT).toDate(),
+                    direction: DisableDirections.BACKWARD,
+                };
+                this.secondDisabledDates = {
+                    date: moment(interval[1], DATE_FORMAT).toDate(),
+                    direction: DisableDirections.FORWARD,
+                };
             }
         } else {
-            this.firstDate = undefined;
-            this.secondDate = undefined;
-            this.secondDateBlock = {};
-            this.firstDateBlock = {};
+            this.resetDates();
         }
         this.changeDetector.markForCheck();
     }
 
     /**
-     * Создает интервал из 2-х дат, если вторая дата меньше чем первая то меняет их местами в интервале.
+     * Сбросить интервал дат.
      */
     public reset() {
+        this.resetDates();
+        this.onSelectDate.emit('');
+    }
+
+    /**
+     * Сбросить интервал дат.
+     */
+    public resetDates() {
         this.firstDate = undefined;
         this.secondDate = undefined;
-        this.secondDateBlock = {};
-        this.firstDateBlock = {};
-        this.onSelectDate.emit('');
+        this.secondDisabledDates = {};
+        this.firstDisabledDates = {};
     }
 }

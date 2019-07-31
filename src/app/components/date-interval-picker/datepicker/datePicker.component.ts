@@ -11,9 +11,14 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {DisableDirections} from 'app/enums/disableDirections.enum';
 import {startCase} from 'lodash';
 import moment from 'moment';
 import {Subscription} from 'rxjs';
+
+const DISABLED_ELEMENT_COLOR: string = 'lightgray';
+const SELECTED_ELEMENT_COLOR: string = 'lightblue';
+const COMMON_ELEMENT_COLOR: string = 'white';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +30,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
     public selectedDate: Date;
-    @Input() public dateBlock: any = {};
+    @Input() public disabledDates: any = {};
     @Input() public initialDate: Date;
     public monthName: string;
     public year: string;
@@ -69,12 +74,6 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         this.recalculateMonth();
     }
 
-    public ngOnDestroy(): void {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
-    }
-
     /**
      * Изменяет время выбраной даты.
      */
@@ -93,7 +92,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
             this.currentDate.hour(0).minute(0).second(0); //?
             this.selectedDate = this.initialDate;
         }
-        if (changes.dateBlock) {
+        if (changes.disabledDates) {
             this.recalculateMonth();
         }
     }
@@ -108,7 +107,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         this.thisMonth = [];
         for (let i = 1; i <= daysInMonth; i++) {
             const date = new Date(this.currentDate.year().valueOf(), this.currentDate.month().valueOf(), i);
-            if (this.isDisabledDay(date)) {
+            if (this.isDayDisabled(date)) {
                 this.thisMonth.push(this.configureDisabledDay(date));
             } else {
                 this.thisMonth.push(this.configureEnabledDay(date));
@@ -116,24 +115,32 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    private isDisabledDay(date: Date) {
-        return this.dateBlock &&
-            ((this.dateBlock.direction === 'forward'
-                && moment(date).startOf('day').isSameOrAfter(this.dateBlock.date))
-                || (this.dateBlock.direction === 'backward'
-                    && moment(date).endOf('day').isSameOrBefore(this.dateBlock.date)));
+    /**
+     * Проверяет должна ли даты быть заблокирована.
+     */
+    private isDayDisabled(date: Date) {
+        return this.disabledDates &&
+            ((this.disabledDates.direction === DisableDirections.FORWARD
+                && moment(date).startOf('day').isSameOrAfter(this.disabledDates.date))
+                || (this.disabledDates.direction === DisableDirections.BACKWARD
+                    && moment(date).endOf('day').isSameOrBefore(this.disabledDates.date)));
     }
 
+    /**
+     * Создает заблокированую дату.
+     */
     private configureDisabledDay(date: Date) {
         return {
             date,
             weekDay: this.getDayOfWeek(date),
             weekOfMonth: this.getWeekNumber(date),
-            color: 'lightgray',
+            color: DISABLED_ELEMENT_COLOR,
             disabled: true,
         };
     }
-
+    /**
+     * Создает обычную дату.
+     */
     private configureEnabledDay(date: Date) {
         return {
             date,
@@ -143,13 +150,24 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         };
     }
 
+    /**
+     * Возвращает цвет обычной ячейки.
+     */
     private getDayColor(date: Date) {
-        if (this.selectedDate && moment(date).endOf('day').isSameOrAfter(this.selectedDate)
-            && moment(date).startOf('day').isSameOrBefore(this.selectedDate)) {
-            return 'lightblue';
+        if (this.isDaySelected(date)) {
+            return SELECTED_ELEMENT_COLOR;
         } else {
-            return 'white';
+            return COMMON_ELEMENT_COLOR;
         }
+    }
+
+    /**
+     * Проверяет является ли дата выбраной.
+     */
+    private isDaySelected(date: Date) {
+        return this.selectedDate
+            && moment(date).endOf('day').isSameOrAfter(this.selectedDate)
+            && moment(date).startOf('day').isSameOrBefore(this.selectedDate);
     }
 
     /**
@@ -175,5 +193,11 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
 
     public trackByFn(index): void {
         return index;
+    }
+
+    public ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }

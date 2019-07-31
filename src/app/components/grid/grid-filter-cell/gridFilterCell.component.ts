@@ -60,22 +60,23 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
      */
     public openDatePicker(event): void {
         event.stopPropagation();
-        if (this.isDate()) {
-            if (!this.isDatePickerOpened) {
-                this.datePicker = this.datePickerManager
-                    .open(this.container);
-                this.datePicker.initialInterval = this.parsedDate;
-                this.datePickerSubscription = this.datePicker.onSelectDate
-                    .subscribe((date) => {
-                        this.selectDate(date);
-                        this.onFilter.emit();
-                    });
-                this.isDatePickerOpened = true;
-                this.initClickListener();
-            }
+        if (this.isDate() && !this.isDatePickerOpened) {
+            this.datePicker = this.datePickerManager
+                .open(this.container);
+            this.datePicker.initialInterval = this.parsedDate;
+            this.datePickerSubscription = this.datePicker.onSelectDate
+                .subscribe((date) => {
+                    this.selectDate(date);
+                    this.onFilter.emit();
+                });
+            this.isDatePickerOpened = true;
+            this.initClickListener();
         }
     }
 
+    /**
+     * Возвращает текущее значение фильтра.
+     */
     public getFilterValue() {
         if (this.column.type === ColumnsTypes.DATE) {
             this.selectDate(this.filterForm.value.filter);
@@ -90,7 +91,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
         this.parsedDate = interval;
         this.filterForm.controls.filter.setValue(this.parsedDate);
         if (this.isDatePickerOpened) {
-            this.datePicker.parseTimeInterval(interval);
+            this.datePicker.parseDateInterval(interval);
         }
     }
 

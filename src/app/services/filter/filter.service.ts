@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IGridItem} from 'app/components/string-add/models/IGridItem';
+import config from 'app/config.json';
 import {filter, forEach, size, startsWith} from 'lodash';
 import moment from 'moment';
 
-const DATE_FORMAT: string = 'DD-MM-YYYY HH:mm:ss';
+const DATE_FORMAT: string = config.DATE.DATE_FORMAT;
 
 @Injectable()
 export class FilterService {

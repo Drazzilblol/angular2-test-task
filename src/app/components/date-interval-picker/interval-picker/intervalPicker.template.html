@@ -1,11 +1,11 @@
 <div>
     <div class="interval-picker">
-        <date-picker (onSelectDate)="selectFirstDate($event)" [dateBlock]="secondDateBlock"
+        <date-picker (onSelectDate)="selectFirstDate($event)" [disabledDates]="secondDisabledDates"
                      [initialDate]="firstDate"></date-picker>
     </div>
 
     <div class="interval-picker">
-        <date-picker (onSelectDate)="selectSecondDate($event)" [dateBlock]="firstDateBlock"
+        <date-picker (onSelectDate)="selectSecondDate($event)" [disabledDates]="firstDisabledDates"
                      [initialDate]="secondDate"></date-picker>
     </div>
 </div>

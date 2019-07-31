@@ -67,9 +67,6 @@ export class GridComponent implements OnInit, OnChanges {
         this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
     }
 
-    /**
-     * Функиця для отслеживания пересоздания элементов в цикле ngFor.
-     */
     public trackByFn(index: number, item: IGridItem): any {
         return item.trackByFn(index, item);
     }
@@ -82,6 +79,9 @@ export class GridComponent implements OnInit, OnChanges {
         }
     }
 
+    /**
+     * Получает текущие значения всех фильтров, и фильтрует массив элементов.
+     */
     public filter() {
         this.filterCells.forEach((item) => {
             this.filterParams[item.getFilterValue().column] = item.getFilterValue().filter;

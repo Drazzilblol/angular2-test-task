@@ -25,6 +25,8 @@ describe('interval picker component', function() {
             providers: [
                 FilterParamsService,
             ],
+        }).overrideComponent(DatePickerComponent, {
+            set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
 
         translate = TestBed.get(TranslateService);

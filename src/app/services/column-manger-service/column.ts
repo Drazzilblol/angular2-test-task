@@ -1,4 +1,4 @@
-import * as config from 'app/config.json';
+import config from 'app/config.json';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 
