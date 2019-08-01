@@ -23,6 +23,9 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
     @Output() public onChangeTime = new EventEmitter();
     @Input() public initialTime: Date;
     public currentDate: moment.Moment = moment(new Date(0, 0, 0, 0, 0, 0));
+    public hours: string = this.currentDate.hour().toString();
+    public minutes: string = this.currentDate.minute().toString();
+    public seconds: string = this.currentDate.second().toString();
     private timeForm: FormGroup;
     private subscription: Subscription;
 
@@ -144,4 +147,5 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
             this.timeForm.controls.seconds.setValue('0');
         }
     }
+
 }
