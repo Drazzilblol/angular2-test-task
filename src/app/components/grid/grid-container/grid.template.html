@@ -7,8 +7,11 @@
 </div>
 <div class="grid-row filter-row">
     <div *ngFor="let column of columns; let i = index;" class="column right-border">
-        <grid-filter-cell (onFilter)="filter()" [column]="column"  [index]="i">
-        </grid-filter-cell>
+        <grid-date-filter-cell *ngIf="column.type === columnTypes.DATE" (onFilter)="filter()" [column]="column"
+                               [index]="i">
+        </grid-date-filter-cell>
+        <grid-text-filter-cell *ngIf="column.type !== columnTypes.DATE" (onFilter)="filter()" [column]="column"
+                               [index]="i"></grid-text-filter-cell>
     </div>
 </div>
 <div class="cont">

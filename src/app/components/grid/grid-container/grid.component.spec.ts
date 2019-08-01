@@ -5,7 +5,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
-import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
+import {GridDateFilterCellComponent} from 'app/components/grid/grid-date-filter-cell/gridDateFilterCell.component';
+import {GridTextFilterCellComponent} from 'app/components/grid/grid-text-filter-cell/gridTextFilterCell.component';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
@@ -38,7 +39,7 @@ describe('grid', function() {
     beforeEach(function() {
         TestBed.configureTestingModule({
             declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective,
-                ResizableDirective, GridFilterCellComponent],
+                ResizableDirective, GridTextFilterCellComponent, GridDateFilterCellComponent],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule, ReactiveFormsModule],
             providers: [FilterParamsService, FilterService, ColumnManagerService, DatePickerManagerService],
         }).overrideComponent(GridComponent, {
@@ -115,7 +116,7 @@ describe('grid', function() {
             const testListItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
             component.items = [testListItem1, testListItem2];
             fixture.detectChanges();
-            const input = fixtureDebug.queryAll(By.css('grid-filter-cell .filter-input'))[0].nativeElement;
+            const input = fixtureDebug.queryAll(By.css('grid-text-filter-cell .filter-input'))[0].nativeElement;
             input.value = '1';
             input.dispatchEvent(new Event('input'));
             input.dispatchEvent(new KeyboardEvent('keypress', {

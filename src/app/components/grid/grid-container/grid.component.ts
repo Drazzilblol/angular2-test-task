@@ -8,8 +8,10 @@ import {
     SimpleChanges,
     ViewChildren,
 } from '@angular/core';
-import {GridFilterCellComponent} from 'app/components/grid/grid-filter-cell/gridFilterCell.component';
+import {BaseGridFilterCellComponent} from 'app/components/grid/base-grid-filter-cell/baseGridFilterCell.component';
+import {GridTextFilterCellComponent} from 'app/components/grid/grid-text-filter-cell/gridTextFilterCell.component';
 import {IGridItem} from 'app/components/string-add/models/IGridItem';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
@@ -29,9 +31,10 @@ export class GridComponent implements OnInit, OnChanges {
     @Input() public columns: IColumn[] = [];
     public currentSort: SortParams;
     public filteredItems: IGridItem[] = this.items;
+    public columnTypes = ColumnsTypes;
 
-    @ViewChildren(GridFilterCellComponent)
-    private filterCells: QueryList<GridFilterCellComponent>;
+    @ViewChildren(BaseGridFilterCellComponent)
+    private filterCells: QueryList<BaseGridFilterCellComponent>;
 
     constructor(private filterService: FilterService, private columnManager: ColumnManagerService) {
     }

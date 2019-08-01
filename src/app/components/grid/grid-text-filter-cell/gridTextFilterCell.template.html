@@ -1,0 +1,6 @@
+<div *ngIf="column.filterable" [formGroup]="filterForm" novalidate autocomplete="off" class="form-content input-group">
+    <input (keypress)="enterPress($event)"
+           formControlName="filter" type="text"
+           placement="top" [ngbTooltip]="filterForm.value.filter" container="body"
+           class="filter-input form-control">
+</div>
