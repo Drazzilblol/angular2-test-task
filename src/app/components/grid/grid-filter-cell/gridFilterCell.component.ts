@@ -56,7 +56,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
     }
 
     /**
-     * Открывает date picker, и подписывается на его событие onSelectDate.
+     * Открывает date picker, и подписывается на его событие onSelectDates.
      */
     public openDatePicker(event): void {
         event.stopPropagation();
@@ -64,7 +64,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
             this.datePicker = this.datePickerManager
                 .open(this.container);
             this.datePicker.initialInterval = this.parsedDate;
-            this.datePickerSubscription = this.datePicker.onSelectDate
+            this.datePickerSubscription = this.datePicker.onSelectDates
                 .subscribe((date) => {
                     this.selectDate(date);
                     this.onFilter.emit();

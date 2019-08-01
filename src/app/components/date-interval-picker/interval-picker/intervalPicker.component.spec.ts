@@ -47,7 +47,7 @@ describe('interval picker component', function() {
 
     it('check interval selection', function() {
         const DATE_FORMAT: string = 'DD-MM-YYYY HH:mm:ss';
-        const subscription: Subscription = component.onSelectDate.subscribe((res) => {
+        const subscription: Subscription = component.onSelectDates.subscribe((res) => {
             expect(res).toEqual(`${moment(this.currentDate).startOf('month').format(DATE_FORMAT)}`
                 + ` - ${moment(this.currentDate).endOf('month').startOf('day').format(DATE_FORMAT)}`);
         });

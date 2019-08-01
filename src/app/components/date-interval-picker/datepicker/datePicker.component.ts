@@ -73,18 +73,6 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         this.recalculateMonth();
     }
 
-    /**
-     * Изменяет время выбраной даты.
-     */
-    public changeTime(time: Date): any {
-        this.time = time;
-        if (!this.selectedDate) {
-            this.selectedDate = this.currentDate.toDate();
-        }
-        this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
-        this.onSelectDate.emit(this.selectedDate);
-    }
-
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.initialDate) {
             this.currentDate = moment(this.initialDate);
@@ -105,7 +93,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     /**
-     * Перерасчитывает название месяца, год, количество дней в месяце и список дат, согласно выбранному дню.
+     * Перерасчитывает месяц.
      */
     public recalculateMonth(): void {
         this.monthName = startCase(this.currentDate.locale(this.translate.currentLang).format('MMMM'));
@@ -117,7 +105,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
             if (this.isDayDisabled(date)) {
                 this.thisMonth.push(this.configureDisabledDay(date));
             } else {
-                this.thisMonth.push(this.configureEnabledDay(date));
+                this.thisMonth.push(this.configureDay(date));
             }
         }
     }
@@ -149,7 +137,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     /**
      * Создает обычную дату.
      */
-    private configureEnabledDay(date: Date) {
+    private configureDay(date: Date) {
         return {
             date,
             weekDay: this.getDayOfWeek(date),
@@ -197,6 +185,18 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
      */
     public calculateWeekNumber(date: number, firstDay: number): number {
         return Math.floor((date + firstDay - 2) / 7) + 1;
+    }
+
+    /**
+     * Изменяет время выбраной даты.
+     */
+    public changeTime(time: Date): any {
+        this.time = time;
+        if (!this.selectedDate) {
+            this.selectedDate = this.currentDate.toDate();
+        }
+        this.selectedDate.setHours(this.time.getHours(), this.time.getMinutes(), this.time.getSeconds());
+        this.onSelectDate.emit(this.selectedDate);
     }
 
     public trackByFn(index): void {

@@ -19,7 +19,7 @@ const DATE_FORMAT: string = config.DATE.DATE_FORMAT;
     templateUrl: './intervalPicker.template.html',
 })
 export class IntervalPickerComponent implements OnInit {
-    @Output() public onSelectDate = new EventEmitter();
+    @Output() public onSelectDates = new EventEmitter();
     @Input() public initialInterval: string;
 
     public firstDate: Date;
@@ -36,8 +36,8 @@ export class IntervalPickerComponent implements OnInit {
      */
     public selectFirstDate(date: Date): void {
         if (this.secondDate) {
-            this.dateRange = this.createTimeInterval(date, this.secondDate);
-            this.onSelectDate.emit(this.dateRange);
+            this.dateRange = this.createDateInterval(date, this.secondDate);
+            this.onSelectDates.emit(this.dateRange);
         }
         this.firstDate = date;
         this.firstDisabledDates = {date, direction: DisableDirections.BACKWARD};
@@ -48,8 +48,8 @@ export class IntervalPickerComponent implements OnInit {
      */
     public selectSecondDate(date: Date): void {
         if (this.firstDate) {
-            this.dateRange = this.createTimeInterval(this.firstDate, date);
-            this.onSelectDate.emit(this.dateRange);
+            this.dateRange = this.createDateInterval(this.firstDate, date);
+            this.onSelectDates.emit(this.dateRange);
         }
         this.secondDate = date;
         this.secondDisabledDates = {date, direction: DisableDirections.FORWARD};
@@ -58,7 +58,7 @@ export class IntervalPickerComponent implements OnInit {
     /**
      * Создает интервал из 2-х дат.
      */
-    public createTimeInterval(firstDate: Date, secondDate: Date): any {
+    public createDateInterval(firstDate: Date, secondDate: Date): any {
         return `${moment(firstDate.getTime()).format(DATE_FORMAT)} - `
             + `${moment(secondDate.getTime()).format(DATE_FORMAT)}`;
     }
@@ -94,7 +94,7 @@ export class IntervalPickerComponent implements OnInit {
      */
     public resetPicker() {
         this.reset();
-        this.onSelectDate.emit('');
+        this.onSelectDates.emit('');
     }
 
     /**
