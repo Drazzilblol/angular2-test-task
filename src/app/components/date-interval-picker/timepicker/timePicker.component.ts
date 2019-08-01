@@ -33,7 +33,6 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public ngOnInit(): void {
-        this.initForm();
         this.initTime();
         this.subscription = fromEvent(this.elementRef.nativeElement, 'input')
             .subscribe(() => {
@@ -43,23 +42,34 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
             });
     }
 
-    private initForm() {
-        this.timeForm = new FormGroup({
-            hours: new FormControl(this.hours, [Validators.required, Validators.max(23), Validators.min(0)]),
-            minutes: new FormControl(this.minutes, [Validators.required, Validators.max(59), Validators.min(0)]),
-            seconds: new FormControl(this.seconds, [Validators.required, Validators.max(59), Validators.min(0)]),
-        });
-    }
-
+    /**
+     * Инициализирует время.
+     */
     private initTime() {
         if (this.initialTime) {
             this.currentDate = moment(this.initialTime);
-            this.timeForm.controls.hours.setValue(this.currentDate.hour().toString());
-            this.timeForm.controls.minutes.setValue(this.currentDate.minute().toString());
-            this.timeForm.controls.seconds.setValue(this.currentDate.second().toString());
+            this.initForm(this.currentDate.hour().toString(),
+                this.currentDate.minute().toString(),
+                this.currentDate.second().toString());
+        } else {
+            this.initForm('0', '0', '0');
         }
     }
 
+    /**
+     * Инициализирует форму.
+     */
+    private initForm(hour: string, minute: string, second: string) {
+        this.timeForm = new FormGroup({
+            hours: new FormControl(hour, [Validators.required, Validators.max(23), Validators.min(0)]),
+            minutes: new FormControl(minute, [Validators.required, Validators.max(59), Validators.min(0)]),
+            seconds: new FormControl(second, [Validators.required, Validators.max(59), Validators.min(0)]),
+        });
+    }
+
+    /**
+     * Изменяет время.
+     */
     public emitTime() {
         this.currentDate.hour(this.timeForm.value.hours)
             .minute(this.timeForm.value.minutes)
