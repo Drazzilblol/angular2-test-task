@@ -88,13 +88,13 @@ export class GridCellComponent extends AbstractGridCellComponent {
      */
     public getTemplate(item: IGridItem): string {
         if (this.column.type === ColumnsTypes.STATUS) {
-            return `<div class="status" [ngClass]="'${item[this.column.dataFieldName]}' | colorsPipe" placement="left"
-                        [ngbTooltip]="'STATUS.${item[this.column.dataFieldName]}' | translate" container="body">
+            return `<div class="status" [ngClass]="'${item[this.column.name]}' | colorsPipe" placement="left"
+                        [ngbTooltip]="'STATUS.${item[this.column.name]}' | translate" container="body">
                     </div>`;
         } else {
             return `<div class="content" container="body" placement="left"
-                    [ngbTooltip]="'${item[this.column.dataFieldName]}' | translate">
-                        {{'${item[this.column.dataFieldName]}' | translate}}
+                    [ngbTooltip]="'${item[this.column.name]}' | translate">
+                        {{'${item[this.column.name]}' | translate}}
                     </div>`;
         }
     }

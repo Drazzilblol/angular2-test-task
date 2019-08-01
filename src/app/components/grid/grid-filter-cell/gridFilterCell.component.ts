@@ -84,7 +84,7 @@ export class GridFilterCellComponent extends AbstractGridCellComponent {
                 this.datePicker.parseDateInterval(this.filterForm.value.filter);
             }
         }
-        return {column: this.column.dataFieldName, filter: this.filterForm.value.filter};
+        return {column: this.column.name, filter: this.filterForm.value.filter};
     }
 
     /**

@@ -45,7 +45,7 @@ describe('grid header cell', function() {
         component = fixture.componentInstance;
         component.index = 0;
         component.column = columnManager.getColumns()[0];
-        component.currentSort = new SortParams(component.column.dataFieldName, Order.ASC);
+        component.currentSort = new SortParams(component.column.name, Order.ASC);
         fixture.detectChanges();
     });
 

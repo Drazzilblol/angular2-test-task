@@ -4,7 +4,7 @@ export interface IColumn {
     width: number;
     title: string;
     type: ColumnsTypes;
-    dataFieldName: string;
+    name: string;
     resizable: boolean;
     sortable: boolean;
     defaultSort: boolean;

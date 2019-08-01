@@ -6,7 +6,7 @@ export class Column implements IColumn {
     public width: number;
     public title: string;
     public type: ColumnsTypes;
-    public dataFieldName: string;
+    public name: string;
     public resizable: boolean;
     public sortable: boolean;
     public defaultSort: boolean;
@@ -18,7 +18,7 @@ export class Column implements IColumn {
      * Конструктор колонки.
      * @param title Название колонки.
      * @param type Тип колонки.
-     * @param dataFieldName Название свойства в модели данных.
+     * @param name Название свойства в модели данных.
      * @param width Ширина колонки.
      * @param options Необязательный набор опций:
      * resizable позволяет изменять ширину колонки,
@@ -28,11 +28,11 @@ export class Column implements IColumn {
      * filterable включает фильтрацию по колонке,
      * minWidth минимальная ширина колонки.
      */
-    constructor(title: string, type: ColumnsTypes, dataFieldName: string, width: number, options?: any) {
+    constructor(title: string, type: ColumnsTypes, name: string, width: number, options?: any) {
         this.width = width;
         this.title = title;
         this.type = type;
-        this.dataFieldName = dataFieldName;
+        this.name = name;
         if (options) {
             this.resizable = options.resizable || false;
             this.sortable = options.sortable || false;

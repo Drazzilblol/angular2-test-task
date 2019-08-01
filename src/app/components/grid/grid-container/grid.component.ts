@@ -57,7 +57,7 @@ export class GridComponent implements OnInit, OnChanges {
         const defaultSortColumn = find(this.columns, (column) => {
             return column.defaultSort;
         });
-        this.currentSort = new SortParams(defaultSortColumn.dataFieldName, Order.ASC);
+        this.currentSort = new SortParams(defaultSortColumn.name, Order.ASC);
     }
 
     /**
@@ -72,9 +72,7 @@ export class GridComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.items) {
-            this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
-        } else if (changes.filterParams) {
+        if (changes.filterParams || changes.items) {
             this.filterItems();
         }
     }
