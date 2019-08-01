@@ -77,7 +77,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         if (changes.initialDate) {
             this.initTime();
         }
-        if (changes.disabledDates) {
+        if (changes.disabledDates && !changes.disabledDates.isFirstChange()) {
             this.recalculateMonth();
         }
     }
