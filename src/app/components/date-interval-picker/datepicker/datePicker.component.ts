@@ -32,7 +32,7 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
     private time: Date = new Date(0, 0, 0, 0, 0);
     public thisMonth: any[] = [];
     @Output() public onSelectDate = new EventEmitter();
-    @Input() public disabledDates: any = {};
+    @Input() public disabledDates: any;
     public monthName: string;
     public year: string;
     private subscription: Subscription;
@@ -75,8 +75,6 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.initialDate) {
-            this.currentDate = moment(this.initialDate);
-            this.selectedDate = this.initialDate;
             this.initTime();
         }
         if (changes.disabledDates) {
@@ -84,11 +82,19 @@ export class DatePickerComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
+    /**
+     * Если initialDate передан то инициализирует дату и время исходя из его значения.
+     */
     public initTime() {
         if (this.initialDate) {
+            this.currentDate = moment(this.initialDate);
+            this.selectedDate = this.initialDate;
             this.time.setHours(this.currentDate.hour(),
                 this.currentDate.minute(),
                 this.currentDate.second());
+        } else {
+            this.currentDate = moment();
+            this.selectedDate = null;
         }
     }
 

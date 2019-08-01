@@ -101,9 +101,9 @@ export class IntervalPickerComponent implements OnInit {
      * Сбросить интервал дат.
      */
     public reset() {
-        this.firstDate = undefined;
-        this.secondDate = undefined;
-        this.secondDisabledDates = {};
-        this.firstDisabledDates = {};
+        this.firstDate = null;
+        this.secondDate = null;
+        this.secondDisabledDates = null;
+        this.firstDisabledDates = null;
     }
 }
