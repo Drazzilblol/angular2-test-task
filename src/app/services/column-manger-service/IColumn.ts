@@ -37,4 +37,8 @@ export interface IColumn {
      * Минимальная ширина колонки.
      */
     minWidth: number;
+    /**
+     * Функция с помощью которой можно получить значение из модели.
+     */
+    functionValue: any;
 }

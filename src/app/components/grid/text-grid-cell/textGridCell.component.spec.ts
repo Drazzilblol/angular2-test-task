@@ -1,26 +1,27 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {StringGridItem} from 'app/components/grid/models/StringGridItem';
+import {TextGridCellComponent} from 'app/components/grid/text-grid-cell/textGridCell.component';
 import {Columns} from 'app/enums/columns.enum';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Statuses} from 'app/enums/statuses.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {GridCellComponent} from './gridCell.component';
 
 describe('grid cell', function() {
-    let component: GridCellComponent;
-    let fixture: ComponentFixture<GridCellComponent>;
+    let component: TextGridCellComponent;
+    let fixture: ComponentFixture<TextGridCellComponent>;
     let columnManager: ColumnManagerService;
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridCellComponent],
-            imports: [translateTestImport],
+            declarations: [TextGridCellComponent],
+            imports: [translateTestImport, NgbTooltipModule],
             providers: [ColumnManagerService],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(GridCellComponent);
+        fixture = TestBed.createComponent(TextGridCellComponent);
         columnManager = TestBed.get(ColumnManagerService);
         columnManager.addColumn(new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 400,
             {

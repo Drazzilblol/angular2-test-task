@@ -30,7 +30,7 @@ export class FilterService {
         return filter(items, (item) => {
             let counter: number = 0;
             forEach(filterParams, (value, key) => {
-                if (key === 'parsedDate') {
+                if (key === 'date') {
                     const interval = value.split(' - ');
                     const firstDate = moment(interval[0], DATE_FORMAT);
                     const secondDate = moment(interval[1], DATE_FORMAT);

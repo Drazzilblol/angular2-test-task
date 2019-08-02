@@ -28,7 +28,7 @@ describe('date filter cell component', function() {
         TestBed.configureTestingModule({
             declarations: [GridDateFilterCellComponent, IntervalPickerComponent, DatePickerComponent,
                 TimePickerComponent],
-            imports: [ReactiveFormsModule, translateTestImport, NgbTooltipModule,  NgxMaskModule.forRoot()],
+            imports: [ReactiveFormsModule, translateTestImport, NgbTooltipModule, NgxMaskModule.forRoot()],
             providers: [ColumnManagerService, DatePickerManagerService],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {

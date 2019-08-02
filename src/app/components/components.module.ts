@@ -8,8 +8,11 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {DatePickerComponent} from 'app/components/date-interval-picker/datepicker/datePicker.component';
 import {IntervalPickerComponent} from 'app/components/date-interval-picker/interval-picker/intervalPicker.component';
 import {TimePickerComponent} from 'app/components/date-interval-picker/timepicker/timePicker.component';
+import {DateGridCellComponent} from 'app/components/grid/date-grid-cell/dateGridCell.component';
 import {GridDateFilterCellComponent} from 'app/components/grid/grid-date-filter-cell/gridDateFilterCell.component';
 import {GridTextFilterCellComponent} from 'app/components/grid/grid-text-filter-cell/gridTextFilterCell.component';
+import {StatusGridCellComponent} from 'app/components/grid/status-grid-cell/statusGridCell.component';
+import {TextGridCellComponent} from 'app/components/grid/text-grid-cell/textGridCell.component';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterService} from 'app/services/filter/filter.service';
@@ -20,7 +23,6 @@ import {FilterParamsService} from '../services/filter-params/filterParams.servic
 import {StringsHttpService} from '../services/getStrings/stringsHttp.service';
 import {GridAddService} from '../services/strings/grid-add.service';
 import {FilterComponent} from './filter/filter.component';
-import {GridCellComponent} from './grid/grid-cell/gridCell.component';
 import {GridComponent} from './grid/grid-container/grid.component';
 import {GridHeaderCellComponent} from './grid/grid-header-cell/gridHeaderCell.component';
 import {LanguageDialogComponent} from './language/dialog/languageDialog.component';
@@ -29,9 +31,9 @@ import {StringAddComponent} from './string-add/stringAdd.component';
 
 @NgModule({
     declarations: [LanguageComponent, LanguageDialogComponent, StringAddComponent, GridComponent,
-        FilterComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective,
-        GridTextFilterCellComponent, DatePickerComponent, IntervalPickerComponent,
-        TimePickerComponent, GridDateFilterCellComponent, GridTextFilterCellComponent],
+        FilterComponent, DateGridCellComponent, GridHeaderCellComponent, DraggableDirective, ResizableDirective,
+        GridTextFilterCellComponent, DatePickerComponent, IntervalPickerComponent, StatusGridCellComponent,
+        TextGridCellComponent, TimePickerComponent, GridDateFilterCellComponent, GridTextFilterCellComponent],
     entryComponents: [LanguageDialogComponent, DatePickerComponent, IntervalPickerComponent, TimePickerComponent],
     exports: [LanguageComponent, StringAddComponent, GridComponent, FilterComponent],
     imports: [BrowserModule, NgbModule, ReactiveFormsModule, FormsModule, HttpClientModule, PipesModule,

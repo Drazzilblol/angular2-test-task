@@ -5,8 +5,11 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
+import {DateGridCellComponent} from 'app/components/grid/date-grid-cell/dateGridCell.component';
 import {GridDateFilterCellComponent} from 'app/components/grid/grid-date-filter-cell/gridDateFilterCell.component';
 import {GridTextFilterCellComponent} from 'app/components/grid/grid-text-filter-cell/gridTextFilterCell.component';
+import {StatusGridCellComponent} from 'app/components/grid/status-grid-cell/statusGridCell.component';
+import {TextGridCellComponent} from 'app/components/grid/text-grid-cell/textGridCell.component';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
@@ -14,8 +17,6 @@ import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {Sort} from 'app/enums/sort.enum';
 import {Statuses} from 'app/enums/statuses.enum';
-import english from 'app/locales/locale-en.json';
-import russian from 'app/locales/locale-ru.json';
 import {PipesModule} from 'app/pipes/pipes.module';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
@@ -24,7 +25,6 @@ import {FilterParamsService} from 'app/services/filter-params/filterParams.servi
 import {FilterService} from 'app/services/filter/filter.service';
 import {NgxMaskModule} from 'ngx-mask';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {GridCellComponent} from '../grid-cell/gridCell.component';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
 import {StringGridItem} from '../models/StringGridItem';
 import {GridComponent} from './grid.component';
@@ -39,8 +39,9 @@ describe('grid', function() {
 
     beforeEach(function() {
         TestBed.configureTestingModule({
-            declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective,
-                ResizableDirective, GridTextFilterCellComponent, GridDateFilterCellComponent],
+            declarations: [GridComponent, GridHeaderCellComponent, DraggableDirective, TextGridCellComponent,
+                DateGridCellComponent, StatusGridCellComponent, ResizableDirective, GridTextFilterCellComponent,
+                GridDateFilterCellComponent],
             imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule, ReactiveFormsModule,
                 NgxMaskModule.forRoot()],
             providers: [FilterParamsService, FilterService, ColumnManagerService, DatePickerManagerService],
@@ -56,9 +57,8 @@ describe('grid', function() {
         component = fixture.componentInstance;
 
         component.columns = columnsManager.addColumns([
-            new Column('', ColumnsTypes.STATUS, 'status', 24),
-            new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText',
-                280, {
+            new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
+                {
                     sortable: true,
                     resizable: true,
                     draggable: true,
@@ -69,11 +69,6 @@ describe('grid', function() {
                     sortable: true,
                     resizable: true,
                     draggable: true,
-                    filterable: true,
-                }),
-            new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
-                {
-                    sortable: true,
                     filterable: true,
                 }),
         ]);
@@ -96,36 +91,13 @@ describe('grid', function() {
     });
 
     describe('component', function() {
-
-        it('check item with numbers', function() {
-            const resultString: string = '1234';
-
-            component.filteredItems = [new StringGridItem('t1e2s3t4', new Date(), Statuses.FRESH)];
-            fixture.detectChanges();
-
-            expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe(resultString);
-        });
-
-        it('check item without numbers', function() {
-            component.filteredItems = [new StringGridItem('test', new Date(), Statuses.FRESH)];
-            fixture.detectChanges();
-            const firstElement = fixtureDebug.query(By.css('grid-cell .content')).nativeElement;
-
-            expect(firstElement.innerText).toBe(english.MESSAGE);
-
-            translate.use('ru');
-            fixture.detectChanges();
-
-            expect(firstElement.innerText).toBe(russian.MESSAGE);
-        });
-
         it('check filter', function() {
             const testListItem1: StringGridItem = new StringGridItem('test1', new Date(), Statuses.YESTERDAY);
             const testListItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
             component.items = [testListItem1, testListItem2];
             fixture.detectChanges();
             const input = fixtureDebug.queryAll(By.css('grid-text-filter-cell .filter-input'))[0].nativeElement;
-            input.value = '1';
+            input.value = 'test1';
             input.dispatchEvent(new Event('input'));
             input.dispatchEvent(new KeyboardEvent('keypress', {
                 bubbles: true,
@@ -135,9 +107,9 @@ describe('grid', function() {
             }));
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('1');
+            expect(fixtureDebug.query(By.css('text-grid-cell .content')).nativeElement.innerText).toBe('test1');
 
-            input.value = '2';
+            input.value = 'test2';
             input.dispatchEvent(new Event('input'));
             input.dispatchEvent(new KeyboardEvent('keypress', {
                 bubbles: true,
@@ -147,7 +119,7 @@ describe('grid', function() {
             }));
             fixture.detectChanges();
 
-            expect(fixtureDebug.query(By.css('grid-cell .content')).nativeElement.innerText).toBe('2');
+            expect(fixtureDebug.query(By.css('text-grid-cell .content')).nativeElement.innerText).toBe('test2');
         });
 
         it('check sorting', function() {
@@ -155,23 +127,24 @@ describe('grid', function() {
             const testListItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
 
             component.filteredItems = [testListItem2, testListItem1];
-            component.sort(new SortParams(Sort.TRANSFORMED, Order.ASC));
+            component.sort(new SortParams(Sort.ORIGIN, Order.ASC));
             fixture.detectChanges();
             let row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 
             expect(row[0].query(By.css('.content')).nativeElement.innerText)
-                .toBe('1');
+                .toBe('test1');
             expect(row[1].query(By.css('.content')).nativeElement.innerText)
-                .toBe('2');
+                .toBe('test2');
 
-            component.sort(new SortParams(Sort.TRANSFORMED, Order.DESC));
+            component.sort(new SortParams(Sort.ORIGIN, Order.DESC));
+
             fixture.detectChanges();
             row = fixtureDebug.queryAll(By.css('.hoverable-row'));
 
             expect(row[0].query(By.css('.content')).nativeElement.innerText)
-                .toBe('2');
+                .toBe('test2');
             expect(row[1].query(By.css('.content')).nativeElement.innerText)
-                .toBe('1');
+                .toBe('test1');
         });
 
         it('check dragging', fakeAsync(function() {

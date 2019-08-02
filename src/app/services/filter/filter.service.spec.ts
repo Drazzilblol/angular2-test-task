@@ -27,7 +27,7 @@ describe('strings filter service', function() {
         const testItem2: StringGridItem = new StringGridItem('test2', new Date(), Statuses.FRESH);
         const stringItems: StringGridItem[] = [testItem1, testItem2];
 
-        expect(filterService.filterItems(stringItems, {transformedText: '2'}))
+        expect(filterService.filterItems(stringItems, {originText: 'test2'}))
             .toEqual([testItem2]);
     });
 });

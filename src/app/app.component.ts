@@ -3,7 +3,8 @@ import {SortParams} from 'app/components/grid/grid-container/models/SortParams';
 import {StringGridItem} from 'app/components/grid/models/StringGridItem';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
-import {clone, concat, forEach, now} from 'lodash';
+import {clone, concat, filter, forEach, get, isEmpty, now} from 'lodash';
+import moment from 'moment';
 import {interval, Subscription} from 'rxjs';
 import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
@@ -11,6 +12,8 @@ import {Column} from './services/column-manger-service/column';
 import {FilterParamsService} from './services/filter-params/filterParams.service';
 import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
+
+const MESSAGE: string = 'MESSAGE';
 
 @Component({
     selector: 'app',
@@ -39,13 +42,17 @@ export class AppComponent implements OnDestroy, OnInit {
 
     private initColumns() {
         this.columns1 = [
-            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23),
+            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23,
+                {
+                    functionValue: this.statusCellFunctionValue,
+                }),
             new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    functionValue: this.transformedTextCellFunctionValue,
                 }),
             new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
                 {
@@ -53,24 +60,30 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    functionValue: this.originTextCellFunctionValue,
                 }),
-            new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
+            new Column(Columns.DATE, ColumnsTypes.DATE, 'date', 216,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    functionValue: this.dateCellFunctionValue,
                 }),
         ];
 
         this.columns2 = [
-            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23),
+            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23,
+                {
+                    functionValue: this.statusCellFunctionValue,
+                }),
             new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    functionValue: this.transformedTextCellFunctionValue,
                 }),
             new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
                 {
@@ -78,13 +91,15 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    functionValue: this.originTextCellFunctionValue,
                 }),
-            new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
+            new Column(Columns.DATE, ColumnsTypes.DATE, 'date', 216,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
                     filterable: true,
+                    functionValue: this.dateCellFunctionValue,
                 }),
         ];
     }
@@ -163,5 +178,28 @@ export class AppComponent implements OnDestroy, OnInit {
         if (this.intervalSub) {
             this.intervalSub.unsubscribe();
         }
+    }
+
+    public transformedTextCellFunctionValue(item, path: string) {
+        const value = item.originText;
+        if (isEmpty(value.trim())) {
+            return MESSAGE;
+        }
+        const filteredArray = filter(value.replace(/\s+/g, '')
+            .split(''), (element) => !isNaN(+element));
+        item[path] = filteredArray.length ? filteredArray.join('') : MESSAGE;
+        return item[path];
+    }
+
+    public statusCellFunctionValue(item, path: string) {
+        return get(item, path);
+    }
+
+    public originTextCellFunctionValue(item, path: string) {
+        return get(item, path);
+    }
+
+    public dateCellFunctionValue(item, path: string) {
+        return moment(get(item, path).getTime()).format('DD-MM-YYYY HH:mm:ss');
     }
 }
