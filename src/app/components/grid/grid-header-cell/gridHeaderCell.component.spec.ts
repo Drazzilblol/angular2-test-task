@@ -75,7 +75,7 @@ describe('grid header cell', function() {
 
     it('check is onSort output emmit value', fakeAsync(function() {
         component.onSort.subscribe((params) => {
-            expect(params.column).toBe('test1');
+            expect(params.columnName).toBe('test1');
             expect(params.order).toBe(Order.DESC);
         });
         fixtureDebug.query(By.css('.content')).nativeElement

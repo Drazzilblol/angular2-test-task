@@ -68,7 +68,7 @@ export class GridHeaderCellComponent extends AbstractGridCellComponent {
      * @param params параметры сортировкию
      */
     private sort(params: any) {
-        if (this.currentSort.order === Order.ASC && this.currentSort.column === this.column.name) {
+        if (this.currentSort.order === Order.ASC && this.currentSort.columnName === this.column.name) {
             this.currentSort.order = Order.DESC;
             this.icon = 'expand_less';
         } else {
@@ -99,6 +99,6 @@ export class GridHeaderCellComponent extends AbstractGridCellComponent {
     }
 
     public isCurrentSort() {
-        return this.column.name === this.currentSort.column;
+        return this.column.name === this.currentSort.columnName;
     }
 }

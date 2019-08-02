@@ -45,7 +45,7 @@ export class GridComponent implements OnInit, OnChanges {
      */
     public sort(params: SortParams): void {
         this.filteredItems.sort((a, b) => {
-            return a[params.column].localeCompare(b[params.column],
+            return a[params.columnName].localeCompare(b[params.columnName],
                 undefined,
                 {numeric: true, sensitivity: 'base'});
         });
