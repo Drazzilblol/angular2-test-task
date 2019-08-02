@@ -15,7 +15,6 @@ import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {FilterService} from 'app/services/filter/filter.service';
-import {find} from 'lodash';
 import {SortParams} from './models/SortParams';
 
 @Component({
@@ -58,10 +57,7 @@ export class GridComponent implements OnInit, OnChanges {
 
     public ngOnInit(): void {
         this.columns = this.columnManager.addColumns(this.columns);
-        const defaultSortColumn = find(this.columns, (column) => {
-            return column.title === this.options.defaultSort;
-        });
-        this.currentSort = new SortParams(defaultSortColumn.name, Order.ASC);
+        this.sort(this.options.defaultSort);
         this.trackByFn = this.options.trackByFunction;
     }
 

@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {SortParams} from 'app/components/grid/grid-container/models/SortParams';
 import {StringGridItem} from 'app/components/grid/models/StringGridItem';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
+import {Order} from 'app/enums/order.enum';
 import {clone, concat, forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
 import {Columns} from './enums/columns.enum';
@@ -57,7 +59,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     sortable: true,
                     resizable: true,
                     draggable: true,
-                    defaultSort: true,
                     filterable: true,
                 }),
         ];
@@ -110,7 +111,7 @@ export class AppComponent implements OnDestroy, OnInit {
             trackByFunction(index: number, item: StringGridItem): any {
                 return item.id + item.status;
             },
-            defaultSort: Columns.DATE,
+            defaultSort: new SortParams('parsedDate', Order.ASC),
         };
     }
 

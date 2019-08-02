@@ -35,19 +35,40 @@ export class GridDateFilterCellComponent extends BaseGridFilterCellComponent {
     /**
      * Открывает date picker, и подписывается на его событие onSelectDates.
      */
-    public openDatePicker(event): void {
+    public openDatePicker(): void {
+        this.datePicker = this.datePickerManager
+            .open(this.container);
+        this.datePicker.initialInterval = this.parsedDate;
+        this.datePickerSubscription = this.datePicker.onSelectDates
+            .subscribe((date) => {
+                this.selectDate(date);
+                this.onFilter.emit();
+            });
+        this.isDatePickerOpened = true;
+        this.initClickListener();
+    }
+
+    /**
+     * Открывает date picker, и подписывается на его событие onSelectDates.
+     */
+    public buttonClick(event): void {
         event.stopPropagation();
         if (!this.isDatePickerOpened) {
-            this.datePicker = this.datePickerManager
-                .open(this.container);
-            this.datePicker.initialInterval = this.parsedDate;
-            this.datePickerSubscription = this.datePicker.onSelectDates
-                .subscribe((date) => {
-                    this.selectDate(date);
-                    this.onFilter.emit();
-                });
-            this.isDatePickerOpened = true;
-            this.initClickListener();
+            this.openDatePicker();
+        } else {
+            this.datePickerManager.close(this.container);
+            this.isDatePickerOpened = false;
+            this.datePickerSubscription.unsubscribe();
+        }
+    }
+
+    /**
+     * Открывает date picker, и подписывается на его событие onSelectDates.
+     */
+    public inputClick(event): void {
+        event.stopPropagation();
+        if (!this.isDatePickerOpened) {
+            this.openDatePicker();
         }
     }
 
