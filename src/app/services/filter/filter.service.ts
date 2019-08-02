@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {IGridItem} from 'app/components/string-add/models/IGridItem';
+import {IGridItem} from 'app/components/grid/models/IGridItem';
 import config from 'app/config.json';
 import {filter, forEach, size, startsWith} from 'lodash';
 import moment from 'moment';

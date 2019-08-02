@@ -9,7 +9,6 @@ export class Column implements IColumn {
     public name: string;
     public resizable: boolean;
     public sortable: boolean;
-    public defaultSort: boolean;
     public draggable: boolean;
     public filterable: boolean;
     public minWidth: number;
@@ -36,7 +35,6 @@ export class Column implements IColumn {
         if (options) {
             this.resizable = options.resizable || false;
             this.sortable = options.sortable || false;
-            this.defaultSort = options.defaultSort || false;
             this.draggable = options.draggable || false;
             this.filterable = options.filterable || false;
             this.minWidth = options.minWidth || config.COLUMN.MIN_WIDTH;

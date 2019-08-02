@@ -4,8 +4,9 @@
     <language class="navbar-nav ml-auto"></language>
 </nav>
 
-<grid [columns]="columns1" [items]="items" [filterParams]="filterParams1"></grid>
+<grid [columns]="columns1" [items]="items" [filterParams]="filterParams1" [options]="gridOptions"></grid>
 
-<grid style="bottom: 0" [columns]="columns2" [items]="items" [filterParams]="filterParams2"></grid>
+<grid style="bottom: 0" [columns]="columns2" [items]="items" [filterParams]="filterParams2"
+      [options]="gridOptions"></grid>
 
 <filter></filter>

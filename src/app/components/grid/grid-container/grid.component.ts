@@ -9,8 +9,7 @@ import {
     ViewChildren,
 } from '@angular/core';
 import {BaseGridFilterCellComponent} from 'app/components/grid/base-grid-filter-cell/baseGridFilterCell.component';
-import {GridTextFilterCellComponent} from 'app/components/grid/grid-text-filter-cell/gridTextFilterCell.component';
-import {IGridItem} from 'app/components/string-add/models/IGridItem';
+import {IGridItem} from 'app/components/grid/models/IGridItem';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
@@ -29,9 +28,11 @@ export class GridComponent implements OnInit, OnChanges {
     @Input() public filterParams: any = {};
     @Input() public items: IGridItem[] = [];
     @Input() public columns: IColumn[] = [];
+    @Input() public options: any = {};
     public currentSort: SortParams;
     public filteredItems: IGridItem[] = this.items;
     public columnTypes = ColumnsTypes;
+    public trackByFn: any;
 
     @ViewChildren(BaseGridFilterCellComponent)
     private filterCells: QueryList<BaseGridFilterCellComponent>;
@@ -58,9 +59,10 @@ export class GridComponent implements OnInit, OnChanges {
     public ngOnInit(): void {
         this.columns = this.columnManager.addColumns(this.columns);
         const defaultSortColumn = find(this.columns, (column) => {
-            return column.defaultSort;
+            return column.title === this.options.defaultSort;
         });
         this.currentSort = new SortParams(defaultSortColumn.name, Order.ASC);
+        this.trackByFn = this.options.trackByFunction;
     }
 
     /**
@@ -68,10 +70,6 @@ export class GridComponent implements OnInit, OnChanges {
      */
     public filterItems(): void {
         this.filteredItems = this.filterService.filterItems(this.items, this.filterParams);
-    }
-
-    public trackByFn(index: number, item: IGridItem): any {
-        return item.trackByFn(index, item);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

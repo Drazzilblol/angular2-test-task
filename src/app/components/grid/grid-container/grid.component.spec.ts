@@ -24,9 +24,9 @@ import {FilterParamsService} from 'app/services/filter-params/filterParams.servi
 import {FilterService} from 'app/services/filter/filter.service';
 import {NgxMaskModule} from 'ngx-mask';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {StringGridItem} from '../../string-add/models/StringGridItem';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
+import {StringGridItem} from '../models/StringGridItem';
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';
 
@@ -74,10 +74,16 @@ describe('grid', function() {
             new Column(Columns.DATE, ColumnsTypes.DATE, 'parsedDate', 216,
                 {
                     sortable: true,
-                    defaultSort: true,
                     filterable: true,
                 }),
         ]);
+
+        component.options = {
+            trackByFunction(index: number, item: StringGridItem): any {
+                return item.id + item.status;
+            },
+            defaultSort: Columns.DATE,
+        };
         fixture.detectChanges();
     });
 

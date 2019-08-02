@@ -1,5 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
+import {StringGridItem} from 'app/components/grid/models/StringGridItem';
 import {Columns} from 'app/enums/columns.enum';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Statuses} from 'app/enums/statuses.enum';

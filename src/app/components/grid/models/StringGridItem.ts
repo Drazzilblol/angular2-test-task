@@ -1,4 +1,4 @@
-import {IGridItem} from 'app/components/string-add/models/IGridItem';
+import {IGridItem} from 'app/components/grid/models/IGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {IdGenerator} from 'app/utils/idGenerator';
 import {filter, isEmpty} from 'lodash';
@@ -53,9 +53,5 @@ export class StringGridItem implements IGridItem {
 
     get date() {
         return this.dateMils;
-    }
-
-    public trackByFn(index: number, item: StringGridItem): any {
-        return item.id + item.status;
     }
 }

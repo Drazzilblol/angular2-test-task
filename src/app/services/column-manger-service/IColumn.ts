@@ -7,7 +7,6 @@ export interface IColumn {
     name: string;
     resizable: boolean;
     sortable: boolean;
-    defaultSort: boolean;
     draggable: boolean;
     filterable: boolean;
     minWidth: number;

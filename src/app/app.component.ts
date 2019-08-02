@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {StringGridItem} from 'app/components/grid/models/StringGridItem';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {clone, concat, forEach, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
@@ -22,6 +23,7 @@ export class AppComponent implements OnDestroy, OnInit {
     public intervalSub: Subscription;
     public filterParams1: any = {};
     public filterParams2: any = {};
+    public gridOptions: any = {};
 
     constructor(private gridAddService: GridAddService, private changeDetector: ChangeDetectorRef,
                 private filterService: FilterParamsService, private stringsHttpService: StringsHttpService) {
@@ -30,6 +32,7 @@ export class AppComponent implements OnDestroy, OnInit {
     public ngOnInit(): void {
         this.initColumns();
         this.initSubscriptions();
+        this.gridOptions = this.constructGridOptions();
     }
 
     private initColumns() {
@@ -80,7 +83,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     sortable: true,
                     resizable: true,
                     draggable: true,
-                    defaultSort: true,
                     filterable: true,
                 }),
         ];
@@ -101,6 +103,15 @@ export class AppComponent implements OnDestroy, OnInit {
             this.filterParams1 = clone(filterParams);
             this.filterParams2 = clone(filterParams);
         }));
+    }
+
+    private constructGridOptions(): any {
+        return {
+            trackByFunction(index: number, item: StringGridItem): any {
+                return item.id + item.status;
+            },
+            defaultSort: Columns.DATE,
+        };
     }
 
     /**
