@@ -22,6 +22,7 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import {FilterService} from 'app/services/filter/filter.service';
+import {NgxMaskModule} from 'ngx-mask';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {StringGridItem} from '../../string-add/models/StringGridItem';
 import {GridCellComponent} from '../grid-cell/gridCell.component';
@@ -40,7 +41,8 @@ describe('grid', function() {
         TestBed.configureTestingModule({
             declarations: [GridComponent, GridCellComponent, GridHeaderCellComponent, DraggableDirective,
                 ResizableDirective, GridTextFilterCellComponent, GridDateFilterCellComponent],
-            imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule, ReactiveFormsModule],
+            imports: [translateTestImport, NgbTooltipModule, HttpClientModule, PipesModule, ReactiveFormsModule,
+                NgxMaskModule.forRoot()],
             providers: [FilterParamsService, FilterService, ColumnManagerService, DatePickerManagerService],
         }).overrideComponent(GridComponent, {
             set: {changeDetection: ChangeDetectionStrategy.Default},

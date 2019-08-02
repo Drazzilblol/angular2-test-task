@@ -13,6 +13,7 @@ import {GridTextFilterCellComponent} from 'app/components/grid/grid-text-filter-
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterService} from 'app/services/filter/filter.service';
+import {NgxMaskModule} from 'ngx-mask';
 import {DraggableDirective} from '../directives/draggable/draggable.directive';
 import {PipesModule} from '../pipes/pipes.module';
 import {FilterParamsService} from '../services/filter-params/filterParams.service';
@@ -40,7 +41,8 @@ import {StringAddComponent} from './string-add/stringAdd.component';
                 provide: TranslateLoader,
                 useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '/locales/locale-', '.json'),
             },
-        })],
+        }),
+        NgxMaskModule.forRoot()],
     providers: [GridAddService, FilterParamsService, StringsHttpService, DatePickerManagerService, FilterService],
 })
 export class ComponentsModule {

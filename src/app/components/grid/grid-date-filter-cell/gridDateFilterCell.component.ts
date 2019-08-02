@@ -1,9 +1,14 @@
 import {ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewChild, ViewContainerRef} from '@angular/core';
 import {IntervalPickerComponent} from 'app/components/date-interval-picker/interval-picker/intervalPicker.component';
 import {BaseGridFilterCellComponent} from 'app/components/grid/base-grid-filter-cell/baseGridFilterCell.component';
+import config from 'app/config.json';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
+import {forEach} from 'lodash';
+import moment from 'moment';
 import {Subscription} from 'rxjs';
+
+const DATE_FORMAT: string = config.DATE.DATE_FORMAT;
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,7 +56,7 @@ export class GridDateFilterCellComponent extends BaseGridFilterCellComponent {
      */
     public getFilterValue() {
         this.selectDate(this.filterForm.value.filter);
-        if (this.isDatePickerOpened) {
+        if (this.isDatePickerOpened && this.isIntervalValid(this.filterForm.value.filter)) {
             this.datePicker.parseDateInterval(this.filterForm.value.filter);
         }
         return {column: this.column.name, filter: this.filterForm.value.filter};
@@ -63,6 +68,20 @@ export class GridDateFilterCellComponent extends BaseGridFilterCellComponent {
     public selectDate(interval: string) {
         this.parsedDate = interval;
         this.filterForm.controls.filter.setValue(this.parsedDate);
+    }
+
+    /**
+     * Проверяет валидный ли интервал.
+     */
+    private isIntervalValid(interval: string) {
+        if (interval) {
+            const days: string[] = interval.split(' - ');
+            const firstDate = moment(days[0], DATE_FORMAT);
+            const secondDate = moment(days[1], DATE_FORMAT);
+            return firstDate.isValid() && secondDate.isValid() && firstDate.isSameOrBefore(secondDate);
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -79,5 +98,29 @@ export class GridDateFilterCellComponent extends BaseGridFilterCellComponent {
                 }
             },
         );
+    }
+
+    /**
+     * Преобразует формат даты в маску для ввода даты.
+     */
+    public parseFormatToMask(): string {
+        const format: string[] = DATE_FORMAT.split('');
+        const result: string[] = [];
+        forEach(format, (item) => {
+            if (this.isLetter(item)) {
+                result.push('0');
+            } else {
+                result.push(item);
+            }
+        });
+        return result.join('');
+    }
+
+    /**
+     * Проверяет является ли симовл буквой.
+     */
+    public isLetter(symbol: string): boolean {
+        const symbolMatch = symbol.match(/\w/);
+        return symbolMatch && symbolMatch.length === 1;
     }
 }

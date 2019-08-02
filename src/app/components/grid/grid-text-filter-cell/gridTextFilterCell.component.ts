@@ -20,5 +20,4 @@ export class GridTextFilterCellComponent extends BaseGridFilterCellComponent {
     public getFilterValue() {
         return {column: this.column.name, filter: this.filterForm.value.filter};
     }
-
 }

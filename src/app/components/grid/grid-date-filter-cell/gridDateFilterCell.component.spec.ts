@@ -14,6 +14,7 @@ import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Column} from 'app/services/column-manger-service/column';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
+import {NgxMaskModule} from 'ngx-mask';
 import {translateTestImport} from 'tests/testTranslationConfig';
 
 describe('date filter cell component', function() {
@@ -27,7 +28,7 @@ describe('date filter cell component', function() {
         TestBed.configureTestingModule({
             declarations: [GridDateFilterCellComponent, IntervalPickerComponent, DatePickerComponent,
                 TimePickerComponent],
-            imports: [ReactiveFormsModule, translateTestImport, NgbTooltipModule],
+            imports: [ReactiveFormsModule, translateTestImport, NgbTooltipModule,  NgxMaskModule.forRoot()],
             providers: [ColumnManagerService, DatePickerManagerService],
         }).overrideModule(BrowserDynamicTestingModule, {
             set: {

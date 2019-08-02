@@ -48,11 +48,11 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
     private initTime() {
         if (this.initialTime) {
             this.currentDate = moment(this.initialTime);
-            this.initForm(this.currentDate.hour().toString(),
+            this.fillForm(this.currentDate.hour().toString(),
                 this.currentDate.minute().toString(),
                 this.currentDate.second().toString());
         } else {
-            this.initForm('0', '0', '0');
+            this.fillForm('0', '0', '0');
         }
     }
 
@@ -65,6 +65,19 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
             minutes: new FormControl(minute, [Validators.required, Validators.max(59), Validators.min(0)]),
             seconds: new FormControl(second, [Validators.required, Validators.max(59), Validators.min(0)]),
         });
+    }
+
+    /**
+     * Заполняет форму.
+     */
+    private fillForm(hour: string, minute: string, second: string) {
+        if (!this.timeForm) {
+            this.initForm(hour, minute, second);
+        } else {
+            this.timeForm.controls.hours.setValue(hour);
+            this.timeForm.controls.minutes.setValue(minute);
+            this.timeForm.controls.seconds.setValue(second);
+        }
     }
 
     /**
@@ -138,14 +151,8 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.initialTime && this.timeForm && !this.initialTime) {
-            this.currentDate.hour(0);
-            this.currentDate.minute(0);
-            this.currentDate.second(0);
-            this.timeForm.controls.hours.setValue('0');
-            this.timeForm.controls.minutes.setValue('0');
-            this.timeForm.controls.seconds.setValue('0');
+        if (changes.initialTime && this.timeForm) {
+            this.initTime();
         }
     }
-
 }
