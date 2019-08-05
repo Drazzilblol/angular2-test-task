@@ -77,10 +77,14 @@ export class GridDateFilterCellComponent extends BaseGridFilterCellComponent {
      */
     public getFilterValue() {
         this.selectDate(this.filterForm.value.filter);
-        if (this.isDatePickerOpened && this.isIntervalValid(this.filterForm.value.filter)) {
-            this.datePicker.parseDateInterval(this.filterForm.value.filter);
+        if (this.isIntervalValid(this.filterForm.value.filter)) {
+            if (this.isDatePickerOpened) {
+                this.datePicker.parseDateInterval(this.filterForm.value.filter);
+            }
+            return {column: this.column.name, filter: this.filterForm.value.filter};
+        } else {
+            return '';
         }
-        return {column: this.column.name, filter: this.filterForm.value.filter};
     }
 
     /**
