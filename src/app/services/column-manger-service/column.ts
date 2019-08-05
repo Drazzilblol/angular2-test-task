@@ -8,12 +8,15 @@ export class Column implements IColumn {
     public title: string;
     public type: ColumnsTypes;
     public name: string;
-    public resizable: boolean;
-    public sortable: boolean;
-    public draggable: boolean;
-    public filterable: boolean;
-    public minWidth: number;
-    public functionValue: any
+    public resizable: boolean = false;
+    public sortable: boolean = false;
+    public draggable: boolean = false;
+    public filterable: boolean = false;
+    public minWidth: number = config.COLUMN.MIN_WIDTH;
+    public functionValue: any = function(item, path) {
+        return get(item, path);
+    };
+;
 
     /**
      * Конструктор колонки.

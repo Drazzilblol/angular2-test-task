@@ -44,10 +44,7 @@ export class AppComponent implements OnDestroy, OnInit {
 
     private initColumns() {
         this.columns1 = [
-            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23,
-                {
-                    functionValue: this.statusCellFunctionValue,
-                }),
+            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23),
             new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText', 280,
                 {
                     sortable: true,
@@ -62,7 +59,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    functionValue: this.originTextCellFunctionValue,
                 }),
             new Column(Columns.DATE, ColumnsTypes.DATE, 'date', 216,
                 {
@@ -75,10 +71,7 @@ export class AppComponent implements OnDestroy, OnInit {
         ];
 
         this.columns2 = [
-            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23,
-                {
-                    functionValue: this.statusCellFunctionValue,
-                }),
+            new Column(Columns.STATUS, ColumnsTypes.STATUS, 'status', 23),
             new Column(Columns.TRANSFORMED, ColumnsTypes.TEXT, 'transformedText', 280,
                 {
                     sortable: true,
@@ -93,7 +86,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    functionValue: this.originTextCellFunctionValue,
                 }),
             new Column(Columns.DATE, ColumnsTypes.DATE, 'date', 216,
                 {
@@ -189,16 +181,7 @@ export class AppComponent implements OnDestroy, OnInit {
         }
         const filteredArray = filter(value.replace(/\s+/g, '')
             .split(''), (element) => !isNaN(+element));
-        item[path] = filteredArray.length ? filteredArray.join('') : MESSAGE;
-        return item[path];
-    }
-
-    public statusCellFunctionValue(item, path: string) {
-        return get(item, path);
-    }
-
-    public originTextCellFunctionValue(item, path: string) {
-        return get(item, path);
+        return item[path] = filteredArray.length ? filteredArray.join('') : MESSAGE;
     }
 
     public dateCellFunctionValue(item, path: string) {
