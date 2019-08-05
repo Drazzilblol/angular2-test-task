@@ -76,14 +76,13 @@ export class GridDateFilterCellComponent extends BaseGridFilterCellComponent {
      * Возвращает текущее значение фильтра.
      */
     public getFilterValue() {
-        this.selectDate(this.filterForm.value.filter);
-        if (this.isIntervalValid(this.filterForm.value.filter)) {
-            if (this.isDatePickerOpened) {
-                this.datePicker.parseDateInterval(this.filterForm.value.filter);
-            }
-            return {column: this.column.name, filter: this.filterForm.value.filter};
+        const formValue = this.filterForm.value.filter;
+        this.selectDate(formValue);
+        if (this.isIntervalValid(formValue)) {
+            this.passIntervalToDatePicker(formValue);
+            return {column: this.column.name, filter: formValue};
         } else {
-            return '';
+            return {column: this.column.name, filter: ''};
         }
     }
 
@@ -106,6 +105,15 @@ export class GridDateFilterCellComponent extends BaseGridFilterCellComponent {
             return firstDate.isValid() && secondDate.isValid() && firstDate.isSameOrBefore(secondDate);
         } else {
             return true;
+        }
+    }
+
+    /**
+     * Создает данные для фильтрации из интервала дат, и отправляет их.
+     */
+    private passIntervalToDatePicker(interval: string) {
+        if (this.isDatePickerOpened) {
+            this.datePicker.parseDateInterval(interval);
         }
     }
 
