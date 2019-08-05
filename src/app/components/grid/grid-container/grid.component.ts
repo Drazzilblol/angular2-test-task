@@ -47,15 +47,15 @@ export class GridComponent implements OnInit, OnChanges {
         const sortColumnIndex = findIndex(this.columns, (col) => {
             return params.columnName === col.name;
         });
-        if (this.columns[sortColumnIndex] && this.columns[sortColumnIndex].type !== ColumnsTypes.DATE) {
-            this.filteredItems.sort((a, b) => {
-                return a[params.columnName].localeCompare(b[params.columnName],
+        if (sortColumnIndex !== -1 && this.columns[sortColumnIndex].type !== ColumnsTypes.DATE) {
+            this.filteredItems.sort((item, nextItem) => {
+                return item[params.columnName].localeCompare(nextItem[params.columnName],
                     undefined,
                     {numeric: true, sensitivity: 'base'});
             });
         } else {
-            this.filteredItems = sortBy(this.filteredItems, (a) => {
-                return a.date.valueOf();
+            this.filteredItems = sortBy(this.filteredItems, (item) => {
+                return item.date.valueOf();
             });
         }
 

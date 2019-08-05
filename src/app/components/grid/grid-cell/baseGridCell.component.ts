@@ -1,4 +1,4 @@
-import {Compiler, ElementRef, Input, Renderer2, ViewChild, ViewContainerRef,} from '@angular/core';
+import {ElementRef, Input, Renderer2, ViewChild, ViewContainerRef,} from '@angular/core';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 

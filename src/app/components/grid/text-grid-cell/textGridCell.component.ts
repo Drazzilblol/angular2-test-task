@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Compiler, Component, ElementRef, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Renderer2} from '@angular/core';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {BaseGridCellComponent} from '../grid-cell/baseGridCell.component';
 
