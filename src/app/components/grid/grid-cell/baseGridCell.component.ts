@@ -11,7 +11,7 @@ export abstract class BaseGridCellComponent extends AbstractGridCellComponent {
     private container: ViewContainerRef;
 
     protected constructor(public elementRef: ElementRef, public renderer: Renderer2,
-                          public columnManager: ColumnManagerService, public compiler: Compiler) {
+                          public columnManager: ColumnManagerService) {
         super(elementRef, renderer, columnManager);
     }
 

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Compiler, Component, ElementRef, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Renderer2} from '@angular/core';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {BaseGridCellComponent} from '../grid-cell/baseGridCell.component';
 
@@ -10,9 +10,8 @@ import {BaseGridCellComponent} from '../grid-cell/baseGridCell.component';
 export class DateGridCellComponent extends BaseGridCellComponent {
     public date: string;
 
-    constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService,
-                public compiler: Compiler) {
-        super(elementRef, renderer, columnManager, compiler);
+    constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService) {
+        super(elementRef, renderer, columnManager);
     }
 
     public ngOnInit(): void {
