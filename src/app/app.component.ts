@@ -1,11 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {SortParams} from 'app/components/grid/grid-container/models/SortParams';
 import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
-import config from 'app/config.json';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
-import {clone, concat, forEach, get, isEmpty, now} from 'lodash';
-import moment from 'moment';
+import {clone, concat, forEach, isEmpty, now} from 'lodash';
 import {interval, Subscription} from 'rxjs';
 import {Columns} from './enums/columns.enum';
 import {Statuses} from './enums/statuses.enum';
@@ -15,7 +13,6 @@ import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
 
 const MESSAGE: string = 'MESSAGE';
-const DATE_FORMAT: string = config.DATE.DATE_FORMAT;
 
 @Component({
     selector: 'app',
@@ -66,7 +63,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    functionValue: this.dateCellFunctionValue,
                 }),
         ];
 
@@ -93,7 +89,6 @@ export class AppComponent implements OnDestroy, OnInit {
                     resizable: true,
                     draggable: true,
                     filterable: true,
-                    functionValue: this.dateCellFunctionValue,
                 }),
         ];
     }
@@ -181,9 +176,5 @@ export class AppComponent implements OnDestroy, OnInit {
         }
         const filteredArray = value.match(/\d/g);
         return item[path] = filteredArray ? filteredArray.join('') : MESSAGE;
-    }
-
-    public dateCellFunctionValue(item, path: string) {
-        return moment(get(item, path).getTime()).format(DATE_FORMAT);
     }
 }

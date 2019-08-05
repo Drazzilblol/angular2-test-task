@@ -1,6 +1,7 @@
 import config from 'app/config.json';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
+import moment from 'moment';
 
 export class Column implements IColumn {
     public width: number;
@@ -11,6 +12,7 @@ export class Column implements IColumn {
     public sortable: boolean = false;
     public draggable: boolean = false;
     public filterable: boolean = false;
+    public dateFormat: string = config.DATE.DATE_FORMAT;
     public minWidth: number = config.COLUMN.MIN_WIDTH;
     public functionValue: any;
 
@@ -39,7 +41,12 @@ export class Column implements IColumn {
             this.sortable = options.sortable || false;
             this.draggable = options.draggable || false;
             this.filterable = options.filterable || false;
+            this.dateFormat = options.dateFormat || config.DATE.DATE_FORMAT;
             this.minWidth = options.minWidth || config.COLUMN.MIN_WIDTH;
         }
+    }
+
+    public parseDate(date) {
+        return moment(date.getTime()).format(this.dateFormat);
     }
 }

@@ -41,4 +41,9 @@ export interface IColumn {
      * Функция с помощью которой можно получить значение из модели.
      */
     functionValue: any;
+
+    /**
+     * Функция для преобразования даты в строку.
+     */
+    parseDate(date: Date);
 }

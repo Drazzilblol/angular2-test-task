@@ -2,6 +2,7 @@ import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {Columns} from 'app/enums/columns.enum';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {ResizeEdges} from 'app/enums/resizeEdges.enum';
+import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {Subscription} from 'rxjs';
 import {Column} from './column';
 import {ColumnManagerService} from './columnManager.service';
@@ -43,7 +44,7 @@ describe('column manager service', function() {
 
         let subscription: Subscription = columnManager.getObservable().subscribe((result: any) => {
             expect(result.type).toBe('header');
-            const columns: Column[] = columnManager.getColumns();
+            const columns: IColumn[] = columnManager.getColumns();
             expect(columns[0].width).toBe(420);
             expect(columns[1].width).toBe(380);
         });

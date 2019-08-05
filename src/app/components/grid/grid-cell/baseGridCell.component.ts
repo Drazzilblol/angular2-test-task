@@ -1,5 +1,6 @@
-import {ElementRef, Input, Renderer2, ViewChild, ViewContainerRef,} from '@angular/core';
+import {ElementRef, Input, Renderer2, ViewChild, ViewContainerRef} from '@angular/core';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
+import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {get, isFunction} from 'lodash';
 
@@ -26,6 +27,14 @@ export abstract class BaseGridCellComponent extends AbstractGridCellComponent {
                 return get(item, path);
             };
         }
-        this.itemValue = this.getValue(this.item, this.column.name);
+        this.getItemValue();
+    }
+
+    private getItemValue() {
+        if (this.column.type === ColumnsTypes.DATE) {
+            this.itemValue = this.column.parseDate(this.getValue(this.item, this.column.name));
+        } else {
+            this.itemValue = this.getValue(this.item, this.column.name);
+        }
     }
 }

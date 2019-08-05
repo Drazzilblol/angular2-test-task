@@ -24,8 +24,6 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import {FilterService} from 'app/services/filter/filter.service';
-import {get} from 'lodash';
-import moment from 'moment';
 import {NgxMaskModule} from 'ngx-mask';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
@@ -72,9 +70,6 @@ describe('grid', function() {
                     sortable: true,
                     resizable: true,
                     draggable: true,
-                    functionValue: (item, path: string) => {
-                        return moment(get(item, path).getTime()).format('DD-MM-YYYY HH:mm:ss');
-                    },
                 }),
         ]);
 
