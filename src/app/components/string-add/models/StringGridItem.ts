@@ -1,8 +1,7 @@
-import {IGridItem} from 'app/components/grid/models/IGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {IdGenerator} from 'app/utils/idGenerator';
 
-export class StringGridItem implements IGridItem {
+export class StringGridItem {
     public originText: string;
     public transformedText: string;
     public status: Statuses;

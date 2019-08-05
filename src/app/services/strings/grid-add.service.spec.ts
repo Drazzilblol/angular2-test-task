@@ -1,5 +1,5 @@
 import {fakeAsync, tick} from '@angular/core/testing';
-import {StringGridItem} from 'app/components/grid/models/StringGridItem';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {Subscription} from 'rxjs';
 import {GridAddService} from './grid-add.service';

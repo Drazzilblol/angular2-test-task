@@ -4,12 +4,12 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import english from 'app/locales/locale-en.json';
 import russian from 'app/locales/locale-ru.json';
 import {GridAddService} from 'app/services/strings/grid-add.service';
 import {Subscription} from 'rxjs';
 import {translateTestImport} from 'tests/testTranslationConfig';
-import {StringGridItem} from '../grid/models/StringGridItem';
 import {StringAddComponent} from './stringAdd.component';
 
 describe('item add', function() {

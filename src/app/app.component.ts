@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {SortParams} from 'app/components/grid/grid-container/models/SortParams';
-import {StringGridItem} from 'app/components/grid/models/StringGridItem';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {clone, concat, filter, forEach, get, isEmpty, now} from 'lodash';

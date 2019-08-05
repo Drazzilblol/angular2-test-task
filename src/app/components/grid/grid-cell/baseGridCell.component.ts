@@ -1,11 +1,10 @@
 import {Compiler, ElementRef, Input, Renderer2, ViewChild, ViewContainerRef,} from '@angular/core';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
-import {IGridItem} from 'app/components/grid/models/IGridItem';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 
 export abstract class BaseGridCellComponent extends AbstractGridCellComponent {
 
-    @Input() public item: IGridItem;
+    @Input() public item: any;
     public getValue: any;
 
     @ViewChild('container', {read: ViewContainerRef})

@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {TranslateService} from '@ngx-translate/core';
-import {StringGridItem} from 'app/components/grid/models/StringGridItem';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {FilterService} from './filter.service';

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {IGridItem} from 'app/components/grid/models/IGridItem';
 import config from 'app/config.json';
 import {filter, forEach, size, startsWith} from 'lodash';
 import moment from 'moment';
@@ -13,7 +12,7 @@ export class FilterService {
     constructor(private translate: TranslateService) {
     }
 
-    public filterItems(items: IGridItem[], filterParams: any) {
+    public filterItems(items: any[], filterParams: any) {
         if (size(filterParams) === 0) {
             return items;
         }
@@ -26,7 +25,7 @@ export class FilterService {
      * @param filterParams Прараметры фильрации.
      * @return {IGridItem[]} Возвращает отфильтрованый список.
      */
-    private filterFn(items: IGridItem[], filterParams: any): IGridItem[] {
+    private filterFn(items: any[], filterParams: any): any[] {
         return filter(items, (item) => {
             let counter: number = 0;
             forEach(filterParams, (value, key) => {

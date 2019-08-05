@@ -9,7 +9,6 @@ import {
     ViewChildren,
 } from '@angular/core';
 import {BaseGridFilterCellComponent} from 'app/components/grid/base-grid-filter-cell/baseGridFilterCell.component';
-import {IGridItem} from 'app/components/grid/models/IGridItem';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
@@ -25,11 +24,11 @@ import {SortParams} from './models/SortParams';
 })
 export class GridComponent implements OnInit, OnChanges {
     @Input() public filterParams: any = {};
-    @Input() public items: IGridItem[] = [];
+    @Input() public items: any[] = [];
     @Input() public columns: IColumn[] = [];
     @Input() public options: any = {};
     public currentSort: SortParams;
-    public filteredItems: IGridItem[] = this.items;
+    public filteredItems: any[] = this.items;
     public columnTypes = ColumnsTypes;
     public trackByFn: any;
 

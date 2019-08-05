@@ -10,6 +10,7 @@ import {GridDateFilterCellComponent} from 'app/components/grid/grid-date-filter-
 import {GridTextFilterCellComponent} from 'app/components/grid/grid-text-filter-cell/gridTextFilterCell.component';
 import {StatusGridCellComponent} from 'app/components/grid/status-grid-cell/statusGridCell.component';
 import {TextGridCellComponent} from 'app/components/grid/text-grid-cell/textGridCell.component';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {DraggableDirective} from 'app/directives/draggable/draggable.directive';
 import {ResizableDirective} from 'app/directives/resizable/resizable.directive';
 import {Columns} from 'app/enums/columns.enum';
@@ -26,7 +27,6 @@ import {FilterService} from 'app/services/filter/filter.service';
 import {NgxMaskModule} from 'ngx-mask';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
-import {StringGridItem} from '../models/StringGridItem';
 import {GridComponent} from './grid.component';
 import {SortParams} from './models/SortParams';
 

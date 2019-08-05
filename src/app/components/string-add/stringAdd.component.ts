@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import {Statuses} from 'app/enums/statuses.enum';
 import {GridAddService} from 'app/services/strings/grid-add.service';
-import {StringGridItem} from '../grid/models/StringGridItem';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
