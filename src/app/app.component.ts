@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {SortParams} from 'app/components/grid/grid-container/models/SortParams';
 import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
+import config from 'app/config.json';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
 import {clone, concat, filter, forEach, get, isEmpty, now} from 'lodash';
@@ -14,6 +15,7 @@ import {StringsHttpService} from './services/getStrings/stringsHttp.service';
 import {GridAddService} from './services/strings/grid-add.service';
 
 const MESSAGE: string = 'MESSAGE';
+const DATE_FORMAT: string = config.DATE.DATE_FORMAT;
 
 @Component({
     selector: 'app',
@@ -126,7 +128,7 @@ export class AppComponent implements OnDestroy, OnInit {
             trackByFunction(index: number, item: StringGridItem): any {
                 return item.id + item.status;
             },
-            defaultSort: new SortParams('parsedDate', Order.ASC),
+            defaultSort: new SortParams('date', Order.ASC),
         };
     }
 
@@ -200,6 +202,6 @@ export class AppComponent implements OnDestroy, OnInit {
     }
 
     public dateCellFunctionValue(item, path: string) {
-        return moment(get(item, path).getTime()).format('DD-MM-YYYY HH:mm:ss');
+        return moment(get(item, path).getTime()).format(DATE_FORMAT);
     }
 }

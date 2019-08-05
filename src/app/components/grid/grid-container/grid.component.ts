@@ -14,6 +14,7 @@ import {Order} from 'app/enums/order.enum';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
 import {FilterService} from 'app/services/filter/filter.service';
+import {findIndex, sortBy} from 'lodash';
 import {SortParams} from './models/SortParams';
 
 @Component({
@@ -43,11 +44,21 @@ export class GridComponent implements OnInit, OnChanges {
      * @param params
      */
     public sort(params: SortParams): void {
-        this.filteredItems.sort((a, b) => {
-            return a[params.columnName].localeCompare(b[params.columnName],
-                undefined,
-                {numeric: true, sensitivity: 'base'});
+        const sortColumnIndex = findIndex(this.columns, (col) => {
+            return params.columnName === col.name;
         });
+        if (this.columns[sortColumnIndex] && this.columns[sortColumnIndex].type !== ColumnsTypes.DATE) {
+            this.filteredItems.sort((a, b) => {
+                return a[params.columnName].localeCompare(b[params.columnName],
+                    undefined,
+                    {numeric: true, sensitivity: 'base'});
+            });
+        } else {
+            this.filteredItems = sortBy(this.filteredItems, (a) => {
+                return a.date.valueOf();
+            });
+        }
+
         if (params.order === Order.DESC) {
             this.filteredItems = this.filteredItems.reverse();
         }
@@ -70,6 +81,9 @@ export class GridComponent implements OnInit, OnChanges {
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.filterParams || changes.items) {
             this.filterItems();
+            if (this.currentSort) {
+                this.sort(this.currentSort);
+            }
         }
     }
 

@@ -24,6 +24,8 @@ import {ColumnManagerService} from 'app/services/column-manger-service/columnMan
 import {DatePickerManagerService} from 'app/services/date-picker-manager/datePickerManager.service';
 import {FilterParamsService} from 'app/services/filter-params/filterParams.service';
 import {FilterService} from 'app/services/filter/filter.service';
+import {get} from 'lodash';
+import moment from 'moment';
 import {NgxMaskModule} from 'ngx-mask';
 import {translateTestImport} from 'tests/testTranslationConfig';
 import {GridHeaderCellComponent} from '../grid-header-cell/gridHeaderCell.component';
@@ -55,6 +57,7 @@ describe('grid', function() {
         fixture = TestBed.createComponent(GridComponent);
         fixtureDebug = fixture.debugElement;
         component = fixture.componentInstance;
+        component.currentSort = new SortParams('date', Order.ASC);
 
         component.columns = columnsManager.addColumns([
             new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
@@ -64,12 +67,14 @@ describe('grid', function() {
                     draggable: true,
                     filterable: true,
                 }),
-            new Column(Columns.ORIGIN, ColumnsTypes.TEXT, 'originText', 280,
+            new Column(Columns.DATE, ColumnsTypes.DATE, 'date', 280,
                 {
                     sortable: true,
                     resizable: true,
                     draggable: true,
-                    filterable: true,
+                    functionValue: (item, path: string) => {
+                        return moment(get(item, path).getTime()).format('DD-MM-YYYY HH:mm:ss');
+                    },
                 }),
         ]);
 
