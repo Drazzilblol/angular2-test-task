@@ -8,14 +8,8 @@ import {BaseGridCellComponent} from '../grid-cell/baseGridCell.component';
     templateUrl: './textGridCell.template.html',
 })
 export class TextGridCellComponent extends BaseGridCellComponent {
-    public text: string;
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService) {
         super(elementRef, renderer, columnManager);
-    }
-
-    public ngOnInit(): void {
-        super.ngOnInit();
-        this.text = this.getValue(this.item, this.column.name);
     }
 }

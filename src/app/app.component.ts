@@ -4,7 +4,7 @@ import {StringGridItem} from 'app/components/string-add/models/StringGridItem';
 import config from 'app/config.json';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {Order} from 'app/enums/order.enum';
-import {clone, concat, filter, forEach, get, isEmpty, now} from 'lodash';
+import {clone, concat, forEach, get, isEmpty, now} from 'lodash';
 import moment from 'moment';
 import {interval, Subscription} from 'rxjs';
 import {Columns} from './enums/columns.enum';
@@ -179,9 +179,8 @@ export class AppComponent implements OnDestroy, OnInit {
         if (isEmpty(value.trim())) {
             return MESSAGE;
         }
-        const filteredArray = filter(value.replace(/\s+/g, '')
-            .split(''), (element) => !isNaN(+element));
-        return item[path] = filteredArray.length ? filteredArray.join('') : MESSAGE;
+        const filteredArray = value.match(/\d/g);
+        return item[path] = filteredArray ? filteredArray.join('') : MESSAGE;
     }
 
     public dateCellFunctionValue(item, path: string) {

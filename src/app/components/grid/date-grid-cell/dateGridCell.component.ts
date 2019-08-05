@@ -8,15 +8,8 @@ import {BaseGridCellComponent} from '../grid-cell/baseGridCell.component';
     templateUrl: './dateGridCell.template.html',
 })
 export class DateGridCellComponent extends BaseGridCellComponent {
-    public date: string;
 
     constructor(public elementRef: ElementRef, public renderer: Renderer2, public columnManager: ColumnManagerService) {
         super(elementRef, renderer, columnManager);
     }
-
-    public ngOnInit(): void {
-        super.ngOnInit();
-        this.date = this.getValue(this.item, this.column.name);
-    }
-
 }

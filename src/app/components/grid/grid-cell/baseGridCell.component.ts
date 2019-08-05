@@ -1,11 +1,13 @@
 import {ElementRef, Input, Renderer2, ViewChild, ViewContainerRef,} from '@angular/core';
 import {AbstractGridCellComponent} from 'app/components/grid/abstract-grid-cell/abstractGridCell.component';
 import {ColumnManagerService} from 'app/services/column-manger-service/columnManager.service';
+import {get, isFunction} from 'lodash';
 
 export abstract class BaseGridCellComponent extends AbstractGridCellComponent {
 
     @Input() public item: any;
     public getValue: any;
+    public itemValue: any;
 
     @ViewChild('container', {read: ViewContainerRef})
     private container: ViewContainerRef;
@@ -17,6 +19,13 @@ export abstract class BaseGridCellComponent extends AbstractGridCellComponent {
 
     public ngOnInit(): void {
         super.ngOnInit();
-        this.getValue = this.column.functionValue;
+        if (this.column.functionValue && isFunction(this.column.functionValue)) {
+            this.getValue = this.column.functionValue;
+        } else {
+            this.getValue = function(item, path) {
+                return get(item, path);
+            };
+        }
+        this.itemValue = this.getValue(this.item, this.column.name);
     }
 }

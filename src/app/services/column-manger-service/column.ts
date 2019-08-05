@@ -1,7 +1,6 @@
 import config from 'app/config.json';
 import {ColumnsTypes} from 'app/enums/columnsTypes.enum';
 import {IColumn} from 'app/services/column-manger-service/IColumn';
-import {get} from 'lodash';
 
 export class Column implements IColumn {
     public width: number;
@@ -13,10 +12,7 @@ export class Column implements IColumn {
     public draggable: boolean = false;
     public filterable: boolean = false;
     public minWidth: number = config.COLUMN.MIN_WIDTH;
-    public functionValue: any = function(item, path) {
-        return get(item, path);
-    };
-;
+    public functionValue: any;
 
     /**
      * Конструктор колонки.
@@ -24,7 +20,6 @@ export class Column implements IColumn {
      * @param type Тип колонки.
      * @param name Название свойства в модели данных.
      * @param width Ширина колонки.
-     * @param functionValue
      * @param options Необязательный набор опций:
      * resizable позволяет изменять ширину колонки,
      * sortable включает сортировку по колонке,
@@ -39,9 +34,7 @@ export class Column implements IColumn {
         this.type = type;
         this.name = name;
         if (options) {
-            this.functionValue = options.functionValue || function(item, path) {
-                return get(item, path);
-            };
+            this.functionValue = options.functionValue;
             this.resizable = options.resizable || false;
             this.sortable = options.sortable || false;
             this.draggable = options.draggable || false;
